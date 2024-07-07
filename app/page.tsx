@@ -1,11 +1,15 @@
 import Header from "@/components/header";
-import Hero from "@/components/hero";
+import Discover from "@/components/landing-page/discover";
+import Hero from "@/components/landing-page/hero";
+import Perks from "@/components/landing-page/perks";
 
 export default function Home() {
   return (
-    <main className=" px-6 pt-10 lg:px-20  xl:px-[80px] 2xl:px-[120px] 2xl:pt-12">
+    <main className=" px-6  lg:px-20  xl:px-[80px] 2xl:px-[120px]">
       <Header />
-      <Hero/>
+      <Hero />
+      <Perks/>
+      <Discover/>
     </main>
   );
 }

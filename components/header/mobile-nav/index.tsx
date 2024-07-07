@@ -21,7 +21,7 @@ const MobileNav = () => {
         <Link href="/login" className="text-primary text-sm font-medium">
           Log in
         </Link>
-        <Button/>
+        <Button text="Get Started"/>
       </div>
     </aside>
   );

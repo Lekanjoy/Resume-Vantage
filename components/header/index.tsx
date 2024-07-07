@@ -19,7 +19,7 @@ const Header = () => {
   };
 
   return (
-    <header className="flex justify-between items-center cursor-pointer">
+    <header className="fixed w-full left-0 top-0 px-6 py-4 bg-white shadow flex justify-between items-center cursor-pointer">
       <Link href={'/'} className="relative text-sm z-10 md:text-2xl">
         <span className="font-medium text-primary-100">Resume</span>
         <span className="font-bold text-primary">Vantage.</span>
@@ -50,7 +50,7 @@ const Header = () => {
         <Link href="/login" className="text-primary text-sm font-medium xl:text-base">
           Log in
         </Link>
-        <Button/>
+        <Button text="Get Started"/>
       </div>
 
       {/* Mobile Nav and UI */}
