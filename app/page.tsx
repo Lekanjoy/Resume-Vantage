@@ -1,8 +1,11 @@
+import Header from "@/components/header";
+import Hero from "@/components/hero";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-
+    <main className=" px-6 pt-10 lg:px-20  xl:px-[80px] 2xl:px-[120px] 2xl:pt-12">
+      <Header />
+      <Hero/>
     </main>
   );
 }
