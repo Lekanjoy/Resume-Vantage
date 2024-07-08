@@ -2,6 +2,7 @@ import Header from "@/components/header";
 import Discover from "@/components/landing-page/discover";
 import Hero from "@/components/landing-page/hero";
 import Perks from "@/components/landing-page/perks";
+import Steps from "@/components/landing-page/steps";
 
 export default function Home() {
   return (
@@ -10,6 +11,7 @@ export default function Home() {
       <Hero />
       <Perks/>
       <Discover/>
+      <Steps/>
     </main>
   );
 }

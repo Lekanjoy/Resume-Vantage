@@ -14,7 +14,7 @@ const Discover = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
 
-  // Handle Next template Click
+  // Handle Next Template Click
   const handleNextTemplate = () => {
     setDirection(1);
     setCurrentIndex((prevState) =>
@@ -49,12 +49,12 @@ const Discover = () => {
   return (
     <section className=" w-full my-20 flex flex-col justify-center items-center gap-y-6 lg:gap-y-8 2xl:gap-y-12">
       <div className="flex flex-col justify-center items-center text-center gap-y-6 lg:gap-y-8 2xl:gap-y-12">
-        <h1 className="text-2xl text-secondary font-bold leading-[24px] lg:text-6xl  lg:leading-[60px] 2xl:text-8xl 2xl:leading-[96px]">
+        <h3 className="text-2xl text-secondary font-bold leading-[24px] lg:text-6xl  lg:leading-[60px] 2xl:text-8xl 2xl:leading-[96px]">
           Discover Your Professional Look with{" "}
           <span className="font-semibold text-primary-100">Resume</span>
           <span className="text-primary">Vantage. </span>
           Templates
-        </h1>
+        </h3>
         <p className="text-secondary-100 font-medium lg:text-xl lg:font-semibold lg:max-w-[700px]">
           We have a wide range of unique features readily available to help you
           stand out in the competitive job market and land your dream job.
@@ -62,7 +62,7 @@ const Discover = () => {
       </div>
       <div className="relative overflow-hidden z-[1] bg-[#B2A0F8] rounded w-full min-h-[430px] flex flex-col items-center gap-y-6 pt-8 px-[70px] lg:rounded-2xl lg:p-20">
         {/* Mobile Templates Scroll */}
-        <div className="relative w-[190px] h-[265px] mb-6 lg:hidden">
+        <div className="relative w-[190px] h-[265px] mb-10 lg:hidden">
           <AnimatePresence initial={false} custom={currentIndex}>
             <motion.div
               key={currentIndex}
@@ -82,7 +82,7 @@ const Discover = () => {
                 alt="template cv"
                 className="w-full h-full"
               />
-              <p className="text-xs text-center font-bold text-[#FAFAFA] mt-3 lg:text-base lg:mt-4 2xl:text-lg">
+              <p className="text-xs max-w-[123px] mx-auto text-center font-bold text-[#FAFAFA] mt-3 lg:text-base lg:mt-4 2xl:text-lg">
                 {templates[currentIndex].text}
               </p>
             </motion.div>
@@ -96,7 +96,7 @@ const Discover = () => {
               className="w-full h-full"
             />
             <p className="text-xs text-center font-bold text-[#FAFAFA] mt-3 lg:text-base lg:mt-4 2xl:text-lg">
-              Simple Resume Template
+              Simple Resume <br /> Template
             </p>
           </div>
 
@@ -107,7 +107,7 @@ const Discover = () => {
               className="w-full h-full"
             />
             <p className="text-xs text-center font-bold text-[#FAFAFA] mt-3 lg:text-base lg:mt-4 2xl:text-lg">
-              Creative Resume Template
+              Creative Resume <br /> Template
             </p>
           </div>
 
@@ -118,7 +118,7 @@ const Discover = () => {
               className="w-full h-full"
             />
             <p className="text-xs text-center font-bold text-[#FAFAFA] mt-3 lg:text-base lg:mt-4 2xl:text-lg">
-              Professional Resume Template
+              Professional Resume <br /> Template
             </p>
           </div>
         </div>
