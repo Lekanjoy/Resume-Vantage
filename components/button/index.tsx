@@ -7,7 +7,7 @@ const Button = ({ text }: { text: string }) => (
     href="/signup"
     className="w-fit flex items-center gap-x-2 py-3 px-5 bg-primary rounded-md text-white ease-in-out duration-300 lg:hover:bg-primary-100"
   >
-    <span className={`text-sm font-semibold lg:text-lg 2xl:text-xl`}>
+    <span className={`text-xs font-semibold lg:text-base sm:text-sm 2xl:text-lg`}>
       {text}
     </span>
     <Image src={arrow} alt="arrow Icon" />
