@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { animate } from "framer-motion";
 import Button from "@/components/button";
 import Card from "./card";
@@ -8,6 +8,27 @@ import arrow from "@/public/assets/landing-page/arrowIcon.svg";
 
 const Testimonials = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [containerWidth, setContainerWidth] = useState(0);
+
+  useEffect(() => {
+    const card = document.querySelector<HTMLDivElement>(".card");
+    const handleResize = () => {
+      if (card) {
+        setContainerWidth(card.offsetWidth);
+      }
+    };
+
+    // Initial width measurement
+    handleResize();
+
+    // Add event listener for window resize to update the width
+    window.addEventListener("resize", handleResize);
+
+    // Clean up event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const scrollTo = (target: number) => {
     const container = containerRef.current;
@@ -26,7 +47,7 @@ const Testimonials = () => {
   const scrollRight = () => {
     const container = containerRef.current;
     if (container) {
-      const target = container.scrollLeft + 250;
+      const target = container.scrollLeft + containerWidth + 12;
       scrollTo(target);
     }
   };
@@ -34,7 +55,7 @@ const Testimonials = () => {
   const scrollLeft = () => {
     const container = containerRef.current;
     if (container) {
-      const target = container.scrollLeft - 250;
+      const target = container.scrollLeft - containerWidth + 12;
       scrollTo(target);
     }
   };

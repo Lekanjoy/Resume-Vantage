@@ -3,7 +3,7 @@ import avatar from "@/public/assets/landing-page/Dayflow Avatar.png";
 
 const Card = () => {
   return (
-    <div className="card flex flex-col items-start gap-y-2 min-w-[230px] min-h-[167px] rounded-xl border p-4 border-[#C5B8FA]/70 bg-white lg:min-w-[320px] lg:gap-y-6 lg:px-5 lg:py-6">
+    <div className="card flex flex-col items-start gap-y-2 min-w-full min-h-[167px] rounded-xl border p-4 border-[#C5B8FA]/70 bg-white lg:min-w-[320px] lg:gap-y-6 lg:px-5 lg:py-6">
       <div className="flex gap-x-4 items-center lg:gap-x-6">
         <Image src={avatar} alt={"avatar"} width={55} height={55} />
         <div className="flex flex-col gap-y-[2px]">
