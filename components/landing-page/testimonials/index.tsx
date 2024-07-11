@@ -1,12 +1,43 @@
 "use client";
+import Image from "next/image";
+import { useRef } from "react";
+import { animate } from "framer-motion";
 import Button from "@/components/button";
-import React, { useEffect, useState } from "react";
 import Card from "./card";
 import arrow from "@/public/assets/landing-page/arrowIcon.svg";
-import Image from "next/image";
-import { AnimatePresence, motion } from "framer-motion";
 
 const Testimonials = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const scrollTo = (target: number) => {
+    const container = containerRef.current;
+    if (container) {
+      animate(container.scrollLeft, target, {
+        type: "spring",
+        stiffness: 60,
+        damping: 20,
+        onUpdate: (value) => {
+          container.scrollLeft = value;
+        },
+      });
+    }
+  };
+
+  const scrollRight = () => {
+    const container = containerRef.current;
+    if (container) {
+      const target = container.scrollLeft + 250;
+      scrollTo(target);
+    }
+  };
+
+  const scrollLeft = () => {
+    const container = containerRef.current;
+    if (container) {
+      const target = container.scrollLeft - 250;
+      scrollTo(target);
+    }
+  };
 
   return (
     <section className=" w-full my-20 flex flex-col justify-center items-center gap-y-6 lg:gap-y-10 2xl:gap-y-12">
@@ -25,23 +56,38 @@ const Testimonials = () => {
           it’s a career catalyst.
         </p>
       </div>
-      
-       <div className="w-full flex justify-between items-center gap-x-3 lg:gap-x-8 2xl:gap-x-14">
-        <div className="bg-[#72767D] rounded-full  min-w-[24px] min-h-[24px] p-2 ">
+      <div className="w-full flex items-center gap-x-4">
+        <div
+          onClick={scrollLeft}
+          className="bg-[#72767D] rounded-full  min-w-[24px] min-h-[24px] p-2  cursor-pointer"
+        >
           <Image
             src={arrow}
             alt="Arrow left"
             className="w-full h-full rotate-[270deg]"
           />
         </div>
-        <Card />
-        {/* <Card />
-        <Card /> */}
-        <div className="bg-primary rounded-full min-w-[24px] min-h-[24px] p-2">
+
+        <div
+          id="container"
+          ref={containerRef}
+          className="w-full overflow-x-hidden flex justify-between items-center gap-x-3 lg:gap-x-8 2xl:gap-x-14"
+        >
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+        </div>
+
+        <div
+          onClick={scrollRight}
+          className="bg-primary rounded-full min-w-[24px] min-h-[24px] p-2 cursor-pointer"
+        >
           <Image src={arrow} alt="Arrow right" className="w-full h-full" />
         </div>
-      </div> 
-      
+      </div>
 
       <Button
         text="Try It Out Yourself"
