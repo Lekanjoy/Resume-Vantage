@@ -1,5 +1,5 @@
 "use client";
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { templatesData } from "@/data";
 import { AnimatePresence, motion } from "framer-motion";
@@ -29,7 +29,6 @@ const Discover = () => {
       prevState > 0 ? prevState - 1 : (prevState = templates.length - 1)
     );
   };
-
 
   const variants = {
     enter: () => ({
@@ -123,7 +122,12 @@ const Discover = () => {
           </div>
         </div>
 
-        <Button text={"Discover Other Resume Templates"} />
+        <Button
+          text={"Discover Other Resume Templates"}
+          bgColor={"bg-primary"}
+          textColor={"text-white"}
+          stroke={"#FFFFFF"}
+        />
         <div className="w-full absolute top-[45%] px-4 flex justify-between cursor-pointer lg:hidden">
           <Image
             src={circleArrow}

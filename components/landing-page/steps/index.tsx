@@ -18,7 +18,12 @@ const Steps = () => {
           journey to creating an impressive resume in just three seamless steps,
           now enhanced by AI.
         </p>
-        <Button text="Create My Resume" />
+        <Button
+          text="Create My Resume"
+          bgColor={"bg-primary"}
+          textColor={"text-white"}
+          stroke={"#FFFFFF"}
+        />
       </div>
 
       <div className="w-full flex flex-col gap-y-14 lg:gap-y-[96px]">
@@ -38,7 +43,11 @@ const Steps = () => {
           </div>
 
           <div className="relative w-[102px] h-[102px] pt-12 lg:w-[256px] lg:h-[256px] lg:top-[90px]">
-            <Image src={arrow3} alt="" className="w-full h-full object-contain" />
+            <Image
+              src={arrow3}
+              alt=""
+              className="w-full h-full object-contain"
+            />
           </div>
         </div>
 
@@ -58,7 +67,11 @@ const Steps = () => {
           </div>
 
           <div className="relative w-[102px] h-[102px] pt-12 lg:w-[256px] lg:h-[256px] lg:top-[100px]">
-            <Image src={arrow4} alt="" className="w-full h-full object-contain" />
+            <Image
+              src={arrow4}
+              alt=""
+              className="w-full h-full object-contain"
+            />
           </div>
         </div>
 

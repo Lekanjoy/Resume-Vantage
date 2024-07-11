@@ -1,16 +1,27 @@
-import Image from "next/image";
 import Link from "next/link";
-import arrow from "@/public/assets/landing-page/arrowIcon.svg";
+import ArrowIcon from "../icon/ArrowIcon";
 
-const Button = ({ text }: { text: string }) => (
+const Button = ({
+  text,
+  bgColor,
+  textColor,
+  stroke,
+}: {
+  text: string;
+  bgColor: string;
+  textColor: string;
+  stroke: string;
+}) => (
   <Link
     href="/signup"
-    className="w-fit flex items-center gap-x-2 py-3 px-5 bg-primary rounded-md text-white ease-in-out duration-300 lg:hover:bg-primary-100"
+    className={`w-fit flex items-center gap-x-2 py-3 px-5 ${bgColor} rounded-md ${textColor} ease-in-out duration-300 lg:hover:opacity-80`}
   >
-    <span className={`text-xs font-semibold lg:text-base sm:text-sm 2xl:text-lg`}>
+    <span
+      className={`text-xs font-semibold lg:text-base sm:text-sm 2xl:text-lg`}
+    >
       {text}
     </span>
-    <Image src={arrow} alt="arrow Icon" />
+    <ArrowIcon stroke={stroke} />
   </Link>
 );
 

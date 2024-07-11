@@ -20,7 +20,7 @@ const Header = () => {
 
   return (
     <header className="fixed z-10 w-full left-0 top-0 px-6 py-4 bg-white shadow flex justify-between items-center cursor-pointer">
-      <Link href={'/'} className="relative text-sm z-10 md:text-2xl">
+      <Link href={"/"} className="relative text-sm z-10 md:text-2xl">
         <span className="font-medium text-primary-100">Resume</span>
         <span className="font-bold text-primary">Vantage.</span>
       </Link>
@@ -47,10 +47,18 @@ const Header = () => {
         ))}
       </nav>
       <div className="hidden gap-x-9 items-center lg:flex lg:flex-row">
-        <Link href="/login" className="text-primary text-sm font-medium xl:text-base">
+        <Link
+          href="/login"
+          className="text-primary text-sm font-medium xl:text-base"
+        >
           Log in
         </Link>
-        <Button text="Get Started"/>
+        <Button
+          text="Get Started"
+          bgColor={"bg-primary"}
+          textColor={"text-white"}
+          stroke={"#FFFFFF"}
+        />
       </div>
 
       {/* Mobile Nav and UI */}

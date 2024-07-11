@@ -4,9 +4,18 @@ import "./globals.css";
 
 const manrope = Manrope({ subsets: ["latin"] });
 
+const defaultUrl = process.env.VERCEL_URL
+  ? `https://${process.env.VERCEL_URL}`
+  : "http://localhost:3000";
+
 export const metadata: Metadata = {
-  title: "Resume Vantage",
-  description: "Unlock your career potential with our effortless resume building platform, powered by AI.",
+  title: {
+    template: "%s | Resume Vantage",
+    default: "Resume Vantage",
+  },
+  description:
+    "Unlock your career potential with our effortless resume building platform, powered by AI.",
+  metadataBase: new URL(defaultUrl),
 };
 
 export default function RootLayout({
@@ -16,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={manrope.className}>{children}</body>
+      <body className={`${manrope.className} antialiased`}>{children}</body>
     </html>
   );
 }

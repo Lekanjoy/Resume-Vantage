@@ -21,7 +21,12 @@ const MobileNav = () => {
         <Link href="/login" className="text-primary text-sm font-medium">
           Log in
         </Link>
-        <Button text="Get Started"/>
+        <Button
+          text="Get Started"
+          bgColor={"bg-primary"}
+          textColor={"text-white"}
+          stroke={"#FFFFFF"}
+        />
       </div>
     </aside>
   );

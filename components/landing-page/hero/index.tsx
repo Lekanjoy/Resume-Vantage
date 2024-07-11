@@ -18,7 +18,12 @@ const Hero = () => {
           platform, powered by AI.
         </p>
         <div className="mx-auto">
-          <Button text="Get Started"/>
+          <Button
+            text="Get Started"
+            bgColor={"bg-primary"}
+            textColor={"text-white"}
+            stroke={"#FFFFFF"}
+          />
         </div>
       </div>
       <div className="w-[250px] h-[250px] lg:w-auto lg:h-auto">
