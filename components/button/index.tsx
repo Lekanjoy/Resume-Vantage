@@ -14,7 +14,7 @@ const Button = ({
 }) => (
   <Link
     href="/signup"
-    className={`w-fit flex items-center gap-x-2 py-3 px-5 ${bgColor} rounded-md ${textColor} ease-in-out duration-300 lg:hover:opacity-80`}
+    className={`whitespace-nowrap w-fit flex items-center gap-x-2 py-3 px-5 ${bgColor} rounded-md ${textColor} ease-in-out duration-300 lg:hover:opacity-80`}
   >
     <span
       className={`text-xs font-semibold lg:text-base sm:text-sm 2xl:text-lg`}
