@@ -8,7 +8,7 @@ import arrow4 from "@/public/assets/landing-page/Arrow 4.png";
 
 const Steps = () => {
   return (
-    <section className="flex flex-col gap-y-12 items-center justify-center mb-[72px] lg:mb-24">
+    <section className="flex flex-col gap-y-12 items-center justify-center mb-[72px] px-6 lg:px-20 lg:mb-24 xl:px-[80px] 2xl:px-[120px] ">
       <div className="flex flex-col items-center justify-center text-center gap-y-6 lg:max-w-[750px]">
         <h4 className="text-xl text-secondary font-bold leading-[24px] lg:text-5xl lg:max-w-[637px]">
           Create The Perfect Resume in 3 Steps

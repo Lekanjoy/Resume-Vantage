@@ -8,7 +8,7 @@ const openSans = Open_Sans({ subsets: ["latin"] });
 const Footer = () => {
   return (
     <footer
-      className={`${openSans.className} w-full font-medium text-secondary-100 text-sm mb-20 flex flex-col gap-y-16 ease-in-out duration-300 text-center lg:text-left lg:gap-y-12 2xl:gap-y-16`}
+      className={`${openSans.className} w-full font-medium text-secondary-100 text-sm mb-20 flex flex-col gap-y-16 ease-in-out duration-300 text-center px-6 lg:px-20  lg:text-left lg:gap-y-12 xl:px-[80px] 2xl:px-[120px] 2xl:gap-y-16`}
     >
       <div className="w-full flex flex-col gap-y-16 justify-between items-center ease-in-out duration-300 lg:items-start lg:flex-row lg:gap-x-16">
         <div className="text-xl lg:w-1/4 ">

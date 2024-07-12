@@ -19,7 +19,7 @@ const Header = () => {
   };
 
   return (
-    <header className="fixed z-10 w-full left-0 top-0 px-6 py-4 bg-white shadow flex justify-between items-center cursor-pointer">
+    <header className="fixed z-10 w-full left-0 top-0 px-6 py-4 bg-white shadow flex justify-between items-center cursor-pointer  lg:px-20  xl:px-[80px] 2xl:px-[120px]">
       <Link href={"/"} className="relative text-sm z-10 md:text-2xl">
         <span className="font-medium text-primary-100">Resume</span>
         <span className="font-bold text-primary">Vantage.</span>

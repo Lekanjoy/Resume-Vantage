@@ -46,7 +46,7 @@ const Discover = () => {
   };
 
   return (
-    <section className=" w-full my-20 flex flex-col justify-center items-center gap-y-6 lg:gap-y-8 2xl:gap-y-12">
+    <section className=" w-full my-20 flex flex-col justify-center items-center gap-y-6 px-6  lg:px-20 lg:gap-y-8 xl:px-[80px] 2xl:px-[120px] 2xl:gap-y-12">
       <div className="flex flex-col justify-center items-center text-center gap-y-6 lg:gap-y-8 2xl:gap-y-12">
         <h3 className="text-2xl text-secondary font-bold leading-[24px] lg:text-6xl  lg:leading-[60px] 2xl:text-8xl 2xl:leading-[96px]">
           Discover Your Professional Look with{" "}
