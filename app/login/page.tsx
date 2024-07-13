@@ -1,3 +1,5 @@
+'use client'
+import { FormEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import BrandName from "@/components/brand-name";
@@ -5,8 +7,15 @@ import CustomInput from "@/components/input";
 import logo from "@/public/assets/auth/logo.svg";
 import google from "@/public/assets/auth/googleIcon.svg";
 import apple from "@/public/assets/auth/appleIcon.svg";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
+  const router = useRouter()
+  const handleLogin = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    router.push("/dashboard");
+  };
+
   return (
     <section className="px-6 py-8">
       <div className="mb-14 w-[131px] lg:mb-20 lg:w-[200px]">
@@ -32,7 +41,7 @@ const Login = () => {
       </div>
 
       <div className=" lg:mx-auto lg:max-w-[800px] lg:px-[100px]">
-        <form action="" className="w-full flex flex-col gap-y-4">
+        <form action="" onSubmit={handleLogin} className="w-full flex flex-col gap-y-4">
           <CustomInput
             id={"email"}
             type={"email"}
