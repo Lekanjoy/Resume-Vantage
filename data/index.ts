@@ -1,6 +1,25 @@
 import template1 from "@/public/assets/landing-page/template-1.png";
 import template2 from "@/public/assets/landing-page/template-2.png";
 import template3 from "@/public/assets/landing-page/template-3.png";
+import add from "@/public/assets/dashboard/add.svg";
+import upload from "@/public/assets/dashboard/upload.svg";
+import { StaticImageData } from "next/image";
+
+
+export const addOrUploadResumeCardData = [
+  {
+    id: 1,
+    title: "Create a new resume",
+    text: " We will be with you every step of the way.",
+    img: add as StaticImageData,
+  },
+  {
+    id: 2,
+    title: "Use an existing resume",
+    text: "We will transfer your information to the new template.",
+    img: upload,
+  },
+];
 
 export const navItems: {
   name: string;

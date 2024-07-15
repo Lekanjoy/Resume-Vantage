@@ -1,12 +1,13 @@
-import Sidebar from '@/components/dashboard/sidebar'
-
+import CardWrapper from "@/components/dashboard/add-upload-resume/CardWrapper";
+import Sidebar from "@/components/dashboard/sidebar";
 
 const Dashboard = () => {
   return (
-    <section className='relative w-full h-dvh flex lg:gap-x-14 2xl:gap-x-16'>
-        <Sidebar/>
+    <section className="relative w-full h-dvh flex">
+      <Sidebar />
+      <CardWrapper />
     </section>
-  )
-}
+  );
+};
 
-export default Dashboard
+export default Dashboard;
