@@ -7,7 +7,7 @@ const CardWrapper = () => {
   const [selectedCardId, setSelectedCardId] = useState<number | null>(null);
 
   return (
-    <section className="mt-[72px] w-full px-4 lg:px-14 2xl:px-16">
+    <>
       <h1 className="text-secondary text-lg font-semibold mb-10 lg:mb-14 lg:text-5xl">
         How do you want to create your resume?
       </h1>
@@ -28,7 +28,7 @@ const CardWrapper = () => {
           Continue
         </button>
       </div>
-    </section>
+    </>
   );
 };
 

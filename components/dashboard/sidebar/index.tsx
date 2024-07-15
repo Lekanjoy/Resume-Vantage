@@ -16,7 +16,7 @@ const Sidebar = () => {
   return (
     <aside
       className={twMerge(
-        "z-10 w-20 bg-[#1D0872] text-[#FAFAFA] flex flex-col gap-y-16 px-6 py-11 h-dvh transition-all  duration-700 ease-in-out lg:w-1/5 lg:items-center lg:px-8 lg:py-10 2xl:px-12",
+        "fixed z-10 w-20 bg-[#1D0872] text-[#FAFAFA] flex flex-col gap-y-8 px-6 py-11 h-dvh transition-all  duration-700 ease-in-out sm:gap-x-16 lg:w-1/5 lg:items-center lg:px-8 lg:py-10 2xl:px-12",
         isToggle ? "w-full" : "w-20"
       )}
     >
