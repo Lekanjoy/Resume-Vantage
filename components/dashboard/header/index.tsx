@@ -1,6 +1,6 @@
 import CustomInput from "@/components/input";
 import Image from "next/image";
-import template from '@/public/assets/landing-page/template-1.png'
+import template from "@/public/assets/landing-page/template-1.png";
 
 const UserHeader = () => {
   return (
@@ -57,7 +57,7 @@ const UserHeader = () => {
           />
         </form>
         <div className="w-full border border-primary rounded-md lg:w-[30%]">
-          <Image src={template} alt="templates" className="w-full h-full"/>
+          <Image src={template} alt="templates" className="w-full h-full" />
         </div>
       </div>
     </>

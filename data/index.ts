@@ -5,7 +5,6 @@ import add from "@/public/assets/dashboard/add.svg";
 import upload from "@/public/assets/dashboard/upload.svg";
 import { StaticImageData } from "next/image";
 
-
 export const addOrUploadResumeCardData = [
   {
     id: 1,
@@ -97,4 +96,14 @@ export const footerData = [
     title: "Social",
     links: ["Instagram", "Twitter", "Facebook", "LinkedIn", "Github"],
   },
+];
+
+export const stepsData = [
+  { title: "Your Header", checked: true },
+  { title: "Your Experience", checked: false },
+  { title: "Education History", checked: false },
+  { title: "Your Skills", checked: false },
+  { title: "Summary", checked: false },
+  { title: "Additional Details", checked: false },
+  { title: "Confirm", checked: false },
 ];

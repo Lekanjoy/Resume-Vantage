@@ -1,14 +1,21 @@
 "use client";
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import Steps from "./Steps";
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
 import hamburger from "@/public/assets/dashboard/hamburgerIcon.svg";
 import close from "@/public/assets/dashboard/closeIcon.svg";
 
-const Sidebar = () => {
-  const [isToggle, setIsToggle] = useState(false);
+interface sidebarProps {
+  steps: {
+    title: string;
+    checked: boolean;
+  }[];
+  isToggle: boolean;
+  setIsToggle: Dispatch<SetStateAction<boolean>>;
+}
 
+const Sidebar = ({ steps, isToggle, setIsToggle }: sidebarProps) => {
   function expandAside() {
     setIsToggle(!isToggle);
   }
@@ -33,26 +40,14 @@ const Sidebar = () => {
         />
       </div>
       <ul className="flex flex-col text-sm gap-y-12 mt-16 lg:mt-0 lg:text-base 2xl:text-xl">
-        <Steps title={"Your Header"} checked={true} isToggle={isToggle} />
-        <Steps title={"Your Experience"} checked={false} isToggle={isToggle} />
-        <Steps
-          title={"Education History"}
-          checked={false}
-          isToggle={isToggle}
-        />
-        <Steps title={"Your Skills"} checked={false} isToggle={isToggle} />
-        <Steps title={"Summary"} checked={false} isToggle={isToggle} />
-        <Steps
-          title={"Additional Details"}
-          checked={false}
-          isToggle={isToggle}
-        />
-        <Steps
-          title={"Confirm"}
-          checked={false}
-          isToggle={isToggle}
-          className="after:hidden"
-        />
+        {steps.map((step, index) => (
+          <Steps
+            key={index}
+            title={step.title}
+            checked={step.checked}
+            isToggle={isToggle}
+          />
+        ))}
       </ul>
     </aside>
   );

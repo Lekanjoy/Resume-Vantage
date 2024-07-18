@@ -3,7 +3,7 @@ import { useState } from "react";
 import { addOrUploadResumeCardData } from "@/data";
 import AddOrUploadCard from ".";
 
-const CardWrapper = () => {
+const CreateOrUpload = () => {
   const [selectedCardId, setSelectedCardId] = useState<number | null>(null);
 
   return (
@@ -23,13 +23,8 @@ const CardWrapper = () => {
           );
         })}
       </div>
-      <div className="mt-20 lg:w-[330px] lg:mx-auto">
-        <button className="bg-primary text-white p-4 rounded-md w-full ease-in-out duration-300 hover:bg-primary-100">
-          Continue
-        </button>
-      </div>
     </>
   );
 };
 
-export default CardWrapper;
+export default CreateOrUpload;
