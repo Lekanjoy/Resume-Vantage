@@ -1,21 +1,31 @@
 "use client";
 import React, { useRef } from "react";
+import { revealPassword } from "@/utils/revealPassword";
 import Image from "next/image";
 import eye from "@/public/assets/auth/eyeIcon.svg";
-import { revealPassword } from "@/utils/revealPassword";
+import { twMerge } from "tailwind-merge";
 
-interface CustomInputProps {
-  id: string;
-  type: string;
+interface CustomInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
-  placeholder: string;
+  isDisabled?: boolean;
 }
 
-const CustomInput = ({ id, type, label, placeholder }: CustomInputProps) => {
+const CustomInput = ({
+  id,
+  type,
+  label,
+  placeholder,
+  isDisabled,
+}: CustomInputProps) => {
   const Ref = useRef<HTMLInputElement>(null);
 
   return (
-    <div className="relative text-secondary-100 text-xs flex flex-col gap-y-1 lg:text-sm">
+    <div
+      className={twMerge(
+        "relative text-secondary-100 text-xs flex flex-col gap-y-1 lg:text-sm",
+        isDisabled && "opacity-50"
+      )}
+    >
       <label htmlFor={id} className="text-secondary-100 ">
         {label}
       </label>
@@ -24,7 +34,8 @@ const CustomInput = ({ id, type, label, placeholder }: CustomInputProps) => {
         id={id}
         type={type}
         placeholder={placeholder}
-        className="border border-[#B9BBBE] py-2 px-3 rounded-md placeholder:text-[#B9BBBE] outline-[#B9BBBE]"
+        disabled={isDisabled}
+        className="border border-[#B9BBBE] py-2 px-3 rounded-md placeholder:text-[#B9BBBE] outline-[#B9BBBE] disabled:cursor-not-allowed"
       />
       {type === "password" && (
         <Image
