@@ -6,11 +6,13 @@ import UserHeader from "@/components/dashboard/header";
 import Sidebar from "@/components/dashboard/sidebar";
 import { stepsData } from "@/data";
 import Experiences from "@/components/dashboard/experiences";
+import Education from "@/components/dashboard/education";
 
 const sectionData = [
   <CreateOrUpload key="create-or-upload" />,
   <UserHeader key="user-header" />,
-  <Experiences key="experiences"/>
+  <Experiences key="experiences"/>,
+  <Education key="education"/>
 ];
 
 const Dashboard = () => {

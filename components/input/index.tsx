@@ -13,6 +13,8 @@ interface CustomInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 const CustomInput = ({
   id,
   type,
+  value,
+  onChange,
   label,
   placeholder,
   isDisabled,
@@ -33,6 +35,8 @@ const CustomInput = ({
         ref={Ref}
         id={id}
         type={type}
+        value={value}
+        onChange={onChange}
         placeholder={placeholder}
         disabled={isDisabled}
         className="border border-[#B9BBBE] py-2 px-3 rounded-md placeholder:text-[#B9BBBE] outline-[#B9BBBE] disabled:cursor-not-allowed"

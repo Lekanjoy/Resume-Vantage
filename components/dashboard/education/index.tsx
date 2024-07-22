@@ -7,30 +7,30 @@ import plus from "@/public/assets/dashboard/plusIcon.svg";
 interface FormState {
   id: number;
   startDate: string;
-  endDate: string;
+  gradDate: string;
   isChecked: boolean;
-  title: string;
-  company: string;
-  city: string;
-  country: string;
+  name: string;
+  location: string;
+  degree: string;
+  field: string;
 }
 
 // Define types for the event handlers
 type CheckboxChangeEvent = ChangeEvent<HTMLInputElement>;
 type InputChangeEvent = ChangeEvent<HTMLInputElement>;
 
-const Experiences = () => {
+const Education = () => {
   const [todayDate, setTodayDate] = useState<string>("");
   const [forms, setForms] = useState<FormState[]>([
     {
       id: 1,
       startDate: todayDate,
-      endDate: todayDate,
+      gradDate: todayDate,
       isChecked: false,
-      title: "",
-      company: "",
-      city: "",
-      country: "",
+      name: "",
+      location: "",
+      degree: "",
+      field: ""
     },
   ]);
 
@@ -46,12 +46,12 @@ const Experiences = () => {
       {
         id: 1,
         startDate: todayDate,
-        endDate: todayDate,
+        gradDate: todayDate,
         isChecked: false,
-        country: "",
-        title: "",
-        company: "",
-        city: "",
+        field: "",
+        name: "",
+        location: "",
+        degree: ""
       },
     ]);
   }, []);
@@ -62,12 +62,12 @@ const Experiences = () => {
       {
         id: prevForms.length + 1,
         startDate: todayDate,
-        endDate: todayDate,
+        gradDate: todayDate,
         isChecked: false,
-        country: "",
-        title: "",
-        company: "",
-        city: "",
+        field: '',
+        name: "",
+        location: "",
+        degree: ""
       },
     ]);
   };
@@ -75,11 +75,11 @@ const Experiences = () => {
   const handleCheckboxChange = (index: number) => (e: CheckboxChangeEvent) => {
     const newForms = [...forms];
     newForms[index].isChecked = e.target.checked;
-    if (newForms[index].isChecked === true) {
-      newForms[index].endDate = "Present";
-    } else {
-      newForms[index].endDate = todayDate;
-    }
+    if(newForms[index].isChecked === true){
+      newForms[index].gradDate = 'Present';
+    }else{
+      newForms[index].gradDate = todayDate;
+    }  
     setForms(newForms);
   };
 
@@ -89,18 +89,17 @@ const Experiences = () => {
       if (field === "id" || field === "isChecked") return;
       newForms[index][field] = e.target.value;
       setForms(newForms);
-      console.log(newForms);
-      
     };
 
   return (
     <>
       <div className="mb-10 flex flex-col gap-y-1 lg:mb-14">
         <h1 className="text-secondary text-lg font-semibold lg:text-5xl">
-          Now, Let’s include your experience
+          Discuss your education history
         </h1>
         <p className="text-xs text-secondary-100 lg:text-sm">
-          Enter details about your most recent job.
+          Tell us about the institutions, colleges, or training courses you have
+          taken or been involved in.
         </p>
       </div>
 
@@ -111,36 +110,36 @@ const Experiences = () => {
             className="flex flex-col flex-shrink-0 gap-y-6 lg:grid lg:w-[70%] lg:grid-cols-2 lg:gap-x-8"
           >
             <CustomInput
-              id={`title-${form.id}`}
-              type={"text"}
-              label={"Job Title"}
-              placeholder={"Product Designer"}
-              value={form.title}
-              onChange={handleInputChange(index, "title")}
+              id={`name-${form.id}`}
+              type="text"
+              label="Name of your School"
+              placeholder="Harvard University"
+              value={form.name}
+              onChange={handleInputChange(index, "name")}
             />
             <CustomInput
-              id={`company-${form.id}`}
+              id={`location-${form.id}`}
               type="text"
-              label={"Company"}
-              placeholder={"Microsoft"}
-              value={form.company}
-              onChange={handleInputChange(index, "company")}
+              label="School Location"
+              placeholder="Boston, USA"
+              value={form.location}
+              onChange={handleInputChange(index, "location")}
             />
             <CustomInput
-              id={`city-${form.id}`}
+              id={`degree-${form.id}`}
               type="text"
-              label={"City"}
-              placeholder={"London"}
-              value={form.city}
-              onChange={handleInputChange(index, "city")}
+              label="Type of Degree"
+              placeholder="M.D."
+              value={form.degree}
+              onChange={handleInputChange(index, "degree")}
             />
             <CustomInput
-              id={`country-${form.id}`}
+              id={`field-${form.id}`}
               type="text"
-              label={"Country"}
-              placeholder={"United Kingdom"}
-              value={form.country}
-              onChange={handleInputChange(index, "country")}
+              label="Field of Study"
+              placeholder="Surgery"
+              value={form.field}
+              onChange={handleInputChange(index, "field")}
             />
             <CustomInput
               id={`start-${form.id}`}
@@ -154,8 +153,8 @@ const Experiences = () => {
               type="date"
               label="Graduation Date"
               isDisabled={form.isChecked}
-              value={form.isChecked === true ? "" : form.endDate}
-              onChange={handleInputChange(index, "endDate")}
+              value={form.isChecked === true ? '' : form.gradDate}
+              onChange={handleInputChange(index, "gradDate")}
             />
             <div className="flex items-center gap-x-4">
               <input
@@ -169,7 +168,7 @@ const Experiences = () => {
                 htmlFor={`checkbox-${form.id}`}
                 className="text-xs text-secondary-100 lg:text-sm"
               >
-                I currently work here
+                I’m still enrolled
               </label>
             </div>
           </form>
@@ -185,11 +184,11 @@ const Experiences = () => {
       >
         <Image src={plus} alt="add icon" />
         <span className="text-xs text-secondary-100 lg:text-sm">
-          Add another experience
+          Add another institution or course
         </span>
       </button>
     </>
   );
 };
 
-export default Experiences;
+export default Education;
