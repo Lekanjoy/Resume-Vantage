@@ -12,7 +12,7 @@ const sectionData = [
   <CreateOrUpload key="create-or-upload" />,
   <UserHeader key="user-header" />,
   <Experiences key="experiences"/>,
-  <Education key="education"/>
+  <Education key="education"/>,
 ];
 
 const Dashboard = () => {

@@ -46,6 +46,7 @@ const Sidebar = ({ steps, isToggle, setIsToggle }: sidebarProps) => {
             title={step.title}
             checked={step.checked}
             isToggle={isToggle}
+            className={index === steps.length -1 ? 'after:hidden' : ''}
           />
         ))}
       </ul>
