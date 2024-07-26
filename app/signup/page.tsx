@@ -10,13 +10,61 @@ import { AnimatePresence } from "framer-motion";
 import SignUpStatus from "@/components/statusPages/SignUpStatus";
 import { FormEvent, useState } from "react";
 import { statusState } from "../reset-password/page";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+
+// Load baseUrl from .env file
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL as string;
 
 const SignUp = () => {
-  const [status, setStatus] = useState<statusState>("pending");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [status, setStatus] = useState<statusState | null>(null);
 
-  const handleSignup = (e: FormEvent<HTMLFormElement>) => {
+  const router = useRouter();
+
+  const handleSignup = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setStatus("success");
+    setStatus("pending");
+    try {
+      const data = await axios({
+        method: "post",
+        url: `${baseUrl}/auth/register`,
+        data: {
+          name: `${firstName} ${lastName}`,
+          firstName,
+          lastName,
+          email,
+          password,
+        },
+      });
+      if (data.status !== 201) {
+        setStatus("failed");
+        throw new Error();
+      }
+      setStatus("success");
+      console.log(data);
+    } catch (error) {
+      setStatus("failed");
+      console.error(error);
+    }
+  };
+
+  const handleGoogleSignup = async () => {
+    setStatus("pending");
+    try {
+      const res = await axios({
+        method: "get",
+        url: `${baseUrl}/auth/google/onboard`,
+      });
+      // setStatus("success");
+      router.push(res.data.payload.redirect);
+    } catch (error) {
+      console.error(error);
+      setStatus("failed");
+    }
   };
 
   return (
@@ -48,24 +96,32 @@ const SignUp = () => {
           <CustomInput
             id={"firstName"}
             type={"text"}
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
             label={"First Name"}
             placeholder={"Enter your first name"}
           />
           <CustomInput
             id={"lastName"}
             type={"text"}
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
             label={"Last Name"}
             placeholder={"Enter your last name"}
           />
           <CustomInput
             id={"email"}
             type={"email"}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             label={"Email Address"}
             placeholder={"Enter a valid email address"}
           />
           <CustomInput
             id={"password"}
             type={"password"}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             label={"Password"}
             placeholder={"Enter your password"}
           />
@@ -90,13 +146,17 @@ const SignUp = () => {
           <p className="text-[#4F545C] text-xs font-semibold lg:text-sm">
             Use any of your social accounts to continue
           </p>
-          <button className="flex items-center justify-center gap-x-3 rounded-md bg-white p-4 border bordee-[#B9BBBE] w-full ease-in-out duration-300 focus:bg-black/10">
+          <button
+            onClick={handleGoogleSignup}
+            disabled={status === "pending"}
+            className="flex items-center justify-center gap-x-3 rounded-md bg-white p-4 border bordee-[#B9BBBE] w-full ease-in-out duration-300 hover:bg-black/10 disabled:bg-black/20"
+          >
             <Image src={google} alt="google" className="w-8 h-8" />
             <span className="font-medium text-secondary">
               Continue with Google
             </span>
           </button>
-          <button className="flex items-center justify-center gap-x-3 rounded-md bg-white p-4 border bordee-[#B9BBBE] w-full ease-in-out duration-300 focus:bg-black/10">
+          <button className="flex items-center justify-center gap-x-3 rounded-md bg-white p-4 border bordee-[#B9BBBE] w-full ease-in-out duration-300 hover:bg-black/10 disabled:bg-black/20">
             <Image src={apple} alt="apple" className="w-8 h-8" />
             <span className="font-medium text-secondary">
               Continue with Apple
@@ -106,7 +166,7 @@ const SignUp = () => {
       </div>
 
       <AnimatePresence>
-        {status === "success" && <SignUpStatus />}
+        {status === "success" && <SignUpStatus email={email} />}
       </AnimatePresence>
     </section>
   );

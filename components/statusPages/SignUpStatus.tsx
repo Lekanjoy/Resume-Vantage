@@ -2,7 +2,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import illust from "@/public/assets/auth/Dayflow Sitting.png";
 
-const SignUpStatus = () => {
+const SignUpStatus = ({email}: {email: string;}) => {
   const variants = {
     hidden: { y: "-100%" },
     visible: { y: 0 },
@@ -30,7 +30,7 @@ const SignUpStatus = () => {
           </h1>
           <p className="text-xs text-secondary lg:text-base">
             We just sent over a confirmation link to{" "}
-            <span className="text-primary">flourishralph@gmail.com.</span> Click
+            <span className="text-primary">{email}.</span> Click
             the link to confirm your email and log in. Be sure to check your{" "}
             <span className="text-primary">spam/junk</span> folder if you didn’t
             get an email.
