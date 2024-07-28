@@ -30,7 +30,7 @@ const Education = () => {
       name: "",
       location: "",
       degree: "",
-      field: ""
+      field: "",
     },
   ]);
 
@@ -51,7 +51,7 @@ const Education = () => {
         field: "",
         name: "",
         location: "",
-        degree: ""
+        degree: "",
       },
     ]);
   }, []);
@@ -64,10 +64,10 @@ const Education = () => {
         startDate: todayDate,
         gradDate: todayDate,
         isChecked: false,
-        field: '',
+        field: "",
         name: "",
         location: "",
-        degree: ""
+        degree: "",
       },
     ]);
   };
@@ -75,11 +75,11 @@ const Education = () => {
   const handleCheckboxChange = (index: number) => (e: CheckboxChangeEvent) => {
     const newForms = [...forms];
     newForms[index].isChecked = e.target.checked;
-    if(newForms[index].isChecked === true){
-      newForms[index].gradDate = 'Present';
-    }else{
+    if (newForms[index].isChecked === true) {
+      newForms[index].gradDate = "Present";
+    } else {
       newForms[index].gradDate = todayDate;
-    }  
+    }
     setForms(newForms);
   };
 
@@ -94,10 +94,10 @@ const Education = () => {
   return (
     <>
       <div className="mb-10 flex flex-col gap-y-1 lg:mb-14">
-        <h1 className="text-secondary text-lg font-semibold lg:text-5xl">
+        <h1 className="text-secondaryColor text-lg font-semibold lg:text-5xl">
           Discuss your education history
         </h1>
-        <p className="text-xs text-secondary-100 lg:text-sm">
+        <p className="text-xs text-secondaryColor-100 lg:text-sm">
           Tell us about the institutions, colleges, or training courses you have
           taken or been involved in.
         </p>
@@ -153,7 +153,7 @@ const Education = () => {
               type="date"
               label="Graduation Date"
               isDisabled={form.isChecked}
-              value={form.isChecked === true ? '' : form.gradDate}
+              value={form.isChecked === true ? "" : form.gradDate}
               onChange={handleInputChange(index, "gradDate")}
             />
             <div className="flex items-center gap-x-4">
@@ -166,7 +166,7 @@ const Education = () => {
               />
               <label
                 htmlFor={`checkbox-${form.id}`}
-                className="text-xs text-secondary-100 lg:text-sm"
+                className="text-xs text-secondaryColor-100 lg:text-sm"
               >
                 I’m still enrolled
               </label>
@@ -174,7 +174,7 @@ const Education = () => {
           </form>
         ))}
 
-        <div className="w-full border border-primary rounded-md lg:absolute lg:-right-10 lg:top-0 lg:w-[30%]">
+        <div className="w-full border border-primaryColor rounded-md lg:absolute lg:-right-10 lg:top-0 lg:w-[30%]">
           <Image src={template} alt="templates" className="w-full h-full" />
         </div>
       </div>
@@ -183,7 +183,7 @@ const Education = () => {
         className="mt-12 w-full flex items-center justify-center border border-[#B9BBBE] rounded-md py-4 gap-x-3 lg:max-w-[300px]"
       >
         <Image src={plus} alt="add icon" />
-        <span className="text-xs text-secondary-100 lg:text-sm">
+        <span className="text-xs text-secondaryColor-100 lg:text-sm">
           Add another institution or course
         </span>
       </button>

@@ -11,19 +11,19 @@ const MobileNav = () => {
             key={item.name}
             href={item.href}
             className="text-sm 
-                text-secondary hover:text-primary-200"
+                text-secondaryColor hover:text-primaryColor-200"
           >
             {item.name}
           </Link>
         ))}
       </div>
       <div className="flex flex-col gap-y-4">
-        <Link href="/login" className="text-primary text-sm font-medium">
+        <Link href="/auth/login" className="text-primaryColor text-sm font-medium">
           Log in
         </Link>
         <Button
           text="Get Started"
-          bgColor={"bg-primary"}
+          bgColor={"bg-primaryColor"}
           textColor={"text-white"}
           stroke={"#FFFFFF"}
         />

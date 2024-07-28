@@ -13,7 +13,7 @@ const Button = ({
   stroke: string;
 }) => (
   <Link
-    href="/signup"
+    href="auth/sign-up"
     className={`whitespace-nowrap w-fit flex items-center gap-x-2 py-3 px-5 ${bgColor} rounded-md ${textColor} ease-in-out duration-300 lg:hover:opacity-80`}
   >
     <span

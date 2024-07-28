@@ -6,10 +6,10 @@ const UserHeader = () => {
   return (
     <>
       <div className="mb-10 flex flex-col gap-y-1 lg:mb-14">
-        <h1 className="text-secondary text-lg font-semibold lg:text-5xl">
+        <h1 className="text-secondaryColor text-lg font-semibold lg:text-5xl">
           First, work on your header
         </h1>
-        <p className="text-xs text-secondary-100 lg:text-sm">
+        <p className="text-xs text-secondaryColor-100 lg:text-sm">
           Enter your personal details and contact information.
         </p>
       </div>
@@ -56,7 +56,7 @@ const UserHeader = () => {
             placeholder={"Floralph@gmail.com"}
           />
         </form>
-        <div className="w-full border border-primary rounded-md lg:w-[30%]">
+        <div className="w-full border border-primaryColor rounded-md lg:w-[30%]">
           <Image src={template} alt="templates" className="w-full h-full" />
         </div>
       </div>

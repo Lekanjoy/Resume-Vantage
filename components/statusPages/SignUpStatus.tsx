@@ -2,7 +2,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import illust from "@/public/assets/auth/Dayflow Sitting.png";
 
-const SignUpStatus = ({email}: {email: string;}) => {
+const SignUpStatus = ({ email }: { email: string }) => {
   const variants = {
     hidden: { y: "-100%" },
     visible: { y: 0 },
@@ -24,21 +24,21 @@ const SignUpStatus = ({email}: {email: string;}) => {
             className="w-full h-full"
           />
         </div>
-        <div className="w-full flex flex-col items-center text-center text-secondary gap-x-2">
+        <div className="w-full flex flex-col items-center text-center text-secondaryColor gap-x-2">
           <h1 className="text-lg font-semibold lg:text-5xl">
             You’ve Got Mail!
           </h1>
-          <p className="text-xs text-secondary lg:text-base">
+          <p className="text-xs text-secondaryColor lg:text-base">
             We just sent over a confirmation link to{" "}
-            <span className="text-primary">{email}.</span> Click
-            the link to confirm your email and log in. Be sure to check your{" "}
-            <span className="text-primary">spam/junk</span> folder if you didn’t
-            get an email.
+            <span className="text-primaryColor">{email}.</span> Click the link
+            to confirm your email and log in. Be sure to check your{" "}
+            <span className="text-primaryColor">spam/junk</span> folder if you
+            didn’t get an email.
           </p>
         </div>
-        <p className="text-xs text-secondary lg:text-base">
+        <p className="text-xs text-secondaryColor lg:text-base">
           Didn’t receive a link?{" "}
-          <span className="text-primary">Contact support</span>
+          <span className="text-primaryColor">Contact support</span>
         </p>
       </div>
     </motion.div>

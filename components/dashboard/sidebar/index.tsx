@@ -28,8 +28,8 @@ const Sidebar = ({ steps, isToggle, setIsToggle }: sidebarProps) => {
       )}
     >
       <div className="">
-        <div className=" text-lg font-bold text-primary-100  absolute top-10 left-[90px] lg:text-[#FAFAFA] lg:text-xl lg:relative lg:top-0 lg:left-0">
-          <span className="text-primary lg:text-[#D8CFFC]">Resume</span>
+        <div className=" text-lg font-bold text-primaryColor-100  absolute top-10 left-[90px] lg:text-[#FAFAFA] lg:text-xl lg:relative lg:top-0 lg:left-0">
+          <span className="text-primaryColor lg:text-[#D8CFFC]">Resume</span>
           Vantage.
         </div>
         <Image
@@ -46,7 +46,7 @@ const Sidebar = ({ steps, isToggle, setIsToggle }: sidebarProps) => {
             title={step.title}
             checked={step.checked}
             isToggle={isToggle}
-            className={index === steps.length -1 ? 'after:hidden' : ''}
+            className={index === steps.length - 1 ? "after:hidden" : ""}
           />
         ))}
       </ul>

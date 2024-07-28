@@ -90,16 +90,15 @@ const Experiences = () => {
       newForms[index][field] = e.target.value;
       setForms(newForms);
       console.log(newForms);
-      
     };
 
   return (
     <>
       <div className="mb-10 flex flex-col gap-y-1 lg:mb-14">
-        <h1 className="text-secondary text-lg font-semibold lg:text-5xl">
+        <h1 className="text-secondaryColor text-lg font-semibold lg:text-5xl">
           Now, Let’s include your experience
         </h1>
-        <p className="text-xs text-secondary-100 lg:text-sm">
+        <p className="text-xs text-secondaryColor-100 lg:text-sm">
           Enter details about your most recent job.
         </p>
       </div>
@@ -167,7 +166,7 @@ const Experiences = () => {
               />
               <label
                 htmlFor={`checkbox-${form.id}`}
-                className="text-xs text-secondary-100 lg:text-sm"
+                className="text-xs text-secondaryColor-100 lg:text-sm"
               >
                 I currently work here
               </label>
@@ -175,7 +174,7 @@ const Experiences = () => {
           </form>
         ))}
 
-        <div className="w-full border border-primary rounded-md lg:absolute lg:-right-10 lg:top-0 lg:w-[30%]">
+        <div className="w-full border border-primaryColor rounded-md lg:absolute lg:-right-10 lg:top-0 lg:w-[30%]">
           <Image src={template} alt="templates" className="w-full h-full" />
         </div>
       </div>
@@ -184,7 +183,7 @@ const Experiences = () => {
         className="mt-12 w-full flex items-center justify-center border border-[#B9BBBE] rounded-md py-4 gap-x-3 lg:max-w-[300px]"
       >
         <Image src={plus} alt="add icon" />
-        <span className="text-xs text-secondary-100 lg:text-sm">
+        <span className="text-xs text-secondaryColor-100 lg:text-sm">
           Add another experience
         </span>
       </button>

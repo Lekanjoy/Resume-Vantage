@@ -30,11 +30,11 @@ const ResetPassword = () => {
         </Link>
       </div>
       <div className="w-full h-[calc(100dvh-280px)] flex flex-col justify-center items-center lg:mx-auto lg:max-w-[800px] lg:px-[100px]">
-        <div className="w-full flex flex-col gap-y-1 items-center text-secondary mb-6">
+        <div className="w-full flex flex-col gap-y-1 items-center text-secondaryColor mb-6">
           <h1 className="text-lg font-semibold lg:text-5xl">Reset Password?</h1>
-          <p className="text-xs text-[#392467] text-center lg:w-2/4 lg:text-secondary lg:text-base">
+          <p className="text-xs text-[#392467] text-center lg:w-2/4 lg:text-secondaryColor lg:text-base">
             Enter in a new password for{" "}
-            <span className="text-primary">{emailValue}</span>
+            <span className="text-primaryColor">{emailValue}</span>
           </p>
         </div>
 
@@ -53,7 +53,7 @@ const ResetPassword = () => {
           />
           <button
             type="submit"
-            className="bg-primary font-semibold p-4 text-white rounded-md ease-in-out duration-300 hover:bg-primary-100"
+            className="bg-primaryColor font-semibold p-4 text-white rounded-md ease-in-out duration-300 hover:bg-primaryColor-100"
           >
             Reset password
           </button>

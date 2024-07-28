@@ -7,7 +7,7 @@ const Card = () => {
       <div className="flex gap-x-4 items-center lg:gap-x-6">
         <Image src={avatar} alt={"avatar"} width={55} height={55} />
         <div className="flex flex-col gap-y-[2px]">
-          <p className="text-sm font-bold text-secondary lg:text-base">
+          <p className="text-sm font-bold text-secondaryColor lg:text-base">
             Flourish Ralph
           </p>
           <p className="text-[#4F545C] text-xs lg:text-sm">

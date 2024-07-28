@@ -10,17 +10,17 @@ const Steps = () => {
   return (
     <section className="flex flex-col gap-y-12 items-center justify-center mb-[72px] px-6 lg:px-20 lg:mb-24 xl:px-[80px] 2xl:px-[120px] ">
       <div className="flex flex-col items-center justify-center text-center gap-y-6 lg:max-w-[750px]">
-        <h4 className="text-xl text-secondary font-bold leading-[24px] lg:text-5xl lg:max-w-[637px]">
+        <h4 className="text-xl text-secondaryColor font-bold leading-[24px] lg:text-5xl lg:max-w-[637px]">
           Create The Perfect Resume in 3 Steps
         </h4>
-        <p className="text-secondary-100 font-medium text-sm lg:text-xl lg:font-semibold ">
+        <p className="text-secondaryColor-100 font-medium text-sm lg:text-xl lg:font-semibold ">
           Crafting perfection made simple. Choose, customize, optimize - your
           journey to creating an impressive resume in just three seamless steps,
           now enhanced by AI.
         </p>
         <Button
           text="Create My Resume"
-          bgColor={"bg-primary"}
+          bgColor={"bg-primaryColor"}
           textColor={"text-white"}
           stroke={"#FFFFFF"}
         />
@@ -36,7 +36,7 @@ const Steps = () => {
               <p className="text-[#9747FF] text-4xl lg:text-8xl 2xl:text-9xl">
                 01
               </p>
-              <p className="text-xs text-secondary-100 whitespace-nowrap lg:text-2xl 2xl:text-3xl">
+              <p className="text-xs text-secondaryColor-100 whitespace-nowrap lg:text-2xl 2xl:text-3xl">
                 Sign up and pick <br /> a template
               </p>
             </div>
@@ -60,7 +60,7 @@ const Steps = () => {
               <p className="text-[#9747FF] text-4xl lg:text-8xl 2xl:text-9xl">
                 02
               </p>
-              <p className="text-xs text-secondary-100 whitespace-nowrap lg:text-2xl 2xl:text-3xl">
+              <p className="text-xs text-secondaryColor-100 whitespace-nowrap lg:text-2xl 2xl:text-3xl">
                 Customize your resume <br /> using AI
               </p>
             </div>
@@ -83,7 +83,7 @@ const Steps = () => {
             <p className="text-[#9747FF] text-4xl lg:text-8xl 2xl:text-9xl">
               03
             </p>
-            <p className="text-xs text-secondary-100 lg:text-2xl 2xl:text-3xl">
+            <p className="text-xs text-secondaryColor-100 lg:text-2xl 2xl:text-3xl">
               Download in your <br /> desired format!
             </p>
           </div>

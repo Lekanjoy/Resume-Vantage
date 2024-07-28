@@ -24,13 +24,13 @@ const ResetStatus = () => {
           className="w-full h-full"
         />
       </div>
-      <div className="w-full flex flex-col items-center text-secondary gap-x-2">
+      <div className="w-full flex flex-col items-center text-secondaryColor gap-x-2">
         <h1 className="text-lg font-semibold lg:text-5xl">
           Your Password Has Been Successfully Reset!
         </h1>
-        <p className="text-xs text-secondary lg:text-base">
+        <p className="text-xs text-secondaryColor lg:text-base">
           Now, you can proceed to{" "}
-          <Link href="/login" className="text-primary">
+          <Link href="/login" className="text-primaryColor">
             log in
           </Link>{" "}
           with your new password

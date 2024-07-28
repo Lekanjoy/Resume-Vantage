@@ -10,13 +10,13 @@ const Perks = () => {
   return (
     <section className="w-full mt-12 flex flex-col justify-center items-center gap-y-6 px-6  lg:px-20 lg:gap-y-8 xl:px-[80px] 2xl:px-[120px] 2xl:gap-y-12">
       <div className="flex flex-col justify-center items-center text-center gap-y-6 lg:gap-y-8 2xl:gap-y-12">
-        <h2 className="text-2xl text-secondary font-bold leading-[24px] lg:text-6xl  lg:leading-[60px] 2xl:text-8xl 2xl:leading-[96px]">
+        <h2 className="text-2xl text-secondaryColor font-bold leading-[24px] lg:text-6xl  lg:leading-[60px] 2xl:text-8xl 2xl:leading-[96px]">
           Why use the
-          <span className="font-semibold text-primary-100"> Resume</span>
-          <span className="text-primary">Vantage. </span>
+          <span className="font-semibold text-primaryColor-100"> Resume</span>
+          <span className="text-primaryColor">Vantage. </span>
           Resume Builder?
         </h2>
-        <p className="text-secondary-100 font-medium lg:text-xl lg:font-semibold lg:max-w-[700px]">
+        <p className="text-secondaryColor-100 font-medium lg:text-xl lg:font-semibold lg:max-w-[700px]">
           We have a wide range of unique features readily available to help you
           stand out in the competitive job market and land your dream job.
         </p>

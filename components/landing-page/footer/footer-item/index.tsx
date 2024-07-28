@@ -32,7 +32,7 @@ const FooterItem = ({ foot }: footerProps) => {
   return (
     <ul className="flex flex-col gap-y-3 ease-in-out duration-300">
       <li className="flex items-center justify-center gap-x-1 lg:justify-start">
-        <p className="text-secondary lg:text-left">{foot.title}</p>
+        <p className="text-secondaryColor lg:text-left">{foot.title}</p>
         <Image
           src={arrowDown}
           alt="arrow down"
@@ -79,4 +79,3 @@ const FooterItem = ({ foot }: footerProps) => {
 };
 
 export default FooterItem;
-

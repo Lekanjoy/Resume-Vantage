@@ -21,8 +21,8 @@ const Header = () => {
   return (
     <header className="fixed z-10 w-full left-0 top-0 px-6 py-4 bg-white shadow flex justify-between items-center cursor-pointer  lg:px-20  xl:px-[80px] 2xl:px-[120px]">
       <Link href={"/"} className="relative text-sm z-10 md:text-2xl">
-        <span className="font-medium text-primary-100">Resume</span>
-        <span className="font-bold text-primary">Vantage.</span>
+        <span className="font-medium text-primaryColor-100">Resume</span>
+        <span className="font-bold text-primaryColor">Vantage.</span>
       </Link>
 
       <div className="flex items-center gap-x-6 lg:hidden">
@@ -40,7 +40,7 @@ const Header = () => {
           <Link
             key={item.name}
             href={item.href}
-            className="text-sm text-secondary hover:text-secondary-100 xl:text-base"
+            className="text-sm text-secondaryColor hover:text-secondaryColor-100 xl:text-base"
           >
             {item.name}
           </Link>
@@ -48,14 +48,14 @@ const Header = () => {
       </nav>
       <div className="hidden gap-x-9 items-center lg:flex lg:flex-row">
         <Link
-          href="/login"
-          className="text-primary text-sm font-medium xl:text-base"
+          href="auth/login"
+          className="text-primaryColor text-sm font-medium xl:text-base"
         >
           Log in
         </Link>
         <Button
           text="Get Started"
-          bgColor={"bg-primary"}
+          bgColor={"bg-primaryColor"}
           textColor={"text-white"}
           stroke={"#FFFFFF"}
         />

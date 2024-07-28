@@ -8,7 +8,7 @@ const CreateOrUpload = () => {
 
   return (
     <>
-      <h1 className="text-secondary text-lg font-semibold mb-10 lg:mb-14 lg:text-5xl">
+      <h1 className="text-secondaryColor text-lg font-semibold mb-10 lg:mb-14 lg:text-5xl">
         How do you want to create your resume?
       </h1>
       <div className=" flex flex-col gap-y-12 lg:flex-row lg:justify-between lg:gap-x-10 2xl:gap-x-16">

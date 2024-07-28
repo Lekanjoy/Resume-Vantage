@@ -10,7 +10,7 @@ const Button = ({ currentIndex, handlePrev, handleNext }: ButtonProps) => {
       {currentIndex > 0 && (
         <button
           onClick={handlePrev}
-          className="bg-[#FAFAFA] text-primary border border-primary p-4 rounded-md w-full ease-in-out duration-300 lg:max-w-[330px]  hover:shadow-md"
+          className="bg-[#FAFAFA] text-primaryColor border border-primaryColor p-4 rounded-md w-full ease-in-out duration-300 lg:max-w-[330px]  hover:shadow-md"
         >
           Back
         </button>
@@ -18,7 +18,7 @@ const Button = ({ currentIndex, handlePrev, handleNext }: ButtonProps) => {
 
       <button
         onClick={handleNext}
-        className="bg-primary text-white p-4 rounded-md w-full ease-in-out duration-300  lg:max-w-[330px] hover:bg-primary-100"
+        className="bg-primaryColor text-white p-4 rounded-md w-full ease-in-out duration-300  lg:max-w-[330px] hover:bg-primaryColor-100"
       >
         Continue
       </button>

@@ -24,11 +24,11 @@ const CustomInput = ({
   return (
     <div
       className={twMerge(
-        "relative text-secondary-100 text-xs flex flex-col gap-y-1 lg:text-sm",
+        "relative text-secondaryColor-100 text-xs flex flex-col gap-y-1 lg:text-sm",
         isDisabled && "opacity-50"
       )}
     >
-      <label htmlFor={id} className="text-secondary-100 ">
+      <label htmlFor={id} className="text-secondaryColor-100 ">
         {label}
       </label>
       <input
