@@ -23,7 +23,6 @@ const Login = () => {
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    try {
       const res = await loginUser(email, password);
       if (res.success) {
         setLoading(false);
@@ -33,14 +32,10 @@ const Login = () => {
         setLoading(false);
         toast({
           variant: "destructive",
-          title: res.error,
-          description: "There was a problem with your login.",
+          title: "An error occurred",
+          description: res.error,
         });
       }
-    } catch (error) {
-      setLoading(false);
-      console.log(error);
-    }
   };
 
   return (

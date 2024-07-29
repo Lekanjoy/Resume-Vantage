@@ -9,14 +9,26 @@ import closeIcon from "@/public/assets/landing-page/closeIcon.svg";
 import MobileNav from "./mobile-nav";
 import Button from "../button";
 import { navItems } from "@/data";
+import { useAuthStatus } from "@/hooks/useAuthStatus";
+import { logOutUser } from "@/app/actions/auth";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
+  const router = useRouter();
   const [showNav, setShowNav] = useState(false);
+  const { isLoggedIn } = useAuthStatus();
 
   const variants = {
     hidden: { x: "100%" },
     visible: { x: 0 },
   };
+
+  async function logout() {
+    await logOutUser();
+    // Clear session
+    sessionStorage.removeItem("token");
+    router.push("/auth/login");
+  }
 
   return (
     <header className="fixed z-10 w-full left-0 top-0 px-6 py-4 bg-white shadow flex justify-between items-center cursor-pointer  lg:px-20  xl:px-[80px] 2xl:px-[120px]">
@@ -46,20 +58,29 @@ const Header = () => {
           </Link>
         ))}
       </nav>
-      <div className="hidden gap-x-9 items-center lg:flex lg:flex-row">
-        <Link
-          href="auth/login"
-          className="text-primaryColor text-sm font-medium xl:text-base"
+      {!isLoggedIn ? (
+        <div className="hidden gap-x-9 items-center lg:flex lg:flex-row">
+          <Link
+            href="auth/login"
+            className="text-primaryColor text-sm font-medium xl:text-base"
+          >
+            Log in
+          </Link>
+          <Button
+            text="Get Started"
+            bgColor={"bg-primaryColor"}
+            textColor={"text-white"}
+            stroke={"#FFFFFF"}
+          />
+        </div>
+      ) : (
+        <button
+          className="whitespace-nowrap w-fit flex items-center gap-x-2 py-3 px-5 text-white bg-primaryColor rounded-md text-xs font-semibold ease-in-out duration-300 sm:text-sm lg:text-base 2xl:text-lg  lg:hover:opacity-80"
+          onClick={logout}
         >
-          Log in
-        </Link>
-        <Button
-          text="Get Started"
-          bgColor={"bg-primaryColor"}
-          textColor={"text-white"}
-          stroke={"#FFFFFF"}
-        />
-      </div>
+          Logout
+        </button>
+      )}
 
       {/* Mobile Nav and UI */}
       <AnimatePresence>

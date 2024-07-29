@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // Load baseUrl from .env file
-const baseURL = process.env.BASE_URL as string;
+const baseURL = process.env.NEXT_PUBLIC_BASE_URL as string;
 
 const axiosInstance = axios.create({
   baseURL,

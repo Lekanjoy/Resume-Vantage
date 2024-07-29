@@ -15,9 +15,10 @@ import SignUpStatus from "@/components/statusPages/SignUpStatus";
 import spinner from "@/public/assets/auth/spinner.svg";
 import spinnerBlue from "@/public/assets/auth/spinnerBlue.svg";
 import axios from "axios";
+import { signUpUser } from "@/app/actions/auth";
 
 // Load baseUrl from .env file
-const baseURL = process.env.BASE_URL as string;
+const baseURL = process.env.NEXT_PUBLIC_BASE_URL as string;
 
 const SignUp = () => {
   const [firstName, setFirstName] = useState("");
@@ -32,27 +33,16 @@ const SignUp = () => {
   const handleSignup = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus("pending");
-    try {
-      const res = await axios.post(`${baseURL}/auth/register`, {
-        name: `${firstName} ${lastName}`,
-        firstName,
-        lastName,
-        email,
-        password,
-      });
-      if (res.status !== 201) {
-        setStatus("failed");
-        throw new Error();
-      }
+    const res = await signUpUser(firstName, lastName, email, password);
+    if (res.success) {
       setStatus("success");
-    } catch (error) {
+    } else {
       setStatus("failed");
       toast({
         variant: "destructive",
-        title: "Uh oh! Something went wrong.",
-        description: "There was a problem with your registration.",
+        title: "An error occurred",
+        description: res.error,
       });
-      console.error(error);
     }
   };
 
