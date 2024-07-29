@@ -2,48 +2,44 @@
 import { FormEvent, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
+import { loginUser } from "@/app/actions/auth";
 import BrandName from "@/components/brand-name";
 import CustomInput from "@/components/input";
 import logo from "@/public/assets/auth/logo.svg";
 import google from "@/public/assets/auth/googleIcon.svg";
 import apple from "@/public/assets/auth/appleIcon.svg";
 import spinner from "@/public/assets/auth/spinner.svg";
-import { useAuth } from "@/hooks/useAuth";
-import axiosInstance from "@/hooks/useAxios";
 
 const Login = () => {
+  const router = useRouter();
   const { toast } = useToast();
-  const { login } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await axiosInstance.post("/auth/login", {
-        email,
-        password,
-      });
-      if (res.status !== 200) {
+      const res = await loginUser(email, password);
+      if (res.success) {
         setLoading(false);
-        throw new Error();
+        sessionStorage.setItem("token", JSON.stringify(res.data.token));
+        router.push("/dashboard");
+      } else {
+        setLoading(false);
+        toast({
+          variant: "destructive",
+          title: res.error,
+          description: "There was a problem with your login.",
+        });
       }
-      setLoading(false);
-      await login(res.data.payload.token);
-      console.log(res);
     } catch (error) {
       setLoading(false);
-      toast({
-        variant: "destructive",
-        title: "Uh oh! Something went wrong.",
-        description: "There was a problem with your login.",
-      });
-      console.error(error);
+      console.log(error);
     }
   };
 

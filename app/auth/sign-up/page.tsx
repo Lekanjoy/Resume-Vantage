@@ -14,7 +14,10 @@ import apple from "@/public/assets/auth/appleIcon.svg";
 import SignUpStatus from "@/components/statusPages/SignUpStatus";
 import spinner from "@/public/assets/auth/spinner.svg";
 import spinnerBlue from "@/public/assets/auth/spinnerBlue.svg";
-import axiosInstance from "@/hooks/useAxios";
+import axios from "axios";
+
+// Load baseUrl from .env file
+const baseURL = process.env.NEXT_PUBLIC_BASE_URL as string;
 
 const SignUp = () => {
   const [firstName, setFirstName] = useState("");
@@ -30,7 +33,7 @@ const SignUp = () => {
     e.preventDefault();
     setStatus("pending");
     try {
-      const res = await axiosInstance.post("/auth/register", {
+      const res = await axios.post(`${baseURL}/auth/register`, {
         name: `${firstName} ${lastName}`,
         firstName,
         lastName,
@@ -56,7 +59,7 @@ const SignUp = () => {
   const handleGoogleAuth = async () => {
     setStatus("pending");
     try {
-      const res = await axiosInstance.get(`/auth/google/onboard`);
+      const res = await axios.get(`${baseURL}/auth/google/onboard`);
       setStatus(null);
       router.push(res.data.payload.redirect);
     } catch (error) {
