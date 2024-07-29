@@ -4,7 +4,7 @@ import { cookies } from 'next/headers'
 
 export async function loginUser(email: string, password: string) {
   try {
-    const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/login`, {
+    const res = await axios.post(`${process.env.BASE_URL}/auth/login`, {
      email, password }
     )
 

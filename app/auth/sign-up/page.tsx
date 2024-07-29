@@ -17,7 +17,7 @@ import spinnerBlue from "@/public/assets/auth/spinnerBlue.svg";
 import axios from "axios";
 
 // Load baseUrl from .env file
-const baseURL = process.env.NEXT_PUBLIC_BASE_URL as string;
+const baseURL = process.env.BASE_URL as string;
 
 const SignUp = () => {
   const [firstName, setFirstName] = useState("");
