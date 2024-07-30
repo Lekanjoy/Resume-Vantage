@@ -123,7 +123,7 @@ const SignUp = () => {
           />
           <button
             type="submit"
-            className="flex  justify-center items-center gap-x-2 bg-primaryColor font-semibold p-4 text-white rounded-md ease-in-out duration-300 hover:bg-primaryColor-100"
+            className="flex  justify-center items-center gap-x-2 bg-primaryColor font-semibold p-4 text-white rounded-md ease-in-out duration-300 hover:bg-primaryColor-100 disabled:cursor-not-allowed"
             disabled={status === "pending"}
           >
             <span>Continue</span>
@@ -149,7 +149,7 @@ const SignUp = () => {
           <button
             onClick={handleGoogleAuth}
             disabled={status === "pending"}
-            className="flex items-center justify-center gap-x-3 rounded-md bg-white p-4 border border-[#B9BBBE] w-full ease-in-out duration-300 hover:bg-black/10"
+            className="flex items-center justify-center gap-x-3 rounded-md bg-white p-4 border border-[#B9BBBE] w-full ease-in-out duration-300 hover:bg-black/10 disabled:cursor-not-allowed"
           >
             <Image src={google} alt="google" className="w-8 h-8" />
             <span className="font-medium text-secondaryColor">
