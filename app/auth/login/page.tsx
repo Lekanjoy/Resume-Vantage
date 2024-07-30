@@ -2,6 +2,7 @@
 import { FormEvent, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
 import { loginUser } from "@/app/actions/auth";
@@ -11,6 +12,10 @@ import logo from "@/public/assets/auth/logo.svg";
 import google from "@/public/assets/auth/googleIcon.svg";
 import apple from "@/public/assets/auth/appleIcon.svg";
 import spinner from "@/public/assets/auth/spinner.svg";
+import spinnerBlue from "@/public/assets/auth/spinnerBlue.svg";
+
+// Load baseUrl from .env file
+const baseURL = process.env.NEXT_PUBLIC_BASE_URL as string;
 
 const Login = () => {
   const router = useRouter();
@@ -23,19 +28,36 @@ const Login = () => {
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-      const res = await loginUser(email, password);
-      if (res.success) {
-        setLoading(false);
-        sessionStorage.setItem("token", JSON.stringify(res.data.token));
-        router.push("/dashboard");
-      } else {
-        setLoading(false);
-        toast({
-          variant: "destructive",
-          title: "An error occurred",
-          description: res.error,
-        });
-      }
+    const res = await loginUser(email, password);
+    if (res.success) {
+      setLoading(false);
+      sessionStorage.setItem("token", JSON.stringify(res.data.token));
+      router.push("/dashboard");
+    } else {
+      setLoading(false);
+      toast({
+        variant: "destructive",
+        title: "An error occurred",
+        description: res.error,
+      });
+    }
+  };
+
+  const handleGoogleAuth = async () => {
+    setLoading(true);
+    try {
+      const res = await axios.get(`${baseURL}/auth/google/onboard`);
+      router.push(res.data.payload.redirect);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your Login.",
+      });
+    }
   };
 
   return (
@@ -112,13 +134,20 @@ const Login = () => {
           <p className="text-[#4F545C] text-xs font-semibold lg:text-sm">
             Use any of your social accounts to continue
           </p>
-          <button className="flex items-center justify-center gap-x-3 rounded-md bg-white p-4 border bordee-[#B9BBBE] w-full ease-in-out duration-300 focus:bg-black/10">
+          <button
+            onClick={handleGoogleAuth}
+            disabled={loading}
+            className="flex items-center justify-center gap-x-3 rounded-md bg-white p-4 border border-[#B9BBBE] w-full ease-in-out duration-300 hover:bg-black/10"
+          >
             <Image src={google} alt="google" className="w-8 h-8" />
             <span className="font-medium text-secondaryColor">
               Continue with Google
             </span>
+            {loading && (
+              <Image src={spinnerBlue} alt="spinner" className="w-4 h-4" />
+            )}
           </button>
-          <button className="flex items-center justify-center gap-x-3 rounded-md bg-white p-4 border bordee-[#B9BBBE] w-full ease-in-out duration-300 focus:bg-black/10">
+          <button className="flex items-center justify-center gap-x-3 rounded-md bg-white p-4 border border-[#B9BBBE] w-full ease-in-out duration-300 focus:bg-black/10">
             <Image src={apple} alt="apple" className="w-8 h-8" />
             <span className="font-medium text-secondaryColor">
               Continue with Apple

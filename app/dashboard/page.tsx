@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CreateOrUpload from "@/components/dashboard/add-upload-resume/CardWrapper";
 import Button from "@/components/dashboard/button";
 import UserHeader from "@/components/dashboard/header";
@@ -7,12 +7,14 @@ import Sidebar from "@/components/dashboard/sidebar";
 import { stepsData } from "@/data";
 import Experiences from "@/components/dashboard/experiences";
 import Education from "@/components/dashboard/education";
+import { useRouter, useSearchParams } from "next/navigation";
+import { setAuthToken } from "../actions/auth";
 
 const sectionData = [
   <CreateOrUpload key="create-or-upload" />,
   <UserHeader key="user-header" />,
-  <Experiences key="experiences"/>,
-  <Education key="education"/>,
+  <Experiences key="experiences" />,
+  <Education key="education" />,
 ];
 
 const Dashboard = () => {
@@ -20,6 +22,23 @@ const Dashboard = () => {
   const [isToggle, setIsToggle] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [section] = useState(sectionData);
+
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  useEffect(() => {
+    const payload = searchParams.get("payload");
+    if (payload) {
+      // Set the token in cookie
+      setAuthToken(payload);
+      // Set the token in sessionStorage
+      sessionStorage.setItem("token", payload);
+      // Remove the payload from the URL
+      requestAnimationFrame(() => {
+        router.replace("/dashboard");
+      });
+    }
+  }, [router, searchParams]);
 
   const handleNext = () => {
     if (currentIndex < steps.length - 1) {

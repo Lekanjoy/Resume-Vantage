@@ -99,6 +99,17 @@ export async function signUpUser(
     return { success: false, error: "Registration failed" };
   }
 }
+
+export async function setAuthToken(token: string) {
+    cookies().set('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV !== 'development',
+      maxAge: 3600, // 1 hour
+      sameSite: 'strict',
+      path: '/',
+    })
+  }
+
 export async function logOutUser() {
   // Clear the cookie
   cookies().delete("token");

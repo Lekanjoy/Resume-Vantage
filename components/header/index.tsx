@@ -75,7 +75,7 @@ const Header = () => {
         </div>
       ) : (
         <button
-          className="whitespace-nowrap w-fit flex items-center gap-x-2 py-3 px-5 text-white bg-primaryColor rounded-md text-xs font-semibold ease-in-out duration-300 sm:text-sm lg:text-base 2xl:text-lg  lg:hover:opacity-80"
+          className="whitespace-nowrap w-fit hidden items-center gap-x-2 py-3 px-5 text-white bg-primaryColor rounded-md text-xs font-semibold ease-in-out duration-300 sm:text-sm lg:text-base 2xl:text-lg lg:hover:opacity-80 lg:flex"
           onClick={logout}
         >
           Logout

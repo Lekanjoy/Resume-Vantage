@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { AnimatePresence } from "framer-motion";
 import { statusState } from "../reset-password/page";
+import { signUpUser } from "@/app/actions/auth";
 import { useToast } from "@/components/ui/use-toast";
 import BrandName from "@/components/brand-name";
 import CustomInput from "@/components/input";
@@ -15,7 +16,6 @@ import SignUpStatus from "@/components/statusPages/SignUpStatus";
 import spinner from "@/public/assets/auth/spinner.svg";
 import spinnerBlue from "@/public/assets/auth/spinnerBlue.svg";
 import axios from "axios";
-import { signUpUser } from "@/app/actions/auth";
 
 // Load baseUrl from .env file
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL as string;

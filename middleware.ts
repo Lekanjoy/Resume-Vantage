@@ -3,13 +3,18 @@ import type { NextRequest } from 'next/server'
 
 export function middleware(request: NextRequest) {
   const token = request.cookies.get('token')?.value
-  const { pathname } = request.nextUrl
+  const { pathname, searchParams } = request.nextUrl
 
   const publicPaths = ['^/auth/login$', '^/auth/sign-up$', '^/auth/forgot-password$']
   const isPublicPath = publicPaths.some(path => new RegExp(path).test(pathname))
 
-  // Always allow access to the home page
+  // Allow access to the home page
   if (pathname === '/') {
+    return NextResponse.next()
+  }
+
+  // Allow access to dashboard if there's a payload in the URL
+  if (pathname === '/dashboard' && searchParams.has('payload')) {
     return NextResponse.next()
   }
 
