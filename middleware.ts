@@ -5,7 +5,7 @@ export function middleware(request: NextRequest) {
   const token = request.cookies.get('token')?.value
   const { pathname, searchParams } = request.nextUrl
 
-  const publicPaths = ['^/auth/login$', '^/auth/sign-up$', '^/auth/forgot-password$']
+  const publicPaths = ['^/templates$','^/auth/login$', '^/auth/sign-up$', '^/auth/forgot-password$']
   const isPublicPath = publicPaths.some(path => new RegExp(path).test(pathname))
 
   // Allow access to the home page
