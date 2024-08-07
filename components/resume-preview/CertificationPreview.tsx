@@ -1,6 +1,6 @@
-import React from "react";
+import { resumeDataProps } from "@/types";
 
-const CertificationPreview = ({ resumeData }) => {
+const CertificationPreview = ({ resumeData }: resumeDataProps) => {
   return (
     <div className="details mt-5">
       <h3 className="text-xs font-bold mb-2 text-center text-blue-900 border-y border-blue-900">

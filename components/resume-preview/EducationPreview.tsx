@@ -1,6 +1,6 @@
-import React from "react";
+import { resumeDataProps } from "@/types";
 
-const EducationPreview = ({ resumeData }) => {
+const EducationPreview = ({ resumeData }: resumeDataProps) => {
   return (
     <div className="education mt-5">
       <h3 className="text-xs font-bold mb-2 text-center text-blue-900 border-y border-blue-900">

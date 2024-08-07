@@ -1,10 +1,10 @@
-import React from "react";
+import { resumeDataProps } from "@/types";
 
-const PreviewHeader = ({ resumeData }) => {
+const PreviewHeader = ({ resumeData }: resumeDataProps) => {
   return (
     <div className="mb-5 flex justify-between gap-x-2 w-full">
       <div className="w-3/5 text-blue-900">
-        <h1 className="font-semibold text-xs">{resumeData.name }</h1>
+        <h1 className="font-semibold text-xs">{resumeData.name}</h1>
         <p className="text-gray-500 text-xs font-normal mb-2">
           {resumeData.title}
         </p>
