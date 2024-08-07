@@ -1,8 +1,8 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import Image from "next/image";
 import CustomInput from "@/components/input";
-import template from "@/public/assets/landing-page/template-1.png";
 import plus from "@/public/assets/dashboard/plusIcon.svg";
+import ResumePreview from "@/components/resume-preview";
 
 interface FormState {
   id: number;
@@ -93,7 +93,7 @@ const Education = () => {
 
   return (
     <>
-      <div className="mb-10 flex flex-col gap-y-1 lg:mb-14">
+      <div className="mb-10 flex flex-col gap-y-1 lg:gap-y-3 lg:mb-14">
         <h1 className="text-secondaryColor text-lg font-semibold lg:text-5xl">
           Discuss your education history
         </h1>
@@ -175,7 +175,7 @@ const Education = () => {
         ))}
 
         <div className="w-full border border-primaryColor rounded-md lg:absolute lg:-right-10 lg:top-0 lg:w-[30%]">
-          <Image src={template} alt="templates" className="w-full h-full" />
+          <ResumePreview />
         </div>
       </div>
       <button

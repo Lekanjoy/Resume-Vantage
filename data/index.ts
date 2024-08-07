@@ -99,8 +99,11 @@ export const footerData = [
 ];
 
 export const stepsData = [
-  { title: "Your Header", checked: true },
+  { title: "Create/Upload", checked: false },
+  { title: "Your Header", checked: false },
   { title: "Your Experience", checked: false },
+  { title: "Experience Description", checked: false },
+  { title: "Experience Review", checked: false },
   { title: "Education History", checked: false },
   { title: "Your Skills", checked: false },
   { title: "Summary", checked: false },
@@ -177,3 +180,29 @@ export const resumeData = {
     },
   ],
 };
+
+export const resultData: {
+  id: number;
+  text: string;
+}[] = [
+  {
+    id: 0,
+    text: "Carried out interviews and User research to understand users’ pain points.",
+  },
+  {
+    id: 1,
+    text: "Developed user stories, user journey maps, and user personas.",
+  },
+  {
+    id: 2,
+    text: "Brainstormed features to serve as solutions to the problems of users.",
+  },
+  {
+    id: 3,
+    text: "Created wireframes and high fidelity designs to showcase the user interface of the product.",
+  },
+  {
+    id: 4,
+    text: "Performed usability testing to showcase the flow of the product and identify areas to improve.",
+  },
+];

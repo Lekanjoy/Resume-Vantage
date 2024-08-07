@@ -1,26 +1,39 @@
 "use client";
 import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { stepsData } from "@/data";
+import { setAuthToken } from "@/app/actions/auth";
 import CreateOrUpload from "@/components/dashboard/add-upload-resume/CardWrapper";
 import Button from "@/components/dashboard/button";
 import UserHeader from "@/components/dashboard/header";
 import Sidebar from "@/components/dashboard/sidebar";
-import { stepsData } from "@/data";
 import Experiences from "@/components/dashboard/experiences";
 import Education from "@/components/dashboard/education";
-import { useRouter, useSearchParams } from "next/navigation";
-import { setAuthToken } from "@/app/actions/auth"; 
-
-const sectionData = [
-  <CreateOrUpload key="create-or-upload" />,
-  <UserHeader key="user-header" />,
-  <Experiences key="experiences" />,
-  <Education key="education" />,
-];
+import ExperienceDescription from "./describe-experience";
+import ExperienceReview from "./review-experience";
+import Skills from "./skills";
+import Summary from "./summary";
+import AdditionalDetails from "./details";
+import Confirm from "./confirm";
 
 const DashboardContent = () => {
   const [steps, setSteps] = useState(stepsData);
-  const [isToggle, setIsToggle] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isToggle, setIsToggle] = useState(false);
+
+  const sectionData = [
+    <CreateOrUpload key="create-or-upload" />,
+    <UserHeader key="user-header" />,
+    <Experiences key="experiences" />,
+    <ExperienceDescription key="exp-describe" />,
+    <ExperienceReview setCurrentIndex={setCurrentIndex} key="exp-preview" />,
+    <Education key="education" />,
+    <Skills key="skills" />,
+    <Summary key="summary" />,
+    <AdditionalDetails key="details" />,
+    <Confirm key="confirm" />,
+  ];
+  
   const [section] = useState(sectionData);
 
   const searchParams = useSearchParams();

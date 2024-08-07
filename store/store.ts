@@ -1,8 +1,11 @@
 import {configureStore} from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import resumeSlice from '@/features/resumeSlice';
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    resume: resumeSlice,
+  },
 });
 
 // Use the ReturnType utility type to get the type of the store object

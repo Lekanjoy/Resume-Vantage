@@ -3,7 +3,7 @@ import { resumeData } from "@/data";
 const SimpleTemplate = () => {
   return (
     <section className="bg-white max-w-[8.5in] rounded-md p-8 flex flex-col">
-      <div className="mb-5 flex justify-between gap-x-8 w-full">
+      <div className="header mb-5 flex justify-between gap-x-8 w-full">
         <div className="max-w-3/5 text-blue-900">
           <h1 className="font-semibold text-xl">{resumeData.name}</h1>
           <p className="text-gray-500 text-sm font-normal mb-2">

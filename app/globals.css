@@ -2,10 +2,52 @@
 @tailwind components;
 @tailwind utilities;
 
-/* "primary": "#7758F3",
-        "primary-100": "#9E88F6",
-        "secondary": "#1A1A1A",
-        "secondary-100": "#40444B", */
+.rsw-editor {
+  background-color: #F7F5FE;
+  width: 100%;
+  min-height: 400px !important;
+  border-radius: 8px !important;
+  border: 1px solid #B9BBBE !important;
+  padding: 20px;
+}
+
+.rsw-toolbar{
+border-bottom: none !important;
+background-color: transparent !important;
+}
+
+.rsw-btn {
+  color: #40444B !important;
+  font-size: 14px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+}
+
+.rsw-ce {
+  font-size: 14px !important;
+  color: #40444B !important;
+}
+.rsw-ce:focus{
+  outline: none !important;
+}
+
+.rsw-ce ul {
+  list-style: disc;
+  padding-left: 2em;
+}
+
+.rsw-ce ol {
+  list-style: decimal;
+  padding-left: 2em;
+}
+
+@media (min-width: 1024px) {
+  .rsw-editor {
+    width: 50%;
+  }
+}
 
 @layer base {
   :root {

@@ -46,7 +46,10 @@ const Sidebar = ({ steps, isToggle, setIsToggle }: sidebarProps) => {
             title={step.title}
             checked={step.checked}
             isToggle={isToggle}
-            className={index === steps.length - 1 ? "after:hidden" : ""}
+            className={`
+              ${index === steps.length - 1 ? "after:hidden" : ""}
+              ${index === 0 || index === 3 || index === 4 ? "hidden" : ""}
+            `.trim()}
           />
         ))}
       </ul>

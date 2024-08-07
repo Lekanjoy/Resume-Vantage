@@ -1,8 +1,16 @@
+"use client";
 import CustomInput from "@/components/input";
-import Image from "next/image";
-import template from "@/public/assets/landing-page/template-1.png";
+import ResumePreview from "@/components/resume-preview";
+import { useState } from "react";
 
 const UserHeader = () => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [city, setCity] = useState("");
+  const [country, setCountry] = useState("");
+
   return (
     <>
       <div className="mb-10 flex flex-col gap-y-1 lg:mb-14">
@@ -24,40 +32,52 @@ const UserHeader = () => {
             type={"text"}
             label={"First Name"}
             placeholder={"Flourish"}
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
           />
           <CustomInput
             id={"lname"}
             type={"text"}
             label={"Last Name"}
             placeholder={"Ralph"}
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
           />
           <CustomInput
             id={"city"}
             type={"text"}
             label={"City"}
             placeholder={"London"}
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
           />
           <CustomInput
             id={"ctry"}
             type={"text"}
             label={"Country"}
             placeholder={"United Kingdom"}
+            value={country}
+            onChange={(e) => setCountry(e.target.value)}
           />
           <CustomInput
             id={"phone"}
             type={"phone"}
             label={"Phone Number"}
             placeholder={"+44 1234 56789"}
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
           />
           <CustomInput
             id={"email"}
             type={"email"}
             label={"Email Address"}
             placeholder={"Floralph@gmail.com"}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </form>
         <div className="w-full border border-primaryColor rounded-md lg:w-[30%]">
-          <Image src={template} alt="templates" className="w-full h-full" />
+          <ResumePreview />
         </div>
       </div>
     </>
