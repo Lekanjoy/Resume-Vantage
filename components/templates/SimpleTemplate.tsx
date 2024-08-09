@@ -2,6 +2,7 @@ import { resumeData } from "@/data";
 
 const SimpleTemplate = () => {
   const fullName = resumeData.fname + ' ' + resumeData.lname;
+  const location = resumeData.city + ', ' + resumeData.country;
 
   return (
     <section className="bg-white max-w-[8.5in] rounded-md p-8 flex flex-col">
@@ -18,7 +19,7 @@ const SimpleTemplate = () => {
         <div className="flex flex-col gap-y-1">
           <p className="text-xs">{resumeData.email}</p>
           <p className="text-xs">{resumeData.phone}</p>
-          <p className="text-xs">{resumeData.location}</p>
+          <p className="text-xs">{location}</p>
         </div>
       </div>
 

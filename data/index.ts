@@ -112,13 +112,13 @@ export const stepsData = [
 ];
 
 export const resumeData = {
-  fname: "John",
-  lname: "Doe",
+  fname: "Florish",
+  lname: "Ralph",
   title: "Software Engineer",
-  email: "johndoe@example.com",
-  city: "New York",
-  country: "USA",
-  phone: "123-456-7890",
+  email: "Floralph@gmail.com",
+  city: "London",
+  country: "United Kingdom",
+  phone: "+44 1234 56789",
   summary:
     "Highly motivated and detail-oriented software engineer with a passion for building scalable and efficient software solutions.",
   skills: [
