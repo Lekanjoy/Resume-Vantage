@@ -112,10 +112,12 @@ export const stepsData = [
 ];
 
 export const resumeData = {
-  name: "John Doe",
+  fname: "John",
+  lname: "Doe",
   title: "Software Engineer",
   email: "johndoe@example.com",
-  location: "New York, USA",
+  city: "New York",
+  country: "USA",
   phone: "123-456-7890",
   summary:
     "Highly motivated and detail-oriented software engineer with a passion for building scalable and efficient software solutions.",
@@ -142,18 +144,7 @@ export const resumeData = {
         "Collaborated with cross-functional teams to design and implement new features.",
         "Improved code quality and efficiency by implementing automated testing and code reviews.",
       ],
-    },
-    {
-      title: "Frontend Developer",
-      company: "XYZ Inc.",
-      dates: "2015-2018",
-      location: "New York, USA",
-      description: [
-        "Designed and developed multiple responsive web applications using HTML, CSS, and JavaScript.",
-        "Worked closely with designers to implement visually appealing and user-friendly interfaces.",
-        "Collaborated with backend developers to integrate frontend features with backend APIs.",
-      ],
-    },
+    }
   ],
   education: [
     {
@@ -161,22 +152,12 @@ export const resumeData = {
       degree: "Diploma in Frontend Engineering",
       dates: "2018-2022",
     },
-    {
-      institution: "New York University",
-      degree: "Bachelor of Science in Computer Science",
-      dates: "2012-2016",
-    },
   ],
   certifications: [
     {
       title: "Certified Scrum Master",
       date: "2020",
       institution: "Meta Inc",
-    },
-    {
-      title: "Certified AWS Developer",
-      date: "2019",
-      institution: "Amazon Web Services",
     },
   ],
 };

@@ -1,15 +1,23 @@
 "use client";
 import CustomInput from "@/components/input";
 import ResumePreview from "@/components/resume-preview";
+import { updatePersonalInfo } from "@/features/resumeSlice";
+import { useAppDispatch, useTypedSelector } from "@/store/store";
 import { useState } from "react";
 
 const UserHeader = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [city, setCity] = useState("");
-  const [country, setCountry] = useState("");
+  const resumeData = useTypedSelector((store) => store.resume);
+  const dispatch = useAppDispatch();
+  
+  const [editedFields, setEditedFields] = useState<Record<string, boolean>>({});
+
+  const handleInputChange = (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(updatePersonalInfo({ [field]: e.target.value }));
+    // Mark the field as edited
+    setEditedFields(prev => ({ ...prev, [field]: true }));
+  };
+
+
 
   return (
     <>
@@ -22,61 +30,72 @@ const UserHeader = () => {
         </p>
       </div>
 
-      <div className="w-full flex flex-col gap-y-12 lg:flex-row  lg:gap-x-10 lg:justify-between">
+      <div className="w-full flex flex-col gap-y-12 lg:flex-row lg:gap-x-10 lg:justify-between">
         <form
           action=""
-          className="flex flex-col flex-shrink-0 gap-y-6 lg:grid lg:w-[70%] lg:grid-cols-2 lg:gap-x-8"
+          className="flex flex-col flex-shrink-0 gap-y-6 h-fit lg:grid lg:w-[60%] lg:grid-cols-2 lg:gap-x-8"
         >
           <CustomInput
             id={"fname"}
             type={"text"}
             label={"First Name"}
             placeholder={"Flourish"}
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
+            value={resumeData.fname}
+            onChange={handleInputChange("fname")}
+            isEdited={editedFields['fname']}
           />
           <CustomInput
             id={"lname"}
             type={"text"}
             label={"Last Name"}
             placeholder={"Ralph"}
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
+            value={resumeData.lname}
+            onChange={handleInputChange("lname")}
+            isEdited={editedFields['lname']}
+
           />
           <CustomInput
             id={"city"}
             type={"text"}
             label={"City"}
             placeholder={"London"}
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
+            value={resumeData.city}
+            onChange={handleInputChange("city")}
+            isEdited={editedFields['city']}
+
           />
           <CustomInput
             id={"ctry"}
             type={"text"}
             label={"Country"}
             placeholder={"United Kingdom"}
-            value={country}
-            onChange={(e) => setCountry(e.target.value)}
+            value={resumeData.country}
+            onChange={handleInputChange("country")}
+            isEdited={editedFields['country']}
+
           />
           <CustomInput
             id={"phone"}
             type={"phone"}
             label={"Phone Number"}
             placeholder={"+44 1234 56789"}
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            value={resumeData.phone}
+            onChange={handleInputChange("phone")}
+            isEdited={editedFields['phone']}
+
           />
           <CustomInput
             id={"email"}
             type={"email"}
             label={"Email Address"}
             placeholder={"Floralph@gmail.com"}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={resumeData.email}
+            onChange={handleInputChange("email")}
+            isEdited={editedFields['email']}
+
           />
         </form>
-        <div className="w-full border border-primaryColor rounded-md lg:w-[30%]">
+        <div className="w-full border border-primaryColor rounded-md lg:w-[40%]">
           <ResumePreview />
         </div>
       </div>

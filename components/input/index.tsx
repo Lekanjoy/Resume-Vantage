@@ -8,6 +8,7 @@ import { twMerge } from "tailwind-merge";
 interface CustomInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
   isDisabled?: boolean;
+  isEdited?: boolean;
 }
 
 const CustomInput = ({
@@ -18,6 +19,7 @@ const CustomInput = ({
   label,
   placeholder,
   isDisabled,
+  isEdited
 }: CustomInputProps) => {
   const Ref = useRef<HTMLInputElement>(null);
 
@@ -39,7 +41,7 @@ const CustomInput = ({
         onChange={onChange}
         placeholder={placeholder}
         disabled={isDisabled}
-        className="border border-[#B9BBBE] py-2 px-3 rounded-md placeholder:text-[#B9BBBE] outline-[#B9BBBE] disabled:cursor-not-allowed"
+        className={twMerge(`border border-[#B9BBBE] py-2 px-3 rounded-md placeholder:text-[#B9BBBE] outline-[#B9BBBE] disabled:cursor-not-allowed`, isEdited ? 'text-secondaryColor-100' : 'text-[#B9BBBE]')}
       />
       {type === "password" && (
         <Image

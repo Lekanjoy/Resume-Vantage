@@ -1,9 +1,11 @@
 export type resumeDataProps = {
   resumeData: {
-    name: string;
+    fname: string;
+    lname: string;
     title: string;
     email: string;
-    location: string;
+    city: string;
+    country: string;
     phone: string;
     summary: string;
     skills: string[];
