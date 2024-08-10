@@ -1,21 +1,62 @@
 "use client";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { AnimatePresence } from "framer-motion";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
+import { updatePassword } from "@/app/actions/auth";
+import ResetStatus from "@/components/statusPages/ResetStatus";
 import CustomInput from "@/components/input";
 import logo from "@/public/assets/auth/logo.svg";
-import { AnimatePresence } from "framer-motion";
-import ResetStatus from "@/components/statusPages/ResetStatus";
-import Link from "next/link";
+import spinner from "@/public/assets/auth/spinner.svg";
 
 export type statusState = "pending" | "success" | "failed";
 
 const ResetPassword = () => {
-  const [emailValue, setEmailValue] = useState("flourishralph@gmail.com");
-  const [status, setStatus] = useState<statusState>("pending");
+  const { toast } = useToast();
+  const [emailValue, setEmailValue] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [status, setStatus] = useState<statusState | null>(null);
 
-  const handleReset = (e: FormEvent<HTMLFormElement>) => {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  useEffect(() => {
+    const email = searchParams.get("email");
+    if (email) {
+      setEmailValue(email);
+    }
+  }, [router, searchParams]);
+
+  const handleReset = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setStatus("success");
+
+    // Check if Passwords match
+    const trimmedPassword = password.trim();
+    const trimmedPasswordConfirm = passwordConfirm.trim();
+
+    if (trimmedPassword !== trimmedPasswordConfirm) {
+      toast({
+        variant: "destructive",
+        description: "Passwords do not match",
+      });
+      return;
+    }
+
+    setStatus("pending");
+    const res = await updatePassword(emailValue, password);
+    if (res.success) {
+      setStatus("success");
+    } else {
+      setStatus("failed");
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: res.error,
+      });
+    }
   };
 
   return (
@@ -42,20 +83,28 @@ const ResetPassword = () => {
           <CustomInput
             id={"password"}
             type={"password"}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             label={"Password"}
             placeholder={"Enter your new password"}
           />
           <CustomInput
             id={"passwordConfirm"}
             type={"password"}
+            value={passwordConfirm}
+            onChange={(e) => setPasswordConfirm(e.target.value)}
             label={"Confirm New Password"}
             placeholder={"Confirm your new password"}
           />
           <button
             type="submit"
-            className="bg-primaryColor font-semibold p-4 text-white rounded-md ease-in-out duration-300 hover:bg-primaryColor-100"
+            className="flex  justify-center items-center gap-x-2 bg-primaryColor font-semibold p-4 text-white rounded-md ease-in-out duration-300 hover:bg-primaryColor-100 disabled:cursor-not-allowed"
+            disabled={status === "pending"}
           >
-            Reset password
+            <span>Reset password </span>
+            {status === "pending" && (
+              <Image src={spinner} alt="spinner" className="w-4 h-4" />
+            )}
           </button>
         </form>
       </div>

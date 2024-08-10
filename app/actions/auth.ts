@@ -137,6 +137,40 @@ export async function recoverPassword(email: string) {
   }
 }
 
+
+export async function updatePassword(email: string, password: string) {
+  try {
+    // Validate input
+    const validatedInput = loginSchema.parse({ email, password });
+
+    const res = await axios.post(
+      `${baseURL}/auth/update-password`,
+      validatedInput
+    );
+
+    if (res.status !== 200) {
+      throw new Error("Password Update failed");
+    }
+
+    return { success: true, data: res.data };
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      // Handle validation errors
+      return { success: false, error: error.errors[0].message };
+    }
+    if (axios.isAxiosError(error) && error.response) {
+      // Handle specific API errors if available
+      return {
+        success: false,
+        error: error.response.data.reason || "Password Update failed",
+      };
+    }
+    console.error("Registration error:", error);
+    return { success: false, error: "Password Update failed" };
+  }
+}
+
+
 export async function setAuthToken(token: string) {
   cookies().set("token", token, {
     httpOnly: true,

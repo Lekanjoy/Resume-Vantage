@@ -1,17 +1,15 @@
 "use client";
+import Link from "next/link";
 import Image from "next/image";
-import CustomInput from "@/components/input";
-import logo from "@/public/assets/auth/logo.svg";
 import { FormEvent, useState } from "react";
 import { statusState } from "../reset-password/page";
 import { AnimatePresence } from "framer-motion";
-import ForgotStatus from "@/components/statusPages/ForgotStatus";
-import Link from "next/link";
-import axios from "axios";
 import { useToast } from "@/components/ui/use-toast";
-import spinner from "@/public/assets/auth/spinner.svg";
-import { z } from "zod";
 import { recoverPassword } from "@/app/actions/auth";
+import CustomInput from "@/components/input";
+import ForgotStatus from "@/components/statusPages/ForgotStatus";
+import spinner from "@/public/assets/auth/spinner.svg";
+import logo from "@/public/assets/auth/logo.svg";
 
 const ForgotPassword = () => {
   const { toast } = useToast();
