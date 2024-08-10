@@ -1,3 +1,4 @@
+import CookieBanner from "@/components/cookie-banner";
 import Header from "@/components/header";
 import Cta from "@/components/landing-page/cta";
 import Discover from "@/components/landing-page/discover";
@@ -18,6 +19,7 @@ export default function Home() {
       <Testimonials />
       <Cta />
       <Footer />
+      <CookieBanner/>
     </>
   );
 }

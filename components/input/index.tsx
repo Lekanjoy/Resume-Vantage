@@ -41,14 +41,14 @@ const CustomInput = ({
         onChange={onChange}
         placeholder={placeholder}
         disabled={isDisabled}
-        className={twMerge(`border border-[#B9BBBE] py-2 px-3 rounded-md placeholder:text-[#B9BBBE] outline-[#B9BBBE] disabled:cursor-not-allowed`, isEdited && 'text-secondaryColor-100')}
+        className={twMerge(`text-[#B9BBBE] text-base border border-[#B9BBBE] py-2 px-3 rounded-md placeholder:text-[#B9BBBE] outline-[#B9BBBE] disabled:cursor-not-allowed lg:text-xs`, isEdited && 'text-secondaryColor-100')}
       />
       {type === "password" && (
         <Image
           onClick={() => revealPassword(Ref)}
           src={eye}
           alt="eye"
-          className="absolute right-3 top-[27px] cursor-pointer z-[1] lg:top-[33px]"
+          className="absolute right-3 top-[30px] cursor-pointer z-[1] lg:top-[33px]"
         />
       )}
     </div>

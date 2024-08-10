@@ -33,7 +33,7 @@ const UserHeader = () => {
       <div className="w-full flex flex-col gap-y-12 lg:flex-row lg:gap-x-10 lg:justify-between">
         <form
           action=""
-          className="flex flex-col flex-shrink-0 gap-y-6 h-fit lg:grid lg:w-[60%] lg:grid-cols-2 lg:gap-x-8"
+          className="flex flex-col flex-shrink-0 gap-y-6 h-fit lg:grid lg:w-[70%] lg:grid-cols-2 lg:gap-x-8"
         >
           <CustomInput
             id={"fname"}
@@ -95,7 +95,7 @@ const UserHeader = () => {
 
           />
         </form>
-        <div className="w-full border border-primaryColor rounded-md lg:w-[40%]">
+        <div className="w-full lg:w-[30%]">
           <ResumePreview />
         </div>
       </div>
