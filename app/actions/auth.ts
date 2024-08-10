@@ -100,15 +100,52 @@ export async function signUpUser(
   }
 }
 
-export async function setAuthToken(token: string) {
-    cookies().set('token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV !== 'development',
-      maxAge: 3600, // 1 hour
-      sameSite: 'strict',
-      path: '/',
-    })
+//  schema for reset input validation
+const forgotPassSchema = z.object({
+  email: z.string().email("Invalid email address"),
+});
+
+export async function recoverPassword(email: string) {
+  try {
+    // Validate input
+    const validatedInput = forgotPassSchema.parse({ email });
+
+    const res = await axios.post(
+      `${baseURL}/auth/verify-email-password-reset`,
+      validatedInput
+    );
+
+    if (res.status !== 200) {
+      throw new Error("Password Recovery failed");
+    }
+
+    return { success: true, data: res.data };
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      // Handle validation errors
+      return { success: false, error: error.errors[0].message };
+    }
+    if (axios.isAxiosError(error) && error.response) {
+      // Handle specific API errors if available
+      return {
+        success: false,
+        error: error.response.data.reason || "Password Recovery failed",
+      };
+    }
+    console.error("Registration error:", error);
+    return { success: false, error: "Password Recovery failed" };
   }
+}
+
+export async function setAuthToken(token: string) {
+  cookies().set("token", token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV !== "development",
+    maxAge: 3600, // 1 hour
+    sameSite: "strict",
+    path: "/",
+  });
+}
 
 export async function logOutUser() {
   // Clear the cookie

@@ -41,7 +41,7 @@ const CustomInput = ({
         onChange={onChange}
         placeholder={placeholder}
         disabled={isDisabled}
-        className={twMerge(`border border-[#B9BBBE] py-2 px-3 rounded-md placeholder:text-[#B9BBBE] outline-[#B9BBBE] disabled:cursor-not-allowed`, isEdited ? 'text-secondaryColor-100' : 'text-[#B9BBBE]')}
+        className={twMerge(`border border-[#B9BBBE] py-2 px-3 rounded-md placeholder:text-[#B9BBBE] outline-[#B9BBBE] disabled:cursor-not-allowed`, isEdited && 'text-secondaryColor-100')}
       />
       {type === "password" && (
         <Image

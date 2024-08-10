@@ -2,7 +2,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import illust from "@/public/assets/auth/Dayflow Computer 2.png";
 
-const ResetStatus = () => {
+const ResetStatus = ({email}: {email:string}) => {
   const variants = {
     hidden: { y: "-100%" },
     visible: { y: 0 },
@@ -30,7 +30,7 @@ const ResetStatus = () => {
           </h1>
           <p className="text-xs text-secondaryColor lg:text-base">
             We just sent the password reset link to{" "}
-            <span className="text-primaryColor">flourishralph@gmail.com.</span>{" "}
+            <span className="text-primaryColor">{email}.</span>{" "}
             Click the link to reset your password and then proceed to log in. Be
             sure to check your{" "}
             <span className="text-primaryColor">spam/junk</span> folder if you

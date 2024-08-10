@@ -7,13 +7,33 @@ import { statusState } from "../reset-password/page";
 import { AnimatePresence } from "framer-motion";
 import ForgotStatus from "@/components/statusPages/ForgotStatus";
 import Link from "next/link";
+import axios from "axios";
+import { useToast } from "@/components/ui/use-toast";
+import spinner from "@/public/assets/auth/spinner.svg";
+import { z } from "zod";
+import { recoverPassword } from "@/app/actions/auth";
 
 const ForgotPassword = () => {
-  const [status, setStatus] = useState<statusState>("pending");
+  const { toast } = useToast();
 
-  const handleForgotPassword = (e: FormEvent<HTMLFormElement>) => {
+  const [status, setStatus] = useState<statusState | null>(null);
+  const [email, setEmail] = useState("");
+
+  const handleForgotPassword = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setStatus("success");
+    setStatus("pending");
+
+    const res = await recoverPassword(email)
+    if (res.success) {
+      setStatus("success");
+    } else {
+      setStatus("failed");
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: res.error,
+      });
+    }
   };
 
   return (
@@ -45,19 +65,26 @@ const ForgotPassword = () => {
             id={"email"}
             type={"email"}
             label={"Email Address"}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             placeholder={"Enter a valid email address"}
+            required
           />
           <button
             type="submit"
-            className="bg-primaryColor font-semibold p-4 text-white rounded-md ease-in-out duration-300 hover:bg-primaryColor-100"
+            className="flex  justify-center items-center gap-x-2 bg-primaryColor font-semibold p-4 text-white rounded-md ease-in-out duration-300 hover:bg-primaryColor-100 disabled:cursor-not-allowed"
+            disabled={status === "pending"}
           >
-            Send password reset link
+            <span>Send password reset link</span>
+            {status === "pending" && (
+              <Image src={spinner} alt="spinner" className="w-4 h-4" />
+            )}
           </button>
         </form>
       </div>
 
       <AnimatePresence>
-        {status === "success" && <ForgotStatus />}
+        {status === "success" && <ForgotStatus email={email} />}
       </AnimatePresence>
     </section>
   );
