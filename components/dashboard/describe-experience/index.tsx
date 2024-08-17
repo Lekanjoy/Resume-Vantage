@@ -1,16 +1,21 @@
 import React, { useState } from "react";
 import SearchBox from "./SearchBox";
 import RichTextEditor from "../editor";
+import Button, { ButtonProps as DescriptionProps } from "../button";
 
 export type selectedResult = {
   id: number;
   text: string;
-}
+};
 
-const ExperienceDescription = () => {
+const ExperienceDescription = ({
+  currentIndex,
+  handlePrev,
+  handleNext,
+}: DescriptionProps) => {
   const role = "Product Designer";
 
-  const [selectedResults, setSelectedResults] = useState<selectedResult[]>([])
+  const [selectedResults, setSelectedResults] = useState<selectedResult[]>([]);
   return (
     <>
       <div className="mb-10 flex flex-col gap-y-1 lg:gap-y-3 lg:mb-12">
@@ -23,8 +28,19 @@ const ExperienceDescription = () => {
       </div>
 
       <div className="w-full flex justify-between flex-col gap-y-10 lg:flex-row lg:gap-x-5 xl:gap-x-8">
-        <SearchBox role={role} setIsSelectedResults={setSelectedResults} selectedResults={selectedResults}/>
-        <RichTextEditor selectedResults={selectedResults}/>
+        <SearchBox
+          role={role}
+          setIsSelectedResults={setSelectedResults}
+          selectedResults={selectedResults}
+        />
+        <RichTextEditor selectedResults={selectedResults} />
+      </div>
+      <div className="w-full my-20 flex justify-center items-center">
+        <Button
+          currentIndex={currentIndex}
+          handleNext={handleNext}
+          handlePrev={handlePrev}
+        />
       </div>
     </>
   );

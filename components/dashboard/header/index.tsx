@@ -1,22 +1,23 @@
 "use client";
-import CustomInput from "@/components/input";
-import ResumePreview from "@/components/resume-preview";
 import { updatePersonalInfo } from "@/features/resumeSlice";
 import { useAppDispatch, useTypedSelector } from "@/store/store";
 import { useState } from "react";
+import Button, { ButtonProps as UserHeaderProps } from "../button";
+import CustomInput from "@/components/input";
+import ResumePreview from "@/components/resume-preview";
 
-const UserHeader = () => {
+const UserHeader = ({ currentIndex, handleNext, handlePrev }: UserHeaderProps) => {
   const resumeData = useTypedSelector((store) => store.resume);
   const dispatch = useAppDispatch();
-  
+
   const [editedFields, setEditedFields] = useState<Record<string, boolean>>({});
 
-  const handleInputChange = (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(updatePersonalInfo({ [field]: e.target.value }));
-    // Mark the field as edited
-    setEditedFields(prev => ({ ...prev, [field]: true }));
-  };
-
+  const handleInputChange =
+    (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      dispatch(updatePersonalInfo({ [field]: e.target.value }));
+      // Mark the field as edited
+      setEditedFields((prev) => ({ ...prev, [field]: true }));
+    };
 
 
   return (
@@ -42,7 +43,7 @@ const UserHeader = () => {
             placeholder={"Flourish"}
             value={resumeData.fname}
             onChange={handleInputChange("fname")}
-            isEdited={editedFields['fname']}
+            isEdited={editedFields["fname"]}
           />
           <CustomInput
             id={"lname"}
@@ -51,8 +52,7 @@ const UserHeader = () => {
             placeholder={"Ralph"}
             value={resumeData.lname}
             onChange={handleInputChange("lname")}
-            isEdited={editedFields['lname']}
-
+            isEdited={editedFields["lname"]}
           />
           <CustomInput
             id={"city"}
@@ -61,8 +61,7 @@ const UserHeader = () => {
             placeholder={"London"}
             value={resumeData.city}
             onChange={handleInputChange("city")}
-            isEdited={editedFields['city']}
-
+            isEdited={editedFields["city"]}
           />
           <CustomInput
             id={"ctry"}
@@ -71,8 +70,7 @@ const UserHeader = () => {
             placeholder={"United Kingdom"}
             value={resumeData.country}
             onChange={handleInputChange("country")}
-            isEdited={editedFields['country']}
-
+            isEdited={editedFields["country"]}
           />
           <CustomInput
             id={"phone"}
@@ -81,8 +79,7 @@ const UserHeader = () => {
             placeholder={"+44 1234 56789"}
             value={resumeData.phone}
             onChange={handleInputChange("phone")}
-            isEdited={editedFields['phone']}
-
+            isEdited={editedFields["phone"]}
           />
           <CustomInput
             id={"email"}
@@ -91,14 +88,21 @@ const UserHeader = () => {
             placeholder={"Floralph@gmail.com"}
             value={resumeData.email}
             onChange={handleInputChange("email")}
-            isEdited={editedFields['email']}
-
+            isEdited={editedFields["email"]}
           />
         </form>
         <div className="w-full lg:w-[30%]">
           <ResumePreview />
         </div>
       </div>
+
+      <div className="w-full my-20 flex justify-center items-center">
+          <Button
+            currentIndex={currentIndex}
+            handleNext={handleNext}
+            handlePrev={handlePrev}
+          />
+        </div>
     </>
   );
 };

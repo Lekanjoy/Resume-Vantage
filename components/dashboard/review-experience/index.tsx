@@ -1,12 +1,18 @@
 import Image from "next/image";
 import { Dispatch, SetStateAction } from "react";
+import Button, { ButtonProps } from "../button";
 import plus from "@/public/assets/dashboard/plusIcon.svg";
 
-const ExperienceReview = ({
-  setCurrentIndex,
-}: {
+export interface ExperienceReviewProps extends ButtonProps {
   setCurrentIndex: Dispatch<SetStateAction<number>>;
-}) => {
+}
+
+const ExperienceReview = ({
+  currentIndex,
+  handlePrev,
+  handleNext,
+  setCurrentIndex,
+}: ExperienceReviewProps) => {
   const handleAddExperience = () => {
     setCurrentIndex(2);
   };
@@ -22,6 +28,13 @@ const ExperienceReview = ({
           Add another institution or course
         </span>
       </button>
+      <div className="w-full my-20 flex justify-center items-center">
+        <Button
+          currentIndex={currentIndex}
+          handleNext={handleNext}
+          handlePrev={handlePrev}
+        />
+      </div>
     </>
   );
 };

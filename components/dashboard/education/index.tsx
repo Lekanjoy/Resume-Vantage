@@ -3,6 +3,7 @@ import Image from "next/image";
 import CustomInput from "@/components/input";
 import plus from "@/public/assets/dashboard/plusIcon.svg";
 import ResumePreview from "@/components/resume-preview";
+import Button, { ButtonProps as EducationProps } from "../button";
 
 interface FormState {
   id: number;
@@ -19,7 +20,7 @@ interface FormState {
 type CheckboxChangeEvent = ChangeEvent<HTMLInputElement>;
 type InputChangeEvent = ChangeEvent<HTMLInputElement>;
 
-const Education = () => {
+const Education = ({currentIndex, handleNext, handlePrev}: EducationProps) => {
   const [todayDate, setTodayDate] = useState<string>("");
   const [forms, setForms] = useState<FormState[]>([
     {
@@ -174,7 +175,7 @@ const Education = () => {
           </form>
         ))}
 
-        <div className="w-full border border-primaryColor rounded-md lg:absolute lg:-right-10 lg:top-0 lg:w-[30%]">
+        <div className="w-full lg:absolute lg:-right-10 lg:top-0 lg:w-[30%]">
           <ResumePreview />
         </div>
       </div>
@@ -187,6 +188,14 @@ const Education = () => {
           Add another institution or course
         </span>
       </button>
+
+      <div className="w-full my-20 flex justify-center items-center">
+        <Button
+          currentIndex={currentIndex}
+          handleNext={handleNext}
+          handlePrev={handlePrev}
+        />
+      </div>
     </>
   );
 };

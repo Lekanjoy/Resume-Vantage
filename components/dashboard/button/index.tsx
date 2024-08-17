@@ -1,4 +1,4 @@
-interface ButtonProps {
+export interface ButtonProps {
   currentIndex: number;
   handlePrev: () => void;
   handleNext: () => void;

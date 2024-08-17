@@ -1,9 +1,9 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import Image from "next/image";
 import CustomInput from "@/components/input";
-import template from "@/public/assets/landing-page/template-1.png";
+import ResumePreview from "@/components/resume-preview";
+import Button, { ButtonProps as ExperienceProps } from "../button";
 
-const Experiences = () => {
+const Experiences = ({currentIndex, handleNext, handlePrev}: ExperienceProps) => {
   const [isChecked, setIsChecked] = useState(false);
   const [startDate, setStartDate] = useState<string>("");
   const [endDate, setEndDate] = useState<string>("");
@@ -94,10 +94,18 @@ const Experiences = () => {
             </label>
           </div>
         </form>
-        <div className="w-full border border-primary rounded-md lg:w-[30%]">
-          <Image src={template} alt="templates" className="w-full h-full" />
+        <div className="w-full lg:w-[30%]">
+          <ResumePreview />
         </div>
       </div>
+
+      <div className="w-full my-20 flex justify-center items-center">
+          <Button
+            currentIndex={currentIndex}
+            handleNext={handleNext}
+            handlePrev={handlePrev}
+          />
+        </div>
     </>
   );
 };

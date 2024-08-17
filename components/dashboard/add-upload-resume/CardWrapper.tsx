@@ -2,8 +2,13 @@
 import { useState } from "react";
 import { addOrUploadResumeCardData } from "@/data";
 import AddOrUploadCard from ".";
+import Button, { ButtonProps as CardWrapperProps } from "../button";
 
-const CreateOrUpload = () => {
+const CreateOrUpload = ({
+  currentIndex,
+  handlePrev,
+  handleNext,
+}: CardWrapperProps) => {
   const [selectedCardId, setSelectedCardId] = useState<number | null>(null);
 
   return (
@@ -22,6 +27,13 @@ const CreateOrUpload = () => {
             />
           );
         })}
+      </div>
+      <div className="w-full my-20 flex justify-center items-center">
+        <Button
+          currentIndex={currentIndex}
+          handleNext={handleNext}
+          handlePrev={handlePrev}
+        />
       </div>
     </>
   );

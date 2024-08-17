@@ -1,8 +1,17 @@
 import React from 'react'
+import Button, { ButtonProps as DetailsProps} from '../button'
 
-const AdditionalDetails = () => {
+const AdditionalDetails = ({currentIndex, handleNext, handlePrev}: DetailsProps) => {
   return (
-    <div>AdditionalDetails</div>
+    <div>AdditionalDetails
+      <div className="w-full my-20 flex justify-center items-center">
+        <Button
+          currentIndex={currentIndex}
+          handleNext={handleNext}
+          handlePrev={handlePrev}
+        />
+      </div>
+    </div>
   )
 }
 
