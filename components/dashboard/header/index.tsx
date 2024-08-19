@@ -19,7 +19,17 @@ const UserHeader = ({ currentIndex, handleNext, handlePrev }: UserHeaderProps) =
       setEditedFields((prev) => ({ ...prev, [field]: true }));
     };
 
+  // const handleCreateHeader = async () => {
+  //   // setLoading(true);
+  //   const res = await createResumeHeader();
+  //   if (res.success) {
 
+  //   } else {
+  //     // setLoading(false);
+
+  //   }
+  // }
+  
   return (
     <>
       <div className="mb-10 flex flex-col gap-y-1 lg:mb-14">

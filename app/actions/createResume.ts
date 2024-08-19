@@ -1,9 +1,8 @@
 "use server";
-import axiosInstance from "@/hooks/useAxios";
+import { getServerAxiosInstance } from "@/hooks/serverAxiosInstance";
+import axiosInstance, { baseURL } from "@/hooks/useAxios";
 import axios from "axios";
 import { z } from "zod";
-
-const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 
 //schema for signup input validation
 const headerSchema = z.object({
@@ -13,14 +12,14 @@ const headerSchema = z.object({
   city: z.string().min(2, "City must be at least 2 characters long"),
   country: z.string().min(2, "Country must be at least 2 characters long"),
   address: z.string().min(2, "Address must be at least 2 characters long"),
-  profession: z.string().min(2, "Profession must be at least 2 characters long"),
+  profession: z
+    .string()
+    .min(2, "Profession must be at least 2 characters long"),
   phoneNumber: z
     .string()
     .min(6, "Phone Number must be at least 2 characters long"),
   publicEmail: z.string().email("Invalid email address"),
 });
-
-
 
 export async function createResumeHeader(
   resumeId: string,
@@ -44,13 +43,15 @@ export async function createResumeHeader(
     phoneNumber,
     publicEmail,
   });
+  const axiosInstance = await getServerAxiosInstance();
+
   try {
     const res = await axiosInstance.post(
       `${baseURL}/resume/header`,
       validatedInput
     );
 
-    if (res.status !== 200) {
+    if (res.status !== 201) {
       throw new Error(res?.data?.message);
     }
 
@@ -69,5 +70,22 @@ export async function createResumeHeader(
     }
     console.error("Header creation error:", error);
     return { success: false, error: "Header creation failed" };
+  }
+}
+
+export async function initializeAction() {
+  const axiosInstance = await getServerAxiosInstance();
+
+  try {
+    const res = await axiosInstance.post(`${baseURL}/resume/initialize`);
+    console.log(res);
+    if (res.status !== 201) {
+      throw new Error(res?.data?.message);
+    }
+
+    return { success: true, data: res.data };
+  } catch (error) {
+    console.error(error);
+    return { success: false, error: "Failed to Initialize Resume" };
   }
 }

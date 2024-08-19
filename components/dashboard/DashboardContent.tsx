@@ -4,7 +4,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { stepsData } from "@/data";
 import { ButtonProps } from "./button";
 import { setAuthToken } from "@/app/actions/auth";
-import CreateOrUpload from "@/components/dashboard/add-upload-resume/CardWrapper";
 import UserHeader from "@/components/dashboard/header";
 import Sidebar from "@/components/dashboard/sidebar";
 import Experiences from "@/components/dashboard/experiences";
@@ -15,6 +14,7 @@ import Skills from "./skills";
 import Summary from "./summary";
 import AdditionalDetails from "./details";
 import Confirm from "./confirm";
+import CreationMethod from "./add-upload-resume/CreationMethod";
 
 const DashboardContent = () => {
   const [steps, setSteps] = useState(stepsData);
@@ -44,7 +44,7 @@ const DashboardContent = () => {
 
   const sectionData = [
     (props: JSX.IntrinsicAttributes & ButtonProps) => (
-      <CreateOrUpload key="create-or-upload" {...props} />
+      <CreationMethod key="create-or-upload" {...props} />
     ),
     (props: JSX.IntrinsicAttributes & ButtonProps) => (
       <UserHeader key="user-header" {...props} />

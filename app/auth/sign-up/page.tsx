@@ -16,9 +16,7 @@ import SignUpStatus from "@/components/statusPages/SignUpStatus";
 import spinner from "@/public/assets/auth/spinner.svg";
 import spinnerBlue from "@/public/assets/auth/spinnerBlue.svg";
 import axios from "axios";
-
-// Load baseUrl from .env file
-const baseURL = process.env.NEXT_PUBLIC_BASE_URL as string;
+import { baseURL } from "@/hooks/useAxios";
 
 const SignUp = () => {
   const [firstName, setFirstName] = useState("");

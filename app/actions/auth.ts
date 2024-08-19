@@ -1,9 +1,8 @@
 "use server";
+import { baseURL } from "@/hooks/useAxios";
 import axios from "axios";
 import { cookies } from "next/headers";
 import { z } from "zod";
-
-const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 
 //  schema for login input validation
 const loginSchema = z.object({

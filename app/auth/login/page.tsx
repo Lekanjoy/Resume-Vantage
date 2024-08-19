@@ -13,9 +13,7 @@ import google from "@/public/assets/auth/googleIcon.svg";
 import apple from "@/public/assets/auth/appleIcon.svg";
 import spinner from "@/public/assets/auth/spinner.svg";
 import spinnerBlue from "@/public/assets/auth/spinnerBlue.svg";
-
-// Load baseUrl from .env file
-const baseURL = process.env.NEXT_PUBLIC_BASE_URL as string;
+import { baseURL } from "@/hooks/useAxios";
 
 const Login = () => {
   const router = useRouter();
