@@ -160,6 +160,7 @@ export const resumeData = {
       institution: "Meta Inc",
     },
   ],
+  status: 'idle',
 };
 
 export const resultData: {

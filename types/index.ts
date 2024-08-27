@@ -28,3 +28,23 @@ export type resumeDataProps = {
     }[];
   };
 };
+
+export type resumeData = {
+  _id: string;
+  completed: boolean;
+  createdBy: string;
+  jobExperiences: [];
+  education: [];
+  skills: [];
+  certifications: [];
+  createdAt: string;
+  updatedAt: string;
+  city: string;
+  country: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  profession: string;
+  publicEmail: string;
+  summary: string;
+};

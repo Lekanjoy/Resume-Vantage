@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useToast } from "@/components/ui/use-toast";
 import { loginUser } from "@/app/actions/auth";
 import BrandName from "@/components/brand-name";
 import CustomInput from "@/components/input";
@@ -14,11 +13,12 @@ import apple from "@/public/assets/auth/appleIcon.svg";
 import spinner from "@/public/assets/auth/spinner.svg";
 import spinnerBlue from "@/public/assets/auth/spinnerBlue.svg";
 import { baseURL } from "@/hooks/useAxios";
+import Toast from "@/components/toast";
+import { useToast } from "@/components/toast/ShowToast";
 
 const Login = () => {
   const router = useRouter();
-  const { toast } = useToast();
-
+  const { showToast, toastState } = useToast();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -33,11 +33,7 @@ const Login = () => {
       router.push("/dashboard");
     } else {
       setLoading(false);
-      toast({
-        variant: "destructive",
-        title: "An error occurred",
-        description: res.error,
-      });
+      showToast(res.error, "error");
     }
   };
 
@@ -50,11 +46,7 @@ const Login = () => {
     } catch (error) {
       console.error(error);
       setLoading(false);
-      toast({
-        variant: "destructive",
-        title: "Uh oh! Something went wrong.",
-        description: "There was a problem with your Login.",
-      });
+      showToast("There was a problem with your Login.", "error");
     }
   };
 
@@ -153,6 +145,11 @@ const Login = () => {
           </button>
         </div>
       </div>
+      <Toast
+        message={toastState.message}
+        variant={toastState.variant}
+        isVisible={toastState.visible}
+      />
     </section>
   );
 };

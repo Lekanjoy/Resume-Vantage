@@ -3,8 +3,42 @@ import Cta from "@/components/landing-page/cta";
 import Footer from "@/components/landing-page/footer";
 import TemplatesList from "@/components/templates/TemplatesList";
 import UserDashboard from "@/components/user-dashboard";
+import { getServerAxiosInstance } from "@/hooks/serverAxiosInstance";
+import { baseURL } from "@/hooks/useAxios";
+import { resumeData } from "@/types";
+import { Suspense } from "react";
+import { AxiosError } from "axios";
 
-export default function Templates() {
+const fetchResumes = async (): Promise<{
+  resumes: resumeData[];
+  error?: string;
+}> => {
+  try {
+    const axiosInstance = await getServerAxiosInstance();
+    const response = await axiosInstance.get(`${baseURL}/profile/fetch`);
+    const resumes = response.data?.payload?.resumes;
+    if (!resumes) {
+      throw new Error("No resumes found in the response");
+    }
+    return { resumes };
+  } catch (error) {
+    let errorMessage = "An unexpected error occurred";
+    if (error instanceof AxiosError) {
+      errorMessage =
+        error.response?.data?.statusCode === 401
+          ? "Please login to see your resumes"
+          : error.message;
+    } else if (error instanceof Error) {
+      errorMessage = error.message;
+    }
+    console.error(errorMessage);
+    return { resumes: [], error: errorMessage };
+  }
+};
+
+export default async function Templates() {
+  const { resumes, error } = await fetchResumes();
+
   return (
     <>
       <Header />
@@ -17,7 +51,9 @@ export default function Templates() {
           stand out in the job marketplace.
         </p>
         <TemplatesList />
-        <UserDashboard />
+        <Suspense fallback={<p>Loading...</p>}>
+          <UserDashboard resumes={resumes} error={error} />
+        </Suspense>
       </div>
       <Cta />
       <Footer />

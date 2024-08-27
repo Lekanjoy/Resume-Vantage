@@ -1,23 +1,27 @@
 "use client";
 import { useCallback, useEffect, useState } from "react";
 import { addOrUploadResumeCardData } from "@/data";
-import { useToast } from "@/components/ui/use-toast";
 import { initializeAction } from "@/app/actions/createResume";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useToast } from "@/components/toast/ShowToast";
 import Button, { ButtonProps as CardWrapperProps } from "../button";
 import AddOrUploadCard from ".";
+import Toast from "@/components/toast";
 
 const CreateOrUpload = ({
   currentIndex,
   handlePrev,
   handleNext,
 }: CardWrapperProps) => {
-  const [selectedCardId, setSelectedCardId] = useState<number | null>(null);
-  const { toast } = useToast();
-
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const { showToast, toastState } = useToast();
+
+  const [selectedCardId, setSelectedCardId] = useState<number | null>(null);
+  const [loading, setLoading] = useState(false);
+
+
 
   //Move page to Next Step if there is a resumeId in the URL
   useEffect(() => {
@@ -41,25 +45,21 @@ const CreateOrUpload = ({
 
   const initializeResume = async () => {
     if (selectedCardId) {
+      setLoading(true);
       const res = await initializeAction();
       if (res.success) {
         router.push(
           pathname + "?" + createQueryString("resumeId", res.data?.payload?._id)
         );
         handleNext();
+        setLoading(false);
       } else {
-        toast({
-          title: "Uh oh!",
-          description: res.error,
-          variant: "destructive",
-        });
+        showToast(res.error as string, "error");
+        setLoading(false);
       }
     } else {
-      toast({
-        title: "Uh oh!",
-        description: "Select a method to start.",
-        variant: "destructive",
-      });
+      showToast("Select a method to start", "error");
+      setLoading(false);
     }
   };
 
@@ -85,8 +85,15 @@ const CreateOrUpload = ({
           currentIndex={currentIndex}
           handleNext={initializeResume}
           handlePrev={handlePrev}
+          loading={loading}
         />
       </div>
+
+      <Toast
+        message={toastState.message}
+        variant={toastState.variant}
+        isVisible={toastState.visible}
+      />
     </>
   );
 };

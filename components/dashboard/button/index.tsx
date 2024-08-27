@@ -2,15 +2,22 @@ export interface ButtonProps {
   currentIndex: number;
   handlePrev: () => void;
   handleNext: () => void;
+  loading?: boolean;
 }
 
-const Button = ({ currentIndex, handlePrev, handleNext }: ButtonProps) => {
+const Button = ({
+  currentIndex,
+  handlePrev,
+  handleNext,
+  loading,
+}: ButtonProps) => {
   return (
     <div className="w-full flex flex-col gap-y-6 lg:flex-row lg:justify-between">
       {currentIndex > 0 && (
         <button
           onClick={handlePrev}
           className="bg-[#FAFAFA] text-primaryColor border border-primaryColor p-4 rounded-md w-full ease-in-out duration-300 lg:max-w-[330px]  hover:shadow-md"
+          disabled={loading}
         >
           Back
         </button>

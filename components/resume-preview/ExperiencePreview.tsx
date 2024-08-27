@@ -3,9 +3,11 @@ import { resumeDataProps } from "@/types";
 const ExperiencePreview = ({ resumeData }: resumeDataProps) => {
   return (
     <div className="mt-1">
-      <h3 className="text-[6px] font-bold mb-1 text-center text-blue-900 border-y border-blue-900/40">
-        WORK EXPERIENCE
-      </h3>
+      {resumeData?.experience?.length > 0 && (
+        <h3 className="text-[6px] font-bold mb-1 text-center text-blue-900 border-y border-blue-900/40">
+          WORK EXPERIENCE
+        </h3>
+      )}
       {resumeData?.experience?.map((exp, index) => {
         return (
           <div key={index} className="text-blue-950 mb-[2px]">

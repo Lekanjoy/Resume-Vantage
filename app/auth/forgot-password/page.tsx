@@ -4,16 +4,16 @@ import Image from "next/image";
 import { FormEvent, useState } from "react";
 import { statusState } from "../reset-password/page";
 import { AnimatePresence } from "framer-motion";
-import { useToast } from "@/components/ui/use-toast";
 import { recoverPassword } from "@/app/actions/auth";
 import CustomInput from "@/components/input";
 import ForgotStatus from "@/components/statusPages/ForgotStatus";
 import spinner from "@/public/assets/auth/spinner.svg";
 import logo from "@/public/assets/auth/logo.svg";
+import Toast from "@/components/toast";
+import { useToast } from "@/components/toast/ShowToast";
 
 const ForgotPassword = () => {
-  const { toast } = useToast();
-
+  const { showToast, toastState } = useToast();
   const [status, setStatus] = useState<statusState | null>(null);
   const [email, setEmail] = useState("");
 
@@ -26,11 +26,7 @@ const ForgotPassword = () => {
       setStatus("success");
     } else {
       setStatus("failed");
-      toast({
-        variant: "destructive",
-        title: "Uh oh! Something went wrong.",
-        description: res.error,
-      });
+      showToast(res.error, "error");
     }
   };
 
@@ -84,6 +80,12 @@ const ForgotPassword = () => {
       <AnimatePresence>
         {status === "success" && <ForgotStatus email={email} />}
       </AnimatePresence>
+
+      <Toast
+        message={toastState.message}
+        variant={toastState.variant}
+        isVisible={toastState.visible}
+      />
     </section>
   );
 };

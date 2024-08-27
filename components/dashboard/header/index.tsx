@@ -2,16 +2,30 @@
 import { updatePersonalInfo } from "@/features/resumeSlice";
 import { useAppDispatch, useTypedSelector } from "@/store/store";
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { createResumeHeader } from "@/app/actions/createResume";
+import { useToast } from "@/components/toast/ShowToast";
 import Button, { ButtonProps as UserHeaderProps } from "../button";
-import CustomInput from "@/components/input";
 import ResumePreview from "@/components/resume-preview";
+import CustomInput from "@/components/input";
+import Toast from "@/components/toast";
 
-const UserHeader = ({ currentIndex, handleNext, handlePrev }: UserHeaderProps) => {
+const UserHeader = ({
+  currentIndex,
+  handleNext,
+  handlePrev,
+}: UserHeaderProps) => {
+  const { showToast, toastState } = useToast();
   const resumeData = useTypedSelector((store) => store.resume);
   const dispatch = useAppDispatch();
+  const searchParams = useSearchParams();
+
+  const resumeId = searchParams.get("resumeId") as string;
+  const { fname, lname, title, email, city, country, phone } = resumeData;
+  const address = city + ", " + country;
 
   const [editedFields, setEditedFields] = useState<Record<string, boolean>>({});
-
+  const [loading, setLoading] = useState(false);
   const handleInputChange =
     (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
       dispatch(updatePersonalInfo({ [field]: e.target.value }));
@@ -19,17 +33,29 @@ const UserHeader = ({ currentIndex, handleNext, handlePrev }: UserHeaderProps) =
       setEditedFields((prev) => ({ ...prev, [field]: true }));
     };
 
-  // const handleCreateHeader = async () => {
-  //   // setLoading(true);
-  //   const res = await createResumeHeader();
-  //   if (res.success) {
+  const handleCreateHeader = async () => {
+    setLoading(true);
+    const res = await createResumeHeader(
+      resumeId,
+      fname,
+      lname,
+      city,
+      country,
+      address,
+      title,
+      phone,
+      email
+    );
+    if (res.success) {
+      setLoading(false);
+      handleNext();
+    } else {
+      setLoading(false);
+      showToast(res.error, "error");
+      console.log(res.error);
+    }
+  };
 
-  //   } else {
-  //     // setLoading(false);
-
-  //   }
-  // }
-  
   return (
     <>
       <div className="mb-10 flex flex-col gap-y-1 lg:mb-14">
@@ -65,6 +91,15 @@ const UserHeader = ({ currentIndex, handleNext, handlePrev }: UserHeaderProps) =
             isEdited={editedFields["lname"]}
           />
           <CustomInput
+            id={"title"}
+            type={"text"}
+            label={"Profession"}
+            placeholder={"Sofware Engineer"}
+            value={resumeData.title}
+            onChange={handleInputChange("title")}
+            isEdited={editedFields["title"]}
+          />
+          <CustomInput
             id={"city"}
             type={"text"}
             label={"City"}
@@ -81,6 +116,13 @@ const UserHeader = ({ currentIndex, handleNext, handlePrev }: UserHeaderProps) =
             value={resumeData.country}
             onChange={handleInputChange("country")}
             isEdited={editedFields["country"]}
+          />
+          <CustomInput
+            id={"addr"}
+            type={"text"}
+            label={"Adress"}
+            value={address}
+            disabled
           />
           <CustomInput
             id={"phone"}
@@ -101,18 +143,25 @@ const UserHeader = ({ currentIndex, handleNext, handlePrev }: UserHeaderProps) =
             isEdited={editedFields["email"]}
           />
         </form>
-        <div className="w-full lg:w-[30%]">
+        <div className="w-full min-h-full lg:w-[30%]">
           <ResumePreview />
         </div>
       </div>
 
       <div className="w-full my-20 flex justify-center items-center">
-          <Button
-            currentIndex={currentIndex}
-            handleNext={handleNext}
-            handlePrev={handlePrev}
-          />
-        </div>
+        <Button
+          currentIndex={currentIndex}
+          handleNext={handleCreateHeader}
+          handlePrev={handlePrev}
+          loading={loading}
+        />
+      </div>
+
+      <Toast
+        message={toastState.message}
+        variant={toastState.variant}
+        isVisible={toastState.visible}
+      />
     </>
   );
 };

@@ -10,7 +10,7 @@ const ResumePreview = () => {
   const resumeData = useTypedSelector((state) => state.resume);
 
   return (
-    <section className="bg-white max-w-full min-h-20 border border-secondaryColor-100/50 rounded-md p-1 flex flex-col">
+    <section className="bg-white max-w-full min-h-full border border-secondaryColor-100/50 rounded-md p-1 flex flex-col">
       <PreviewHeader resumeData={resumeData} />
       <SkillsPreview resumeData={resumeData} />
       <ExperiencePreview resumeData={resumeData} />

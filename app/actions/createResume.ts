@@ -1,6 +1,7 @@
 "use server";
 import { getServerAxiosInstance } from "@/hooks/serverAxiosInstance";
-import axiosInstance, { baseURL } from "@/hooks/useAxios";
+import { baseURL } from "@/hooks/useAxios";
+import { resumeData } from "@/types";
 import axios from "axios";
 import { z } from "zod";
 
@@ -78,7 +79,6 @@ export async function initializeAction() {
 
   try {
     const res = await axiosInstance.post(`${baseURL}/resume/initialize`);
-    console.log(res);
     if (res.status !== 201) {
       throw new Error(res?.data?.message);
     }
@@ -89,3 +89,31 @@ export async function initializeAction() {
     return { success: false, error: "Failed to Initialize Resume" };
   }
 }
+
+export async function getUser() {
+  const axiosInstance = await getServerAxiosInstance();
+
+  try {
+    const res = await axiosInstance.get(`${baseURL}/profile/fetch`);
+    if (res.status !== 200) {
+      throw new Error(res?.data?.message);
+    }
+    return { success: true, data: res.data };
+  } catch (error) {
+    console.error(error);
+    return { success: false, error: "Failed to Fetch user" };
+  }
+}
+
+export const fetchResumes = async (id: string) => {
+  const axiosInstance = await getServerAxiosInstance();
+  try {
+    const response = await axiosInstance.get(`${baseURL}/profile/fetch`);
+    const resumes: resumeData[] = response.data?.payload?.resumes;
+    //Filter based on resumeId search query in url
+    const filteredResumes = resumes.filter((resume) => resume?._id === id);
+    return filteredResumes;
+  } catch (error) {
+    console.log(error);
+  }
+};

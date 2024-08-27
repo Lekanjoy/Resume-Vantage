@@ -4,6 +4,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { stepsData } from "@/data";
 import { ButtonProps } from "./button";
 import { setAuthToken } from "@/app/actions/auth";
+import { useAppDispatch } from "@/store/store";
+import { fetchResumeData } from "@/features/resumeSlice";
 import UserHeader from "@/components/dashboard/header";
 import Sidebar from "@/components/dashboard/sidebar";
 import Experiences from "@/components/dashboard/experiences";
@@ -16,7 +18,8 @@ import AdditionalDetails from "./details";
 import Confirm from "./confirm";
 import CreationMethod from "./add-upload-resume/CreationMethod";
 
-const DashboardContent = () => {
+
+const DashboardContent = ({ id }: { id: string | string[] | undefined }) => {
   const [steps, setSteps] = useState(stepsData);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isToggle, setIsToggle] = useState(false);
@@ -91,6 +94,12 @@ const DashboardContent = () => {
       });
     }
   }, [router, searchParams]);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (id) dispatch(fetchResumeData(id as string));
+  }, [dispatch, id]);
 
   return (
     <section className="relative w-full min-h-dvh flex">

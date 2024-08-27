@@ -4,16 +4,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence } from "framer-motion";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useToast } from "@/components/ui/use-toast";
 import { updatePassword } from "@/app/actions/auth";
 import ResetStatus from "@/components/statusPages/ResetStatus";
 import CustomInput from "@/components/input";
 import logo from "@/public/assets/auth/logo.svg";
 import spinner from "@/public/assets/auth/spinner.svg";
 import { statusState } from "./page";
+import { useToast } from "@/components/toast/ShowToast";
+import Toast from "@/components/toast";
 
 const ResetContent = () => {
-  const { toast } = useToast();
+  const { showToast, toastState } = useToast();
   const [emailValue, setEmailValue] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
@@ -37,10 +38,7 @@ const ResetContent = () => {
     const trimmedPasswordConfirm = passwordConfirm.trim();
 
     if (trimmedPassword !== trimmedPasswordConfirm) {
-      toast({
-        variant: "destructive",
-        description: "Passwords do not match",
-      });
+      showToast("Passwords do not match", "error");
       return;
     }
 
@@ -50,11 +48,7 @@ const ResetContent = () => {
       setStatus("success");
     } else {
       setStatus("failed");
-      toast({
-        variant: "destructive",
-        title: "Uh oh! Something went wrong.",
-        description: res.error,
-      });
+      showToast(res.error, "error");
     }
   };
 
@@ -111,6 +105,12 @@ const ResetContent = () => {
       <AnimatePresence>
         {status === "success" && <ResetStatus />}
       </AnimatePresence>
+
+      <Toast
+        message={toastState.message}
+        variant={toastState.variant}
+        isVisible={toastState.visible}
+      />
     </section>
   );
 };

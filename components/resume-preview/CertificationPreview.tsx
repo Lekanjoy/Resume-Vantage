@@ -3,9 +3,11 @@ import { resumeDataProps } from "@/types";
 const CertificationPreview = ({ resumeData }: resumeDataProps) => {
   return (
     <div className="mt-1">
-      <h3 className="text-[6px] font-bold mb-[1px] text-center text-blue-900 border-y border-blue-900/40">
-        CERTIFICATIONS
-      </h3>
+      {resumeData?.certifications?.length > 0 && (
+        <h3 className="text-[6px] font-bold mb-[1px] text-center text-blue-900 border-y border-blue-900/40">
+          CERTIFICATIONS
+        </h3>
+      )}
       {resumeData?.certifications?.map((det, index) => {
         return (
           <div key={index} className="flex flex-col mb-[1px]">

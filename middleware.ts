@@ -16,7 +16,7 @@ export function middleware(request: NextRequest) {
   );
 
   // Allow access to the home page
-  if (pathname === "/") {
+  if (pathname === "/" || pathname === "/templates") {
     return NextResponse.next();
   }
 

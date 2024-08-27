@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { AnimatePresence } from "framer-motion";
 import { statusState } from "../reset-password/page";
 import { signUpUser } from "@/app/actions/auth";
-import { useToast } from "@/components/ui/use-toast";
 import BrandName from "@/components/brand-name";
 import CustomInput from "@/components/input";
 import logo from "@/public/assets/auth/logo.svg";
@@ -17,6 +16,8 @@ import spinner from "@/public/assets/auth/spinner.svg";
 import spinnerBlue from "@/public/assets/auth/spinnerBlue.svg";
 import axios from "axios";
 import { baseURL } from "@/hooks/useAxios";
+import { useToast } from "@/components/toast/ShowToast";
+import Toast from "@/components/toast";
 
 const SignUp = () => {
   const [firstName, setFirstName] = useState("");
@@ -26,7 +27,7 @@ const SignUp = () => {
   const [status, setStatus] = useState<statusState | null>(null);
 
   const router = useRouter();
-  const { toast } = useToast();
+  const { showToast, toastState } = useToast();
 
   const handleSignup = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -36,11 +37,7 @@ const SignUp = () => {
       setStatus("success");
     } else {
       setStatus("failed");
-      toast({
-        variant: "destructive",
-        title: "An error occurred",
-        description: res.error,
-      });
+      showToast(res.error, "error");
     }
   };
 
@@ -53,11 +50,7 @@ const SignUp = () => {
     } catch (error) {
       console.error(error);
       setStatus("failed");
-      toast({
-        variant: "destructive",
-        title: "Uh oh! Something went wrong.",
-        description: "There was a problem with your registration.",
-      });
+      showToast("There was a problem with your registration.", "error");
     }
   };
 
@@ -169,6 +162,12 @@ const SignUp = () => {
       <AnimatePresence>
         {status === "success" && <SignUpStatus email={email} />}
       </AnimatePresence>
+
+      <Toast
+        message={toastState.message}
+        variant={toastState.variant}
+        isVisible={toastState.visible}
+      />
     </section>
   );
 };
