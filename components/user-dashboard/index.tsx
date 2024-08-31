@@ -69,7 +69,7 @@ const UserDashboard = ({ resumes, error }: UserDashboardProps) => {
         ))}
       </div>
 
-      <div className="mt-12 xl:mt-16">
+      <div className="mt-5 flex gap-x-2 xl:mt-16">
         {renderResumeViews()}
       </div>
 

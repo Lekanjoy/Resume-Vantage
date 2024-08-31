@@ -18,8 +18,30 @@ import AdditionalDetails from "./details";
 import Confirm from "./confirm";
 import CreationMethod from "./add-upload-resume/CreationMethod";
 
-
 const DashboardContent = ({ id }: { id: string | string[] | undefined }) => {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const payload = searchParams.get("payload");
+    if (payload) {
+      // Set the token in cookie
+      setAuthToken(payload);
+      // Set the token in sessionStorage
+      sessionStorage.setItem("token", payload);
+      // Remove the payload from the URL
+      requestAnimationFrame(() => {
+        router.replace("/dashboard");
+      });
+    }
+  }, [router, searchParams]);
+
+
+  useEffect(() => {
+    if (id) dispatch(fetchResumeData(id as string));
+  }, [dispatch, id]);
+
   const [steps, setSteps] = useState(stepsData);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isToggle, setIsToggle] = useState(false);
@@ -45,6 +67,10 @@ const DashboardContent = ({ id }: { id: string | string[] | undefined }) => {
     }
   };
 
+  const handleEditExperience = () => {
+    setCurrentIndex(2);
+  };
+
   const sectionData = [
     (props: JSX.IntrinsicAttributes & ButtonProps) => (
       <CreationMethod key="create-or-upload" {...props} />
@@ -59,7 +85,7 @@ const DashboardContent = ({ id }: { id: string | string[] | undefined }) => {
       <ExperienceDescription key="exp-describe" {...props} />
     ),
     (props: JSX.IntrinsicAttributes & ExperienceReviewProps) => (
-      <ExperienceReview key="exp-preview" {...props} />
+      <ExperienceReview key="exp-preview" {...props} onEditExperience={handleEditExperience} />
     ),
     (props: JSX.IntrinsicAttributes & ButtonProps) => (
       <Education key="education" {...props} />
@@ -78,38 +104,17 @@ const DashboardContent = ({ id }: { id: string | string[] | undefined }) => {
     ),
   ];
 
-  const searchParams = useSearchParams();
-  const router = useRouter();
-
-  useEffect(() => {
-    const payload = searchParams.get("payload");
-    if (payload) {
-      // Set the token in cookie
-      setAuthToken(payload);
-      // Set the token in sessionStorage
-      sessionStorage.setItem("token", payload);
-      // Remove the payload from the URL
-      requestAnimationFrame(() => {
-        router.replace("/dashboard");
-      });
-    }
-  }, [router, searchParams]);
-
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    if (id) dispatch(fetchResumeData(id as string));
-  }, [dispatch, id]);
 
   return (
     <section className="relative w-full min-h-dvh flex">
       <Sidebar steps={steps} isToggle={isToggle} setIsToggle={setIsToggle} />
       <section className="mt-[72px] w-full pr-4 pl-[96px] lg:pl-[calc(20%+56px)] lg:pr-14 2xl:lg:pl-[calc(20%+64px)] 2xl:pr-16">
         {sectionData[currentIndex]({
-          currentIndex,
           handlePrev,
           handleNext,
+          currentIndex,
           setCurrentIndex,
+          onEditExperience: handleEditExperience,
         })}
       </section>
     </section>

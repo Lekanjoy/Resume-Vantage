@@ -1,7 +1,14 @@
 import { fetchResumes } from "@/app/actions/createResume";
 import { resumeData } from "@/data";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+interface Experience {
+  title: string;
+  company: string;
+  dates: string;
+  location: string;
+  description: string[];
+}
 const initialState = resumeData;
 
 export const fetchResumeData = createAsyncThunk(
@@ -25,15 +32,29 @@ const resumeSlice = createSlice({
     removeSkill: (state, action) => {
       state.skills = state.skills.filter((skill) => skill !== action.payload);
     },
-    addExperience: (state, action) => {
-      state.experience.push(action.payload);
+    addExperience: (state, action: PayloadAction<Omit<Experience, 'description'>>) => {
+      state.experience.push({ ...action.payload, description: [] });
+      state.currentEditingIndex = state.experience.length - 1;
     },
-    updateExperience: (state, action) => {
-      const index = state.experience.findIndex(
-        (exp) => exp.company === action.payload.company
-      );
-      if (index !== -1) {
-        state.experience[index] = action.payload;
+    updateExperience: (state, action: PayloadAction<{ experience: Experience }>) => {
+      if (state.currentEditingIndex !== null) {
+        state.experience[state.currentEditingIndex] = action.payload.experience;
+      }
+    },
+    setCurrentEditingIndex: (state, action: PayloadAction<number | null>) => {
+      state.currentEditingIndex = action.payload;
+    },
+    toggleDescriptionInCurrentExperience: (state, action: PayloadAction<string>) => {
+      if (state.currentEditingIndex !== null) {
+        const currentExperience = state.experience[state.currentEditingIndex];
+        const descriptionIndex = currentExperience.description.indexOf(action.payload);
+        if (descriptionIndex === -1) {
+          // Description doesn't exist, so add it
+          currentExperience.description.push(action.payload);
+        } else {
+          // Description exists, so remove it
+          currentExperience.description.splice(descriptionIndex, 1);
+        }
       }
     },
     removeExperience: (state, action) => {
@@ -81,7 +102,6 @@ const resumeSlice = createSlice({
       })
       .addCase(fetchResumeData.fulfilled, (state, action) => {
         state.status = "success";
-
         if (action.payload) {
           state.fname = action.payload[0]?.firstName;
           state.lname = action.payload[0]?.lastName;
@@ -109,6 +129,8 @@ export const {
   removeSkill,
   addExperience,
   updateExperience,
+  toggleDescriptionInCurrentExperience,
+  setCurrentEditingIndex,
   removeExperience,
   addEducation,
   updateEducation,

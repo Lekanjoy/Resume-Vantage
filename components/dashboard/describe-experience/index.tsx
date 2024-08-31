@@ -1,7 +1,8 @@
-import React, { useState } from "react";
 import SearchBox from "./SearchBox";
 import RichTextEditor from "../editor";
 import Button, { ButtonProps as DescriptionProps } from "../button";
+import { useTypedSelector } from "@/store/store";
+
 
 export type selectedResult = {
   id: number;
@@ -13,9 +14,14 @@ const ExperienceDescription = ({
   handlePrev,
   handleNext,
 }: DescriptionProps) => {
-  const role = "Product Designer";
 
-  const [selectedResults, setSelectedResults] = useState<selectedResult[]>([]);
+  const experiences = useTypedSelector((store) => store.resume.experience);
+  const currentEditingIndex = useTypedSelector((state) => state.resume.currentEditingIndex);
+
+  const role = currentEditingIndex !== null
+    ? experiences[currentEditingIndex].title
+    : "Product Designer";
+
   return (
     <>
       <div className="mb-10 flex flex-col gap-y-1 lg:gap-y-3 lg:mb-12">
@@ -30,10 +36,8 @@ const ExperienceDescription = ({
       <div className="w-full flex justify-between flex-col gap-y-10 lg:flex-row lg:gap-x-5 xl:gap-x-8">
         <SearchBox
           role={role}
-          setIsSelectedResults={setSelectedResults}
-          selectedResults={selectedResults}
         />
-        <RichTextEditor selectedResults={selectedResults} />
+        <RichTextEditor/>
       </div>
       <div className="w-full my-20 flex justify-center items-center">
         <Button

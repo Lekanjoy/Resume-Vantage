@@ -1,36 +1,37 @@
 import Image from "next/image";
 import addIcon from "@/public/assets/dashboard/add-01.svg";
 import removeIcon from "@/public/assets/dashboard/remove-01.svg";
-import { Dispatch, SetStateAction, useState } from "react";
+import {  useMemo } from "react";
 import { twMerge } from "tailwind-merge";
 import { selectedResult } from ".";
+import { toggleDescriptionInCurrentExperience } from "@/features/resumeSlice";
+import { useTypedSelector, useAppDispatch } from "@/store/store";
 
 interface resultProps {
   result: selectedResult;
-  setIsSelectedResults:  Dispatch<SetStateAction<selectedResult[]>>;
 }
 
-const Result = ({ result, setIsSelectedResults }: resultProps) => {
-  const [isSelected, setIsSelected] = useState(false);
+const Result = ({ result }: resultProps) => {
+  const dispatch = useAppDispatch();
+  const experiences = useTypedSelector((state) => state.resume.experience);
+  const currentEditingIndex = useTypedSelector(
+    (state) => state.resume.currentEditingIndex
+  );
 
-  const handleSelected = () => {
-    setIsSelected(!isSelected);
-    setIsSelectedResults(prevResults => {
-      const resultExists = prevResults.some(item => item.id === result.id);
-      if (resultExists) {
-        // If the result is already in the array, remove it
-        return prevResults.filter(item => item.id !== result.id);
-      } else {
-        // If the result is not in the array, add it
-        return [...prevResults, { id: result.id, text: result.text }];
-      }
-    });
+  const isSelected = useMemo(() => {
+    if (currentEditingIndex !== null && experiences[currentEditingIndex]) {
+      return experiences[currentEditingIndex].description.includes(result.text);
+    }
+    return false;
+  }, [experiences, currentEditingIndex, result.text]);
+
+  const handleAddDescription = () => {
+    dispatch(toggleDescriptionInCurrentExperience(result.text));
   };
-
 
   return (
     <div
-      onClick={handleSelected}
+      onClick={handleAddDescription}
       className="flex justify-between gap-x-2 p-4 bg-[#FAFAFA] w-full cursor-pointer  border border-[#B9BBBE]/65 rounded-sm lg:rounded-md  xl:p-5 xl:gap-x-6"
     >
       <div

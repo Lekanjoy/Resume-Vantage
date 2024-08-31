@@ -112,6 +112,8 @@ export const stepsData = [
 ];
 
 export const resumeData = {
+  currentEditingIndex: null as number | null,
+  status: 'idle',
   fname: "Florish",
   lname: "Ralph",
   title: "Software Engineer",
@@ -160,7 +162,6 @@ export const resumeData = {
       institution: "Meta Inc",
     },
   ],
-  status: 'idle',
 };
 
 export const resultData: {

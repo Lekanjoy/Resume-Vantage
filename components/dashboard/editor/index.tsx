@@ -1,90 +1,84 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   BtnBold,
-  BtnBulletList,
-  BtnClearFormatting,
   BtnItalic,
-  BtnLink,
-  BtnNumberedList,
-  BtnStrikeThrough,
-  BtnStyles,
   BtnUnderline,
   Editor,
   EditorProvider,
-  HtmlButton,
-  Separator,
   Toolbar,
   BtnRedo,
   BtnUndo,
-  createButton,
   ContentEditableEvent,
 } from "react-simple-wysiwyg";
 import stars from "@/public/assets/dashboard/stars.svg";
 import Image from "next/image";
-import { selectedResult } from "../describe-experience";
+import { useTypedSelector, useAppDispatch } from "@/store/store";
+import { updateExperience } from "@/features/resumeSlice";
 
-function RichTextEditor({
-  selectedResults,
-}: {
-  selectedResults: selectedResult[];
-}) {
+function RichTextEditor() {
+  const dispatch = useAppDispatch();
+  const experiences = useTypedSelector((state) => state.resume.experience);
+  const currentEditingIndex = useTypedSelector((state) => state.resume.currentEditingIndex);
+
   const [editorContent, setEditorContent] = useState("");
-  const prevSelectedResultsRef = useRef<selectedResult[]>([]);
 
   useEffect(() => {
-    const newResults = selectedResults.filter(
-      (result) =>
-        !prevSelectedResultsRef.current.some(
-          (prevResult) => prevResult.id === result.id
-        )
-    );
-
-    if (newResults.length > 0) {
-      setEditorContent((prevContent) => {
-        const newItems = newResults.map((result) => `<li>${result.text}</li>`);
-        const newContent = prevContent
-          ? `${prevContent}\n${newItems.join("\n")}`
-          : `<ul>\n${newItems.join("\n")}\n</ul>`;
-        return newContent;
-      });
-    } else {
-      // Handle removal of results
-      const removedResults = prevSelectedResultsRef.current.filter(
-        (prevResult) =>
-          !selectedResults.some((result) => result.id === prevResult.id)
-      );
-
-      if (removedResults.length > 0) {
-        setEditorContent((prevContent) => {
-          let newContent = prevContent;
-          removedResults.forEach((result) => {
-            // Remove the <li> element containing the result
-            newContent = newContent
-              .replace(`<li>${result.text}</li>\n`, "")
-              .replace(`<li>${result.text}</li>`, "")
-              .trim();
-          });
-          // Remove empty <ul> tags if all items are removed
-          newContent = newContent.replace(/<ul>\s*<\/ul>/g, "");
-          return newContent;
-        });
-      }
+    if (currentEditingIndex !== null && experiences[currentEditingIndex]) {
+      const description = experiences[currentEditingIndex].description
+        .map(item => `<li>${item}</li>`)
+        .join('');
+      setEditorContent(`<ul>${description}</ul>`);
     }
-    prevSelectedResultsRef.current = selectedResults;
-  }, [selectedResults]);
+  }, [currentEditingIndex, experiences]);
 
   const handleContentChange = (event: ContentEditableEvent) => {
-    setEditorContent(event.target.value);
+    let newContent = event.target.value;
+    
+    // Ensure content is always wrapped in a <ul> tag
+    if (!newContent.trim().startsWith('<ul>')) {
+      newContent = `<ul>${newContent}</ul>`;
+    }
+
+    // Ensure each line is a list item
+    newContent = newContent.replace(/<ul>([^]*?)<\/ul>/g, (match, p1) => {
+      const items = p1.split(/<\/li>\s*<li>|<br\s*\/?>/g)
+        .map((item: string) => item.trim())
+        .filter((item: string) => item !== '')
+        .map((item: string) => item.replace(/^<li>|<\/li>$/g, ''))
+        .map((item: string) => `<li>${item}</li>`)
+        .join('');
+      return `<ul>${items}</ul>`;
+    });
+
+    setEditorContent(newContent);
+
+    if (currentEditingIndex !== null) {
+      const updatedExperience = {
+        ...experiences[currentEditingIndex],
+        description: newContent.match(/<li>(.*?)<\/li>/g)?.map(item => item.replace(/<\/?li>/g, '')) || []
+      };
+      dispatch(updateExperience({ experience: updatedExperience }));
+    }
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      document.execCommand('insertHTML', false, '</li><li><br></li>');
+    }
   };
 
   return (
     <EditorProvider>
-      <Editor value={editorContent} onChange={handleContentChange}>
+      <Editor 
+        value={editorContent} 
+        onChange={handleContentChange} 
+        onKeyDown={handleKeyDown}
+      >
         <Toolbar>
           <BtnBold />
           <BtnItalic />
           <BtnUnderline />
-          <BtnBulletList />
           <BtnUndo />
           <BtnRedo />
           <div className="bg-[#FAFAFA] border border-[#BDBDBD] p-2 rounded-md cursor-pointer ml-auto">

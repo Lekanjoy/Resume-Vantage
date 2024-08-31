@@ -23,7 +23,7 @@ const View = ({ resume }: ViewProps) => {
   };
   return (
     <Link
-      href={`/dashboard/?resumeId=${resume?._id}`}
+      href={`/dashboard/?resumeId=${resume?._id}&editing=true`}
       className="flex flex-col w-[200px] h-[250px]"
     >
       <Resume resumeData={resumeData} />

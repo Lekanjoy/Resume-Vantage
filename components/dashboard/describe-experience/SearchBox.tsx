@@ -2,17 +2,13 @@ import Image from "next/image";
 import searchIcon from "@/public/assets/dashboard/searchIcon.svg";
 import Result from "./Result";
 import { resultData } from "@/data";
-import { selectedResult } from ".";
-import { Dispatch, SetStateAction } from "react";
 
 interface searchResultProps {
   role: string;
-  selectedResults:  selectedResult[];
-  setIsSelectedResults:  Dispatch<SetStateAction<selectedResult[]>>;
 }
 
 
-const SearchResults = ({ role, setIsSelectedResults }: searchResultProps) => {
+const SearchResults = ({ role }: searchResultProps) => {
   return (
     <div className="w-full bg-[#F7F5FE] p-5 h-[400px] overflow-x-auto border border-[#B9BBBE] rounded lg:h-[600px] lg:rounded-md lg:w-1/2 xl:p-8">
       <div className="w-full search flex flex-col gap-y-1">
@@ -40,7 +36,10 @@ const SearchResults = ({ role, setIsSelectedResults }: searchResultProps) => {
 
         <div className="flex flex-col gap-y-2 lg:gap-y-3">
           {resultData.map((result) => (
-            <Result key={result.id} result={result} setIsSelectedResults={setIsSelectedResults}/>
+            <Result
+              key={result.id}
+              result={result}
+            />
           ))}
         </div>
       </div>
