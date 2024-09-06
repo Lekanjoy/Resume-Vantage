@@ -8,7 +8,7 @@ import { useAppDispatch } from "@/store/store";
 import { fetchResumeData } from "@/features/resumeSlice";
 import UserHeader from "@/components/dashboard/header";
 import Sidebar from "@/components/dashboard/sidebar";
-import Experiences from "@/components/dashboard/experiences";
+import Experiences, { ExtendedExperienceProps } from "@/components/dashboard/experiences";
 import Education from "@/components/dashboard/education";
 import ExperienceDescription from "./describe-experience";
 import ExperienceReview, { ExperienceReviewProps } from "./review-experience";
@@ -41,6 +41,19 @@ const DashboardContent = ({ id }: { id: string | string[] | undefined }) => {
   useEffect(() => {
     if (id) dispatch(fetchResumeData(id as string));
   }, [dispatch, id]);
+
+  useEffect(() => {
+  // Clear sessionStorage on page refresh
+  const handleBeforeUnload = () => {
+    sessionStorage.removeItem('hasNavigatedToExperiences');
+  };
+
+  window.addEventListener('beforeunload', handleBeforeUnload);
+
+  return () => {
+    window.removeEventListener('beforeunload', handleBeforeUnload);
+  };
+  },[])
 
   const [steps, setSteps] = useState(stepsData);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -78,7 +91,7 @@ const DashboardContent = ({ id }: { id: string | string[] | undefined }) => {
     (props: JSX.IntrinsicAttributes & ButtonProps) => (
       <UserHeader key="user-header" {...props} />
     ),
-    (props: JSX.IntrinsicAttributes & ButtonProps) => (
+    (props: JSX.IntrinsicAttributes & ExtendedExperienceProps) => (
       <Experiences key="experiences" {...props} />
     ),
     (props: JSX.IntrinsicAttributes & ButtonProps) => (

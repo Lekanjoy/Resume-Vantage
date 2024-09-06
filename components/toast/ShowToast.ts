@@ -17,7 +17,7 @@ export function useToast() {
 
     const showToast = useCallback((message: string, variant: ToastVariant) => {
         setToastState({ visible: true, message, variant });
-        setTimeout(() => setToastState((prev) => ({ ...prev, visible: false })), 3000);
+        setTimeout(() => setToastState((prev) => ({ ...prev, visible: false })), 5000);
     }, []);
 
     return { toastState, showToast };

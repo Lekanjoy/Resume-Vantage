@@ -1,40 +1,84 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from "react";
 import CustomInput from "@/components/input";
 import ResumePreview from "@/components/resume-preview";
 import Button, { ButtonProps as ExperienceProps } from "../button";
-import { addExperience, setCurrentEditingIndex, updateExperience } from "@/features/resumeSlice";
+import {
+  addExperience,
+  setCurrentEditingIndex,
+  updateExperience,
+} from "@/features/resumeSlice";
 import { useAppDispatch, useTypedSelector } from "@/store/store";
+import { createResumeExperience } from "@/app/actions/createResume";
+import { useToast } from "@/components/toast/ShowToast";
+import Toast from "@/components/toast";
+import { useSearchParams } from "next/navigation";
+import { updateSuggestions } from "@/features/AISuggestionsSlice";
+
+
+export interface ExtendedExperienceProps extends ExperienceProps {
+  setCurrentIndex: Dispatch<SetStateAction<number>>;
+}
 
 const Experiences = ({
   currentIndex,
+  setCurrentIndex,
   handleNext,
   handlePrev,
-}: ExperienceProps) => {
+}: ExtendedExperienceProps) => {
+  const searchParams = useSearchParams();
   const dispatch = useAppDispatch();
+  const { showToast, toastState } = useToast();
   const experiences = useTypedSelector((store) => store.resume.experience);
-  const currentEditingIndex = useTypedSelector((state) => state.resume.currentEditingIndex);
-
+  const currentEditingIndex = useTypedSelector(
+    (state) => state.resume.currentEditingIndex
+  );
+  const resumeId = useTypedSelector((state) => state.resume.resumeId);
   const [isChecked, setIsChecked] = useState(false);
   const [currentExperience, setCurrentExperience] = useState({
-    title: "",
+    _id: "",
+    jobTitle: "",
     company: "",
-    dates: "",
-    location: "",
+    startDate: "",
+    endDate: "",
+    city: "",
+    country: "",
     description: [""],
   });
+
+  const editing = searchParams.get("editing") as string;
+  const toBoolean =
+    sessionStorage.getItem("hasNavigatedToExperiences") === "true"
+      ? true
+      : false;
+  const [hasNavigated, setHasNavigated] = useState(toBoolean);
+
+  useEffect(() => {
+    const isEditing = editing === "true";
+    if (isEditing && !hasNavigated) {
+      setCurrentIndex(4);
+      setHasNavigated(true);
+      // Store the navigation state in sessionStorage
+      sessionStorage.setItem("hasNavigatedToExperiences", "true");
+    } else if (!isEditing) {
+      // Clear the navigation state when not editing
+      sessionStorage.removeItem("hasNavigatedToExperiences");
+      setHasNavigated(false);
+    }
+  }, [editing, setCurrentIndex, hasNavigated]);
 
   useEffect(() => {
     if (currentEditingIndex !== null && experiences[currentEditingIndex]) {
       setCurrentExperience(experiences[currentEditingIndex]);
-      setIsChecked(experiences[currentEditingIndex].dates.split(" - ")[1] === "Present");
+      setIsChecked(experiences[currentEditingIndex].endDate === "Present");
     } else {
-      const today = new Date();
-      const todayDate = today.toISOString().split("T")[0];
       setCurrentExperience({
-        title: "",
+        _id: "",
+        jobTitle: "",
         company: "",
-        dates: `${todayDate} - ${todayDate}`,
-        location: "",
+        startDate: "",
+        endDate: "",
+        city: "",
+        country: "",
         description: [""],
       });
       setIsChecked(false);
@@ -45,46 +89,79 @@ const Experiences = ({
     setIsChecked(event.target.checked);
     const endDate = event.target.checked
       ? "Present"
-      : currentExperience.dates.split(" - ")[0];
+      : currentExperience.endDate;
     setCurrentExperience((prev) => ({
       ...prev,
-      dates: `${prev.dates.split(" - ")[0]} - ${endDate}`,
+      endDate,
     }));
   };
 
   const handleInputChange =
     (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (field === "city" || field === "country") {
-        setCurrentExperience((prev) => ({
-          ...prev,
-          location: `${
-            field === "city" ? e.target.value : prev.location.split(", ")[0]
-          }, ${
-            field === "country" ? e.target.value : prev.location.split(", ")[1]
-          }`,
-        }));
-      } else if (field === "startDate" || field === "endDate") {
-        const [start, end] = currentExperience.dates.split(" - ");
-        setCurrentExperience((prev) => ({
-          ...prev,
-          dates: `${field === "startDate" ? e.target.value : start} - ${
-            field === "endDate" ? e.target.value : end
-          }`,
-        }));
-      } else {
-        setCurrentExperience((prev) => ({ ...prev, [field]: e.target.value }));
-      }
+      setCurrentExperience((prev) => ({
+        ...prev,
+        [field]: e.target.value,
+      }));
     };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (currentEditingIndex !== null) {
-      dispatch(updateExperience({experience: currentExperience }));
+      const experienceToUpdate = {
+        ...currentExperience,
+        description: currentExperience.description || []
+      };
+      dispatch(updateExperience({ experience: experienceToUpdate }));
+      console.log(experienceToUpdate);
     } else {
-      dispatch(addExperience(currentExperience));
-    dispatch(setCurrentEditingIndex(experiences.length));
-
+      const newExperience = {
+        ...currentExperience,
+        description: currentExperience.description || []
+      };
+      dispatch(addExperience(newExperience));
+      dispatch(setCurrentEditingIndex(experiences.length));
     }
     handleNext();
+
+    // const experienceInput = {
+    //   resumeId,
+    //   jobTitle: currentExperience.jobTitle,
+    //   company: currentExperience.company,
+    //   city: currentExperience.city,
+    //   country: currentExperience.country,
+    //   startDate: currentExperience.startDate,
+    //   endDate: currentExperience.endDate,
+    //   currentlyWorking: isChecked,
+    // };
+
+    // const result = await createResumeExperience(experienceInput);
+
+    // if (result.success) {
+    //   if (currentEditingIndex !== null) {
+    //     const experienceToUpdate = {
+    //       ...currentExperience,
+    //       description: currentExperience.description || [],
+    //     };
+    //     dispatch(updateExperience({ experience: experienceToUpdate }));
+    //     console.log(experienceToUpdate);
+    //   } else {
+    //     const newExperience = {
+    //       ...currentExperience,
+    //       description: currentExperience.description || [],
+    //     };
+    //     dispatch(addExperience(newExperience));
+    //     dispatch(setCurrentEditingIndex(experiences.length));
+    //   }
+    //   console.log(result.data?.payload);
+    //   console.log(resumeId)
+    //   dispatch(
+    //     updateSuggestions(result.data?.payload?.responsiblitiesRecommendations)
+    //   );
+    //   showToast("Experience created successfully", "success");
+    //   handleNext();
+    // } else {
+    //   showToast(result.error, "error");
+    //   console.error("Failed to create experience:", result.error);
+    // }
   };
 
   return (
@@ -104,49 +181,49 @@ const Experiences = ({
           className="flex flex-col flex-shrink-0 gap-y-6 lg:grid lg:w-[70%] lg:grid-cols-2 lg:gap-x-8"
         >
           <CustomInput
-            id={"title"}
-            type={"text"}
-            label={"Job Title"}
-            placeholder={"Product Designer"}
-            value={currentExperience.title}
-            onChange={handleInputChange("title")}
+            id="jobTitle"
+            type="text"
+            label="Job Title"
+            placeholder="Product Designer"
+            value={currentExperience.jobTitle}
+            onChange={handleInputChange("jobTitle")}
           />
           <CustomInput
-            id={"company"}
-            type={"text"}
-            label={"Company"}
-            placeholder={"Microsoft"}
+            id="company"
+            type="text"
+            label="Company"
+            placeholder="Microsoft"
             value={currentExperience.company}
             onChange={handleInputChange("company")}
           />
           <CustomInput
-            id={"city"}
-            type={"text"}
-            label={"City"}
-            placeholder={"London"}
-            value={currentExperience.location.split(", ")[0]}
+            id="city"
+            type="text"
+            label="City"
+            placeholder="London"
+            value={currentExperience.city}
             onChange={handleInputChange("city")}
           />
           <CustomInput
-            id={"country"}
-            type={"text"}
-            label={"Country"}
-            placeholder={"United Kingdom"}
-            value={currentExperience.location.split(", ")[1]}
+            id="country"
+            type="text"
+            label="Country"
+            placeholder="United Kingdom"
+            value={currentExperience.country}
             onChange={handleInputChange("country")}
           />
           <CustomInput
-            id={"startDate"}
-            type={"date"}
-            label={"Start Date"}
-            value={currentExperience.dates.split(" - ")[0]}
+            id="startDate"
+            type="date"
+            label="Start Date"
+            value={currentExperience.startDate}
             onChange={handleInputChange("startDate")}
           />
           <CustomInput
             id="endDate"
             type={isChecked ? "text" : "date"}
             label="End Date"
-            value={currentExperience.dates.split(" - ")[1]}
+            value={currentExperience.endDate}
             onChange={handleInputChange("endDate")}
             isDisabled={isChecked}
           />
@@ -178,6 +255,12 @@ const Experiences = ({
           handlePrev={handlePrev}
         />
       </div>
+
+      <Toast
+        message={toastState.message}
+        variant={toastState.variant}
+        isVisible={toastState.visible}
+      />
     </>
   );
 };

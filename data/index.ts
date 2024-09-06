@@ -113,7 +113,8 @@ export const stepsData = [
 
 export const resumeData = {
   currentEditingIndex: null as number | null,
-  status: 'idle',
+  status: "idle",
+  resumeId: "23dfasds4dfgdfg",
   fname: "Florish",
   lname: "Ralph",
   title: "Software Engineer",
@@ -137,16 +138,19 @@ export const resumeData = {
   ],
   experience: [
     {
-      title: "Software Engineer",
+      _id: "66d4ee36ab71f75fc3fbbdc1",
+      jobTitle: "Software Engineer",
       company: "ABC Corporation",
-      dates: "2018-2020",
-      location: "New York, USA",
+      startDate: "2018",
+      endDate: "2020",
+      city: "New York",
+      country: "USA",
       description: [
         "Developed multiple web applications using React and Node.js.",
         "Collaborated with cross-functional teams to design and implement new features.",
         "Improved code quality and efficiency by implementing automated testing and code reviews.",
       ],
-    }
+    },
   ],
   education: [
     {
@@ -164,28 +168,10 @@ export const resumeData = {
   ],
 };
 
-export const resultData: {
-  id: number;
-  text: string;
-}[] = [
-  {
-    id: 0,
-    text: "Carried out interviews and User research to understand users’ pain points.",
-  },
-  {
-    id: 1,
-    text: "Developed user stories, user journey maps, and user personas.",
-  },
-  {
-    id: 2,
-    text: "Brainstormed features to serve as solutions to the problems of users.",
-  },
-  {
-    id: 3,
-    text: "Created wireframes and high fidelity designs to showcase the user interface of the product.",
-  },
-  {
-    id: 4,
-    text: "Performed usability testing to showcase the flow of the product and identify areas to improve.",
-  },
+export const resultData = [
+  "Carried out interviews and User research to understand users’ pain points.",
+  "Developed user stories, user journey maps, and user personas.",
+  "Brainstormed features to serve as solutions to the problems of users.",
+  "Created wireframes and high fidelity designs to showcase the user interface of the product.",
+  "Performed usability testing to showcase the flow of the product and identify areas to improve.",
 ];

@@ -1,14 +1,13 @@
 import Image from "next/image";
 import addIcon from "@/public/assets/dashboard/add-01.svg";
 import removeIcon from "@/public/assets/dashboard/remove-01.svg";
-import {  useMemo } from "react";
+import { useMemo } from "react";
 import { twMerge } from "tailwind-merge";
-import { selectedResult } from ".";
 import { toggleDescriptionInCurrentExperience } from "@/features/resumeSlice";
 import { useTypedSelector, useAppDispatch } from "@/store/store";
 
 interface resultProps {
-  result: selectedResult;
+  result: string;
 }
 
 const Result = ({ result }: resultProps) => {
@@ -20,13 +19,15 @@ const Result = ({ result }: resultProps) => {
 
   const isSelected = useMemo(() => {
     if (currentEditingIndex !== null && experiences[currentEditingIndex]) {
-      return experiences[currentEditingIndex].description.includes(result.text);
+      return experiences[currentEditingIndex].description?.includes(
+        result
+      );
     }
     return false;
-  }, [experiences, currentEditingIndex, result.text]);
+  }, [experiences, currentEditingIndex, result]);
 
   const handleAddDescription = () => {
-    dispatch(toggleDescriptionInCurrentExperience(result.text));
+    dispatch(toggleDescriptionInCurrentExperience(result));    
   };
 
   return (
@@ -46,7 +47,7 @@ const Result = ({ result }: resultProps) => {
           className="w-fit"
         />
       </div>
-      <p className=" text-[#40444B] text-xs md:text-sm">{result.text}</p>
+      <p className=" text-[#40444B] text-xs md:text-sm">{result}</p>
     </div>
   );
 };

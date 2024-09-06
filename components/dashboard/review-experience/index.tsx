@@ -20,6 +20,7 @@ const ExperienceReview = ({
   setCurrentIndex,
   onEditExperience,
 }: ExperienceReviewProps) => {
+  const dispatch = useAppDispatch();
   const experiences = useTypedSelector((state) => state.resume.experience);
 
   const handleAddExperience = () => {
@@ -27,11 +28,11 @@ const ExperienceReview = ({
     dispatch(setCurrentEditingIndex(null));
   };
 
-  const dispatch = useAppDispatch();
   const handleEditExperience = (index: number) => {
     dispatch(setCurrentEditingIndex(index));
     onEditExperience();
   };
+
 
   return (
     <>
@@ -49,15 +50,15 @@ const ExperienceReview = ({
         <div className="flex flex-col flex-shrink-0 gap-y-2 lg:gap-y-4 lg:grid lg:w-[70%]">
           {experiences.map((experience, index) => (
             <div
-              key={index}
+              key={experience._id}
               className="w-full flex flex-col gap-y-3 bg-[#F7F5FE] py-4 px-4 text-secondaryColor-100 rounded-md border border-[#B9BBBE] lg:gap-y-4 xl:p-6 2xl:p-8"
             >
               <div className="flex justify-between items-center">
                 <div className="flex flex-col gap-y-[2px]">
                   <h3 className="text-sm font-semibold lg:text-base">
-                    {experience.title} at {experience.company}
+                    {experience.jobTitle} at {experience.company}
                   </h3>
-                  <p className="text-xs">{experience.dates}</p>
+                  <p className="text-xs">{`${experience.startDate} - ${experience.endDate}`}</p>
                 </div>
                 <div className="flex gap-x-3 items-center cursor-pointer xl:gap-x-6">
                   <Image
@@ -69,13 +70,14 @@ const ExperienceReview = ({
                   <Image
                     src={deleteIcon}
                     alt="delete Icon"
+                    onClick={() => console.log(experiences)}
                     className="w-[12px] h-[12px] lg:w-full lg:h-full"
                   />
                 </div>
               </div>
               <div>
                 <ul className="flex flex-col text-xs gap-y-[10px] pl-1 md:gap-y-3 xl:gap-y-4 list-disc list-inside">
-                  {experience.description.map((desc) => (
+                  {experience.description?.map((desc) => (
                     <li key={desc}>{desc}</li>
                   ))}
                 </ul>

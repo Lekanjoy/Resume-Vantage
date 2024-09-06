@@ -21,6 +21,7 @@ const UserHeader = ({
   const searchParams = useSearchParams();
 
   const resumeId = searchParams.get("resumeId") as string;
+
   const { fname, lname, title, email, city, country, phone } = resumeData;
   const address = city + ", " + country;
 
@@ -34,6 +35,8 @@ const UserHeader = ({
       setEditedFields((prev) => ({ ...prev, [field]: true }));
     };
 
+
+    
   const handleCreateHeader = async () => {
     setLoading(true);
     const res = await createResumeHeader(

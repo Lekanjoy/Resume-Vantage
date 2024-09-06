@@ -24,8 +24,7 @@ function RichTextEditor() {
 
   useEffect(() => {
     if (currentEditingIndex !== null && experiences[currentEditingIndex]) {
-      const description = experiences[currentEditingIndex].description
-        .map(item => `<li>${item}</li>`)
+      const description = experiences[currentEditingIndex].description?.map(item => `<li>${item}</li>`)
         .join('');
       setEditorContent(`<ul>${description}</ul>`);
     }

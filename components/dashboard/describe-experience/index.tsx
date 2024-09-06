@@ -2,25 +2,45 @@ import SearchBox from "./SearchBox";
 import RichTextEditor from "../editor";
 import Button, { ButtonProps as DescriptionProps } from "../button";
 import { useTypedSelector } from "@/store/store";
-
-
-export type selectedResult = {
-  id: number;
-  text: string;
-};
+import { addResponsibilitiesAction } from "@/app/actions/addResponsiblilities";
+import { useToast } from "@/components/toast/ShowToast";
+import Toast from "@/components/toast";
 
 const ExperienceDescription = ({
   currentIndex,
   handlePrev,
   handleNext,
 }: DescriptionProps) => {
-
+  const { showToast, toastState } = useToast();
   const experiences = useTypedSelector((store) => store.resume.experience);
-  const currentEditingIndex = useTypedSelector((state) => state.resume.currentEditingIndex);
+  const currentEditingIndex = useTypedSelector(
+    (state) => state.resume.currentEditingIndex
+  );
 
-  const role = currentEditingIndex !== null
-    ? experiences[currentEditingIndex].title
-    : "Product Designer";
+  const role =
+    currentEditingIndex !== null
+      ? experiences[currentEditingIndex].jobTitle
+      : "Product Designer";
+
+  const resumeId = useTypedSelector((store) => store.resume.resumeId);
+  const jobExperienceId = experiences[currentEditingIndex!]._id;
+  const userResponsibilities = experiences[currentEditingIndex!].description;
+
+  async function addResponsibilities() {
+    const responsibilitiesInput = {
+      resumeId,
+      jobExperienceId,
+      userResponsibilities,
+    };
+
+    const result = await addResponsibilitiesAction(responsibilitiesInput);
+    if (result.success) {
+      showToast("Responsibilities added", "success");
+    } else {
+      showToast(result.error, "error");
+      console.error(result.error);
+    }
+  }
 
   return (
     <>
@@ -34,18 +54,21 @@ const ExperienceDescription = ({
       </div>
 
       <div className="w-full flex justify-between flex-col gap-y-10 lg:flex-row lg:gap-x-5 xl:gap-x-8">
-        <SearchBox
-          role={role}
-        />
-        <RichTextEditor/>
+        <SearchBox role={role} />
+        <RichTextEditor />
       </div>
       <div className="w-full my-20 flex justify-center items-center">
         <Button
           currentIndex={currentIndex}
-          handleNext={handleNext}
+          handleNext={addResponsibilities}
           handlePrev={handlePrev}
         />
       </div>
+      <Toast
+        message={toastState.message}
+        variant={toastState.variant}
+        isVisible={toastState.visible}
+      />
     </>
   );
 };

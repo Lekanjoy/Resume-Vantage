@@ -1,10 +1,12 @@
 import {configureStore} from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import resumeSlice from '@/features/resumeSlice';
+import AISuggestionsSlice from '@/features/AISuggestionsSlice';
 
 export const store = configureStore({
   reducer: {
     resume: resumeSlice,
+    suggestions: AISuggestionsSlice
   },
 });
 

@@ -10,10 +10,13 @@ export type resumeDataProps = {
     summary: string;
     skills: string[];
     experience: {
-      title: string;
+      _id: string;
+      jobTitle: string;
       company: string;
-      dates: string;
-      location: string;
+      startDate: string;
+      endDate: string;
+      city: string;
+      country: string;
       description: string[];
     }[];
     education: {

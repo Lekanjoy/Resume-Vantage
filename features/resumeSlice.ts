@@ -3,10 +3,13 @@ import { resumeData } from "@/data";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface Experience {
-  title: string;
+  _id: string;
+  jobTitle: string;
   company: string;
-  dates: string;
-  location: string;
+  startDate: string;
+  endDate: string;
+  city: string;
+  country: string;
   description: string[];
 }
 const initialState = resumeData;
@@ -103,6 +106,7 @@ const resumeSlice = createSlice({
       .addCase(fetchResumeData.fulfilled, (state, action) => {
         state.status = "success";
         if (action.payload) {
+          state.resumeId = action.payload[0]?._id
           state.fname = action.payload[0]?.firstName;
           state.lname = action.payload[0]?.lastName;
           state.title = action.payload[0]?.profession;

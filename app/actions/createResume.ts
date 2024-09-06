@@ -97,7 +97,10 @@ const experienceSchema = z.object({
   country: z.string().min(2, "Country must be at least 2 characters long"),
   company: z.string().min(2, "Company name must be at least 2 characters long"),
   startDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format. Use YYYY-MM-DD"),
-  endDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format. Use YYYY-MM-DD").optional(),
+  endDate: z.union([
+    z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format. Use YYYY-MM-DD"),
+    z.literal("Present")
+  ]).optional(),
   currentlyWorking: z.boolean()
 });
 
@@ -109,7 +112,7 @@ export async function createResumeExperience(input: ExperienceInput) {
 
   try {
     const res = await axiosInstance.post(
-      `${baseURL}/resume/experience`,
+      `${baseURL}/resume/experiences`,
       validatedInput
     );
 
