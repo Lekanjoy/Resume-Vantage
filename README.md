@@ -1,36 +1,105 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Resume Vantage Documentation
 
-## Getting Started
+## Table of Contents
 
-First, run the development server:
+1. [Introduction](#introduction)
+2. [Project Structure](#project-structure)
+3. [Key Components](#key-components)
+4. [Styling](#styling)
+5. [State Management](#state-management)
+6. [API Integration](#api-integration)
+7. [Routing](#routing)
+8. [Authentication](#authentication)
+9. [Resume Building Process](#resume-building-process)
+10. [AI Integration](#ai-integration)
+11. [Deployment](#deployment)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Introduction
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Resume Vantage is a Next.js-based web application that allows users to create, customize, and manage professional resumes. The application features AI-powered content optimization, multiple resume templates, and a user-friendly interface for building and editing resumes.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+The project follows a typical Next.js structure with some custom organization:
 
-## Learn More
+- `app/`: Contains the main application pages and layouts
+- `components/`: Reusable React components
+- `public/`: Static assets like images and SVGs
+- `styles/`: Global CSS and Tailwind configuration
+- `lib/`: Utility functions and helpers
+- `types/`: TypeScript type definitions
+- `features/`: Redux slices for state management
+- `hooks/`: Custom React hooks
 
-To learn more about Next.js, take a look at the following resources:
+## Key Components
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Landing Page Components
+- `Hero`: Main landing page component
+- `Perks`: Displays key features of the application
+- `Discover`: Showcases resume templates
+- `Steps`: Explains the resume creation process
+- `Testimonials`: Displays user testimonials
+- `CTA`: Call-to-action section
+- `Footer`: Site footer with links and information
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Dashboard Components
+- `Sidebar`: Navigation for the resume building process
+- `DashboardContent`: Main content area for resume editing
+- `Experiences`: Component for adding and editing work experiences
+- `Education`: Component for adding educational background
+- `Skills`: Component for adding skills
+- `Summary`: Component for writing resume summary
+- `AdditionalDetails`: Component for adding extra information
 
-## Deploy on Vercel
+### Resume Preview
+- `ResumePreview`: Displays a live preview of the resume being built
+- `PreviewHeader`, `SkillsPreview`, `ExperiencePreview`, `EducationPreview`, `CertificationPreview`: Subcomponents for different sections of the resume preview
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Styling
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+The project uses Tailwind CSS for styling, with custom configurations in `tailwind.config.ts`. Global styles are defined in `app/globals.css`.
+
+## State Management
+
+Redux is used for state management, with slices defined in the `features/` directory:
+- `resumeSlice`: Manages the state of the resume being built
+- `AISuggestionsSlice`: Handles AI-generated content suggestions
+
+## API Integration
+
+Axios is used for making API calls, with a custom hook `useAxios` for handling requests. Server-side API calls are made using `getServerAxiosInstance`.
+
+## Routing
+
+Next.js App Router is used for routing. Key routes include:
+- `/`: Landing page
+- `/dashboard`: Resume building dashboard
+- `/templates`: Resume template selection
+- `/auth`: Authentication pages (login, signup, password reset)
+
+## Authentication
+
+Authentication is implemented using JWT tokens. The `middleware.ts` file handles route protection for authenticated areas.
+
+## Resume Building Process
+
+The resume building process is broken down into steps, managed by the `Sidebar` component. Users progress through these steps:
+1. Choose a template
+2. Add personal information
+3. Add work experiences
+4. Add education
+5. Add skills
+6. Write summary
+7. Add additional details
+
+## AI Integration
+
+AI is integrated for content optimization and suggestions. The `ExperienceDescription` component uses AI to help users write better job descriptions.
+
+## Deployment
+
+The project is configured for deployment on Vercel, with environment variables set for production use.
+
+---
+
+This documentation provides an overview of the Resume Vantage project structure and key features. For more detailed information on specific components or functionalities, refer to the inline comments and TypeScript types within the codebase.
