@@ -92,7 +92,7 @@ const DashboardContent = ({ id }: { id: string | string[] | undefined }) => {
       <UserHeader key="user-header" {...props} />
     ),
     (props: JSX.IntrinsicAttributes & ExtendedExperienceProps) => (
-      <Experiences key="experiences" {...props} />
+      <Experiences key="experiences" {...props} id={id}/>
     ),
     (props: JSX.IntrinsicAttributes & ButtonProps) => (
       <ExperienceDescription key="exp-describe" {...props} />
@@ -128,6 +128,7 @@ const DashboardContent = ({ id }: { id: string | string[] | undefined }) => {
           currentIndex,
           setCurrentIndex,
           onEditExperience: handleEditExperience,
+          id
         })}
       </section>
     </section>

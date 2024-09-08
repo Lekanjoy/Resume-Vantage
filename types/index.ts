@@ -17,7 +17,9 @@ export type resumeDataProps = {
       endDate: string;
       city: string;
       country: string;
-      description: string[];
+      responsibilities: {
+        responsibilities: string[];
+      };
     }[];
     education: {
       institution: string;

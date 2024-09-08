@@ -1,8 +1,9 @@
 import { fetchResumes } from "@/app/actions/createResume";
 import { resumeData } from "@/data";
+import { resumeData as resumeDataType} from "@/types";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface Experience {
+export interface Experience {
   _id: string;
   jobTitle: string;
   company: string;
@@ -10,15 +11,28 @@ interface Experience {
   endDate: string;
   city: string;
   country: string;
-  description: string[];
+  responsibilities: {
+    responsibilities: string[];
+  };
 }
 const initialState = resumeData;
 
-export const fetchResumeData = createAsyncThunk(
+export const fetchResumeData = createAsyncThunk<
+  resumeDataType[] | null,
+  string,
+  { rejectValue: string }
+>(
   "resume/fetchResumeData",
-  async (id: string) => {
-    const resume = fetchResumes(id);
-    return resume;
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const resume = await fetchResumes(id);
+      if (resume === null) {
+        return rejectWithValue('Failed to fetch resume data');
+      }
+      return resume;
+    } catch (error) {
+      return rejectWithValue('An unexpected error occurred');
+    }
   }
 );
 
@@ -35,8 +49,8 @@ const resumeSlice = createSlice({
     removeSkill: (state, action) => {
       state.skills = state.skills.filter((skill) => skill !== action.payload);
     },
-    addExperience: (state, action: PayloadAction<Omit<Experience, 'description'>>) => {
-      state.experience.push({ ...action.payload, description: [] });
+    addExperience: (state, action: PayloadAction<Omit<Experience, 'responsibilities'>>) => {
+      state.experience.push({ ...action.payload, responsibilities: { responsibilities: [] } });
       state.currentEditingIndex = state.experience.length - 1;
     },
     updateExperience: (state, action: PayloadAction<{ experience: Experience }>) => {
@@ -50,13 +64,13 @@ const resumeSlice = createSlice({
     toggleDescriptionInCurrentExperience: (state, action: PayloadAction<string>) => {
       if (state.currentEditingIndex !== null) {
         const currentExperience = state.experience[state.currentEditingIndex];
-        const descriptionIndex = currentExperience.description.indexOf(action.payload);
-        if (descriptionIndex === -1) {
-          // Description doesn't exist, so add it
-          currentExperience.description.push(action.payload);
+        const responsibilityIndex = currentExperience.responsibilities.responsibilities.indexOf(action.payload);
+        if (responsibilityIndex === -1) {
+          // Responsibility doesn't exist, so add it
+          currentExperience.responsibilities.responsibilities.push(action.payload);
         } else {
-          // Description exists, so remove it
-          currentExperience.description.splice(descriptionIndex, 1);
+          // Responsibility exists, so remove it
+          currentExperience.responsibilities.responsibilities.splice(responsibilityIndex, 1);
         }
       }
     },
@@ -116,7 +130,13 @@ const resumeSlice = createSlice({
           state.phone = action.payload[0]?.phoneNumber;
           state.summary = action.payload[0]?.summary;
           state.skills = action.payload[0]?.skills;
-          state.experience = action.payload[0]?.jobExperiences;
+          
+          // Ensure each experience has a responsibilities section
+          state.experience = action.payload[0]?.jobExperiences.map((exp: any) => ({
+            ...exp,
+            responsibilities: exp.responsibilities || { responsibilities: [] }
+          }));
+
           state.education = action.payload[0]?.education;
           state.certifications = action.payload[0]?.certifications;
         }

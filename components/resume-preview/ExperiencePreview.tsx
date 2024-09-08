@@ -18,7 +18,7 @@ const ExperiencePreview = ({ resumeData }: resumeDataProps) => {
               <p>{`${exp.city} - ${exp.country}`}</p>
 
             </div>
-            {exp?.description?.map((desc, id) => {
+            {exp?.responsibilities?.responsibilities?.map((desc, id) => {
               return (
                 <div key={id} className="flex flex-col gap-y-[1px]">
                   <p className="text-[6px]">- {desc}</p>

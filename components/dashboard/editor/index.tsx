@@ -10,10 +10,10 @@ import {
   BtnUndo,
   ContentEditableEvent,
 } from "react-simple-wysiwyg";
-import stars from "@/public/assets/dashboard/stars.svg";
 import Image from "next/image";
 import { useTypedSelector, useAppDispatch } from "@/store/store";
 import { updateExperience } from "@/features/resumeSlice";
+import stars from "@/public/assets/dashboard/stars.svg";
 
 function RichTextEditor() {
   const dispatch = useAppDispatch();
@@ -24,9 +24,9 @@ function RichTextEditor() {
 
   useEffect(() => {
     if (currentEditingIndex !== null && experiences[currentEditingIndex]) {
-      const description = experiences[currentEditingIndex].description?.map(item => `<li>${item}</li>`)
+      const responsibilities = experiences[currentEditingIndex].responsibilities?.responsibilities?.map(item => `<li>${item}</li>`)
         .join('');
-      setEditorContent(`<ul>${description}</ul>`);
+      setEditorContent(`<ul>${responsibilities}</ul>`);
     }
   }, [currentEditingIndex, experiences]);
 
@@ -54,7 +54,9 @@ function RichTextEditor() {
     if (currentEditingIndex !== null) {
       const updatedExperience = {
         ...experiences[currentEditingIndex],
-        description: newContent.match(/<li>(.*?)<\/li>/g)?.map(item => item.replace(/<\/?li>/g, '')) || []
+        responsibilities: {
+          responsibilities: newContent.match(/<li>(.*?)<\/li>/g)?.map(item => item.replace(/<\/?li>/g, '')) || []
+        }
       };
       dispatch(updateExperience({ experience: updatedExperience }));
     }

@@ -4,6 +4,7 @@ import { baseURL } from "@/hooks/useAxios";
 import { resumeData } from "@/types";
 import axios from "axios";
 import { z } from "zod";
+import { AxiosError } from 'axios';
 
 export async function initializeAction() {
   const axiosInstance = await getServerAxiosInstance();
@@ -154,7 +155,7 @@ export async function getUser() {
   }
 }
 
-export const fetchResumes = async (id: string) => {
+export const fetchResumes = async (id: string): Promise<resumeData[] | null> => {
   const axiosInstance = await getServerAxiosInstance();
   try {
     const response = await axiosInstance.get(`${baseURL}/profile/fetch`);
@@ -163,6 +164,15 @@ export const fetchResumes = async (id: string) => {
     const filteredResumes = resumes.filter((resume) => resume?._id === id);
     return filteredResumes;
   } catch (error) {
-    console.log(error);
+    if (error instanceof AxiosError) {
+      console.error('Axios error:', error.message);
+      if (error.response) {
+        console.error('Response data:', error.response.data);
+        console.error('Response status:', error.response.status);
+      }
+    } else {
+      console.error('Unexpected error:', error);
+    }
+    return null;
   }
 };

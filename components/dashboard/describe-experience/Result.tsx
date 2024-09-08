@@ -1,10 +1,10 @@
 import Image from "next/image";
-import addIcon from "@/public/assets/dashboard/add-01.svg";
-import removeIcon from "@/public/assets/dashboard/remove-01.svg";
 import { useMemo } from "react";
 import { twMerge } from "tailwind-merge";
 import { toggleDescriptionInCurrentExperience } from "@/features/resumeSlice";
 import { useTypedSelector, useAppDispatch } from "@/store/store";
+import removeIcon from "@/public/assets/dashboard/remove-01.svg";
+import addIcon from "@/public/assets/dashboard/add-01.svg";
 
 interface resultProps {
   result: string;
@@ -19,7 +19,7 @@ const Result = ({ result }: resultProps) => {
 
   const isSelected = useMemo(() => {
     if (currentEditingIndex !== null && experiences[currentEditingIndex]) {
-      return experiences[currentEditingIndex].description?.includes(
+      return experiences[currentEditingIndex].responsibilities?.responsibilities?.includes(
         result
       );
     }

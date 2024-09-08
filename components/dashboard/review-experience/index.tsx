@@ -1,10 +1,10 @@
 import Image from "next/image";
 import { Dispatch, SetStateAction } from "react";
-import Button, { ButtonProps } from "../button";
-import plus from "@/public/assets/dashboard/plusIcon.svg";
 import { setCurrentEditingIndex } from "@/features/resumeSlice";
 import { useAppDispatch, useTypedSelector } from "@/store/store";
+import Button, { ButtonProps } from "../button";
 import ResumePreview from "@/components/resume-preview";
+import plus from "@/public/assets/dashboard/plusIcon.svg";
 import deleteIcon from "@/public/assets/dashboard/delete.svg";
 import editIcon from "@/public/assets/dashboard/edit.svg";
 
@@ -32,7 +32,6 @@ const ExperienceReview = ({
     dispatch(setCurrentEditingIndex(index));
     onEditExperience();
   };
-
 
   return (
     <>
@@ -70,16 +69,17 @@ const ExperienceReview = ({
                   <Image
                     src={deleteIcon}
                     alt="delete Icon"
-                    onClick={() => console.log(experiences)}
                     className="w-[12px] h-[12px] lg:w-full lg:h-full"
                   />
                 </div>
               </div>
               <div>
                 <ul className="flex flex-col text-xs gap-y-[10px] pl-1 md:gap-y-3 xl:gap-y-4 list-disc list-inside">
-                  {experience.description?.map((desc) => (
-                    <li key={desc}>{desc}</li>
-                  ))}
+                  {experience?.responsibilities?.responsibilities?.map(
+                    (desc) => (
+                      <li key={desc}>{desc}</li>
+                    )
+                  )}
                 </ul>
               </div>
             </div>

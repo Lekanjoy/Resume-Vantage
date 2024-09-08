@@ -1,9 +1,10 @@
-import SearchBox from "./SearchBox";
-import RichTextEditor from "../editor";
-import Button, { ButtonProps as DescriptionProps } from "../button";
+import { useState } from "react";
 import { useTypedSelector } from "@/store/store";
 import { addResponsibilitiesAction } from "@/app/actions/addResponsiblilities";
 import { useToast } from "@/components/toast/ShowToast";
+import Button, { ButtonProps as DescriptionProps } from "../button";
+import SearchBox from "./SearchBox";
+import RichTextEditor from "../editor";
 import Toast from "@/components/toast";
 
 const ExperienceDescription = ({
@@ -16,17 +17,18 @@ const ExperienceDescription = ({
   const currentEditingIndex = useTypedSelector(
     (state) => state.resume.currentEditingIndex
   );
-
   const role =
     currentEditingIndex !== null
       ? experiences[currentEditingIndex].jobTitle
       : "Product Designer";
-
+  const [loading, setLoading] = useState(false);
   const resumeId = useTypedSelector((store) => store.resume.resumeId);
   const jobExperienceId = experiences[currentEditingIndex!]._id;
-  const userResponsibilities = experiences[currentEditingIndex!].description;
+  const userResponsibilities =
+    experiences[currentEditingIndex!]?.responsibilities?.responsibilities;
 
-  async function addResponsibilities() {
+  async function handleAddResponsibilities() {
+    setLoading(true);
     const responsibilitiesInput = {
       resumeId,
       jobExperienceId,
@@ -36,7 +38,10 @@ const ExperienceDescription = ({
     const result = await addResponsibilitiesAction(responsibilitiesInput);
     if (result.success) {
       showToast("Responsibilities added", "success");
+      handleNext();
+      setLoading(false);
     } else {
+      setLoading(false);
       showToast(result.error, "error");
       console.error(result.error);
     }
@@ -60,8 +65,9 @@ const ExperienceDescription = ({
       <div className="w-full my-20 flex justify-center items-center">
         <Button
           currentIndex={currentIndex}
-          handleNext={addResponsibilities}
+          handleNext={handleAddResponsibilities}
           handlePrev={handlePrev}
+          loading={loading}
         />
       </div>
       <Toast

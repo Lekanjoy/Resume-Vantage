@@ -1,9 +1,17 @@
-import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from "react";
+import {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import CustomInput from "@/components/input";
 import ResumePreview from "@/components/resume-preview";
 import Button, { ButtonProps as ExperienceProps } from "../button";
 import {
   addExperience,
+  Experience,
+  fetchResumeData,
   setCurrentEditingIndex,
   updateExperience,
 } from "@/features/resumeSlice";
@@ -14,9 +22,9 @@ import Toast from "@/components/toast";
 import { useSearchParams } from "next/navigation";
 import { updateSuggestions } from "@/features/AISuggestionsSlice";
 
-
 export interface ExtendedExperienceProps extends ExperienceProps {
   setCurrentIndex: Dispatch<SetStateAction<number>>;
+  id: string | string[] | undefined;
 }
 
 const Experiences = ({
@@ -24,17 +32,19 @@ const Experiences = ({
   setCurrentIndex,
   handleNext,
   handlePrev,
+  id,
 }: ExtendedExperienceProps) => {
   const searchParams = useSearchParams();
   const dispatch = useAppDispatch();
   const { showToast, toastState } = useToast();
   const experiences = useTypedSelector((store) => store.resume.experience);
+  const resumeId = useTypedSelector((state) => state.resume.resumeId);
   const currentEditingIndex = useTypedSelector(
     (state) => state.resume.currentEditingIndex
   );
-  const resumeId = useTypedSelector((state) => state.resume.resumeId);
+  const [loading, setLoading] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
-  const [currentExperience, setCurrentExperience] = useState({
+  const [currentExperience, setCurrentExperience] = useState<Experience>({
     _id: "",
     jobTitle: "",
     company: "",
@@ -42,7 +52,7 @@ const Experiences = ({
     endDate: "",
     city: "",
     country: "",
-    description: [""],
+    responsibilities: { responsibilities: [] },
   });
 
   const editing = searchParams.get("editing") as string;
@@ -67,6 +77,8 @@ const Experiences = ({
   }, [editing, setCurrentIndex, hasNavigated]);
 
   useEffect(() => {
+    const today = new Date();
+      const todayDate = today.toISOString().split("T")[0];
     if (currentEditingIndex !== null && experiences[currentEditingIndex]) {
       setCurrentExperience(experiences[currentEditingIndex]);
       setIsChecked(experiences[currentEditingIndex].endDate === "Present");
@@ -75,15 +87,16 @@ const Experiences = ({
         _id: "",
         jobTitle: "",
         company: "",
-        startDate: "",
-        endDate: "",
+        startDate: todayDate,
+        endDate: todayDate,
         city: "",
         country: "",
-        description: [""],
+        responsibilities: { responsibilities: [] },
       });
       setIsChecked(false);
     }
-  }, [currentEditingIndex, experiences]);
+    showToast("Your resume was saved a minute ago", "success");
+  }, [currentEditingIndex, experiences, showToast]);
 
   const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
     setIsChecked(event.target.checked);
@@ -104,64 +117,52 @@ const Experiences = ({
       }));
     };
 
-  const handleSubmit = async () => {
-    if (currentEditingIndex !== null) {
-      const experienceToUpdate = {
-        ...currentExperience,
-        description: currentExperience.description || []
-      };
-      dispatch(updateExperience({ experience: experienceToUpdate }));
-      console.log(experienceToUpdate);
+  const handleSubmitExperience = async () => {
+    setLoading(true);
+    const experienceInput = {
+      resumeId,
+      jobTitle: currentExperience.jobTitle,
+      company: currentExperience.company,
+      city: currentExperience.city,
+      country: currentExperience.country,
+      startDate: currentExperience.startDate,
+      endDate: currentExperience.endDate,
+      currentlyWorking: isChecked,
+    };
+
+    const result = await createResumeExperience(experienceInput);
+
+    if (result.success) {
+      if (currentEditingIndex !== null) {
+        const experienceToUpdate = {
+          ...currentExperience,
+          responsibilities: currentExperience.responsibilities || {
+            responsibilities: [],
+          },
+        };
+        dispatch(updateExperience({ experience: experienceToUpdate }));
+      } else {
+        const newExperience = {
+          ...currentExperience,
+          responsibilities: currentExperience.responsibilities || {
+            responsibilities: [],
+          },
+        };
+        dispatch(addExperience(newExperience));
+        dispatch(setCurrentEditingIndex(experiences.length));
+      }
+      dispatch(
+        updateSuggestions(result.data?.payload?.responsiblitiesRecommendations)
+      );
+      dispatch(fetchResumeData(id as string));
+      showToast("Experience created successfully", "success");
+      handleNext();
+      setLoading(false);
     } else {
-      const newExperience = {
-        ...currentExperience,
-        description: currentExperience.description || []
-      };
-      dispatch(addExperience(newExperience));
-      dispatch(setCurrentEditingIndex(experiences.length));
+      setLoading(false);
+      showToast(result.error, "error");
+      console.error("Failed to create experience:", result.error);
     }
-    handleNext();
-
-    // const experienceInput = {
-    //   resumeId,
-    //   jobTitle: currentExperience.jobTitle,
-    //   company: currentExperience.company,
-    //   city: currentExperience.city,
-    //   country: currentExperience.country,
-    //   startDate: currentExperience.startDate,
-    //   endDate: currentExperience.endDate,
-    //   currentlyWorking: isChecked,
-    // };
-
-    // const result = await createResumeExperience(experienceInput);
-
-    // if (result.success) {
-    //   if (currentEditingIndex !== null) {
-    //     const experienceToUpdate = {
-    //       ...currentExperience,
-    //       description: currentExperience.description || [],
-    //     };
-    //     dispatch(updateExperience({ experience: experienceToUpdate }));
-    //     console.log(experienceToUpdate);
-    //   } else {
-    //     const newExperience = {
-    //       ...currentExperience,
-    //       description: currentExperience.description || [],
-    //     };
-    //     dispatch(addExperience(newExperience));
-    //     dispatch(setCurrentEditingIndex(experiences.length));
-    //   }
-    //   console.log(result.data?.payload);
-    //   console.log(resumeId)
-    //   dispatch(
-    //     updateSuggestions(result.data?.payload?.responsiblitiesRecommendations)
-    //   );
-    //   showToast("Experience created successfully", "success");
-    //   handleNext();
-    // } else {
-    //   showToast(result.error, "error");
-    //   console.error("Failed to create experience:", result.error);
-    // }
   };
 
   return (
@@ -251,8 +252,9 @@ const Experiences = ({
       <div className="w-full my-20 flex justify-center items-center">
         <Button
           currentIndex={currentIndex}
-          handleNext={handleSubmit}
+          handleNext={handleSubmitExperience}
           handlePrev={handlePrev}
+          loading={loading}
         />
       </div>
 

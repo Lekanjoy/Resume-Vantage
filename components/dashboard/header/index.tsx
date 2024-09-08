@@ -1,7 +1,7 @@
 "use client";
 import { updatePersonalInfo } from "@/features/resumeSlice";
 import { useAppDispatch, useTypedSelector } from "@/store/store";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { createResumeHeader } from "@/app/actions/createResume";
 import { useToast } from "@/components/toast/ShowToast";
@@ -21,13 +21,19 @@ const UserHeader = ({
   const searchParams = useSearchParams();
 
   const resumeId = searchParams.get("resumeId") as string;
-
-  const { fname, lname, title, email, city, country, phone } = resumeData;
-  const address = city + ", " + country;
+  const { status, fname, lname, title, email, city, country, phone } = resumeData;
+  const address = city + ", " + country || "";
 
   const [editedFields, setEditedFields] = useState<Record<string, boolean>>({});
   const [loading, setLoading] = useState(false);
-  
+
+  // Check if Current resume fetch is successfull
+  useEffect(() => {
+    if (status === "failed") {
+      showToast("Something went wrong! Failed to fetch resume", "error");
+    }
+  }, []);
+
   const handleInputChange =
     (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
       dispatch(updatePersonalInfo({ [field]: e.target.value }));
@@ -35,8 +41,7 @@ const UserHeader = ({
       setEditedFields((prev) => ({ ...prev, [field]: true }));
     };
 
-
-    
+  //Create Resume Header
   const handleCreateHeader = async () => {
     setLoading(true);
     const res = await createResumeHeader(
@@ -56,8 +61,9 @@ const UserHeader = ({
     } else {
       setLoading(false);
       showToast(res.error, "error");
-      console.log(res.error);
+      console.error(res.error);
     }
+    handleNext();
   };
 
   return (

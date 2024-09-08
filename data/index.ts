@@ -145,11 +145,18 @@ export const resumeData = {
       endDate: "2020",
       city: "New York",
       country: "USA",
-      description: [
-        "Developed multiple web applications using React and Node.js.",
-        "Collaborated with cross-functional teams to design and implement new features.",
-        "Improved code quality and efficiency by implementing automated testing and code reviews.",
-      ],
+      responsibilities: {
+        responsibilities: [
+          "Developed multiple web applications using React and Node.js.",
+          "Collaborated with cross-functional teams to design and implement new features.",
+          "Improved code quality and efficiency by implementing automated testing and code reviews.",
+        ],
+      },
+      // description: [
+      //   "Developed multiple web applications using React and Node.js.",
+      //   "Collaborated with cross-functional teams to design and implement new features.",
+      //   "Improved code quality and efficiency by implementing automated testing and code reviews.",
+      // ],
     },
   ],
   education: [
