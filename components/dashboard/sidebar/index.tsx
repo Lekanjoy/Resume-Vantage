@@ -1,8 +1,8 @@
 "use client";
 import React, { Dispatch, SetStateAction, useState } from "react";
-import Steps from "./Steps";
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
+import Steps from "./Steps";
 import hamburger from "@/public/assets/dashboard/hamburgerIcon.svg";
 import close from "@/public/assets/dashboard/closeIcon.svg";
 

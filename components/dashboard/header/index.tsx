@@ -63,7 +63,6 @@ const UserHeader = ({
       showToast(res.error, "error");
       console.error(res.error);
     }
-    handleNext();
   };
 
   return (

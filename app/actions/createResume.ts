@@ -2,9 +2,8 @@
 import { getServerAxiosInstance } from "@/hooks/serverAxiosInstance";
 import { baseURL } from "@/hooks/useAxios";
 import { resumeData } from "@/types";
-import axios from "axios";
 import { z } from "zod";
-import { AxiosError } from 'axios';
+import axios, { AxiosError } from "axios";
 
 export async function initializeAction() {
   const axiosInstance = await getServerAxiosInstance();
@@ -90,19 +89,24 @@ export async function createResumeHeader(
   }
 }
 
-
 const experienceSchema = z.object({
   jobTitle: z.string().min(2, "Job title must be at least 2 characters long"),
   resumeId: z.string().min(10, "Invalid Resume ID"),
   city: z.string().min(2, "City must be at least 2 characters long"),
   country: z.string().min(2, "Country must be at least 2 characters long"),
   company: z.string().min(2, "Company name must be at least 2 characters long"),
-  startDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format. Use YYYY-MM-DD"),
-  endDate: z.union([
-    z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format. Use YYYY-MM-DD"),
-    z.literal("Present")
-  ]).optional(),
-  currentlyWorking: z.boolean()
+  startDate: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format. Use YYYY-MM-DD"),
+  endDate: z
+    .union([
+      z
+        .string()
+        .regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format. Use YYYY-MM-DD"),
+      z.literal("Present"),
+    ])
+    .optional(),
+  currentlyWorking: z.boolean(),
 });
 
 type ExperienceInput = z.infer<typeof experienceSchema>;
@@ -139,7 +143,6 @@ export async function createResumeExperience(input: ExperienceInput) {
   }
 }
 
-
 export async function getUser() {
   const axiosInstance = await getServerAxiosInstance();
 
@@ -155,7 +158,9 @@ export async function getUser() {
   }
 }
 
-export const fetchResumes = async (id: string): Promise<resumeData[] | null> => {
+export const fetchResumes = async (
+  id: string
+): Promise<resumeData[] | null> => {
   const axiosInstance = await getServerAxiosInstance();
   try {
     const response = await axiosInstance.get(`${baseURL}/profile/fetch`);
@@ -165,13 +170,13 @@ export const fetchResumes = async (id: string): Promise<resumeData[] | null> => 
     return filteredResumes;
   } catch (error) {
     if (error instanceof AxiosError) {
-      console.error('Axios error:', error.message);
+      console.error("Axios error:", error.message);
       if (error.response) {
-        console.error('Response data:', error.response.data);
-        console.error('Response status:', error.response.status);
+        console.error("Response data:", error.response.data);
+        console.error("Response status:", error.response.status);
       }
     } else {
-      console.error('Unexpected error:', error);
+      console.error("Unexpected error:", error);
     }
     return null;
   }

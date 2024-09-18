@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { JSX, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { stepsData } from "@/data";
@@ -8,7 +9,9 @@ import { useAppDispatch } from "@/store/store";
 import { fetchResumeData } from "@/features/resumeSlice";
 import UserHeader from "@/components/dashboard/header";
 import Sidebar from "@/components/dashboard/sidebar";
-import Experiences, { ExtendedExperienceProps } from "@/components/dashboard/experiences";
+import Experiences, {
+  ExtendedExperienceProps,
+} from "@/components/dashboard/experiences";
 import Education from "@/components/dashboard/education";
 import ExperienceDescription from "./describe-experience";
 import ExperienceReview, { ExperienceReviewProps } from "./review-experience";
@@ -17,6 +20,7 @@ import Summary from "./summary";
 import AdditionalDetails from "./details";
 import Confirm from "./confirm";
 import CreationMethod from "./add-upload-resume/CreationMethod";
+import bulb from "@/public/assets/dashboard/insight.svg";
 
 const DashboardContent = ({ id }: { id: string | string[] | undefined }) => {
   const searchParams = useSearchParams();
@@ -37,23 +41,22 @@ const DashboardContent = ({ id }: { id: string | string[] | undefined }) => {
     }
   }, [router, searchParams]);
 
-
   useEffect(() => {
     if (id) dispatch(fetchResumeData(id as string));
   }, [dispatch, id]);
 
   useEffect(() => {
-  // Clear sessionStorage on page refresh
-  const handleBeforeUnload = () => {
-    sessionStorage.removeItem('hasNavigatedToExperiences');
-  };
+    // Clear sessionStorage on page refresh
+    const handleBeforeUnload = () => {
+      sessionStorage.removeItem("hasNavigatedToExperiences");
+    };
 
-  window.addEventListener('beforeunload', handleBeforeUnload);
+    window.addEventListener("beforeunload", handleBeforeUnload);
 
-  return () => {
-    window.removeEventListener('beforeunload', handleBeforeUnload);
-  };
-  },[])
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
 
   const [steps, setSteps] = useState(stepsData);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -92,13 +95,17 @@ const DashboardContent = ({ id }: { id: string | string[] | undefined }) => {
       <UserHeader key="user-header" {...props} />
     ),
     (props: JSX.IntrinsicAttributes & ExtendedExperienceProps) => (
-      <Experiences key="experiences" {...props} id={id}/>
+      <Experiences key="experiences" {...props} id={id} />
     ),
     (props: JSX.IntrinsicAttributes & ButtonProps) => (
       <ExperienceDescription key="exp-describe" {...props} />
     ),
     (props: JSX.IntrinsicAttributes & ExperienceReviewProps) => (
-      <ExperienceReview key="exp-preview" {...props} onEditExperience={handleEditExperience} />
+      <ExperienceReview
+        key="exp-preview"
+        {...props}
+        onEditExperience={handleEditExperience}
+      />
     ),
     (props: JSX.IntrinsicAttributes & ButtonProps) => (
       <Education key="education" {...props} />
@@ -117,10 +124,14 @@ const DashboardContent = ({ id }: { id: string | string[] | undefined }) => {
     ),
   ];
 
-
   return (
     <section className="relative w-full min-h-dvh flex">
       <Sidebar steps={steps} isToggle={isToggle} setIsToggle={setIsToggle} />
+      <Image
+        src={bulb}
+        alt="Insight icon"
+        className="cursor-pointer absolute right-4 top-9 xl:right-8 xl:top-7 xl:w-[56px] xl:h-[56px]"
+      />
       <section className="mt-[72px] w-full pr-4 pl-[96px] lg:pl-[calc(20%+56px)] lg:pr-14 2xl:lg:pl-[calc(20%+64px)] 2xl:pr-16">
         {sectionData[currentIndex]({
           handlePrev,
@@ -128,7 +139,7 @@ const DashboardContent = ({ id }: { id: string | string[] | undefined }) => {
           currentIndex,
           setCurrentIndex,
           onEditExperience: handleEditExperience,
-          id
+          id,
         })}
       </section>
     </section>
