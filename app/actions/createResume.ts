@@ -160,7 +160,7 @@ export async function getUser() {
 
 export const fetchResumes = async (
   id: string
-): Promise<resumeData[] | null> => {
+): Promise<resumeData[]> => {
   const axiosInstance = await getServerAxiosInstance();
   try {
     const response = await axiosInstance.get(`${baseURL}/profile/fetch`);
@@ -178,6 +178,6 @@ export const fetchResumes = async (
     } else {
       console.error("Unexpected error:", error);
     }
-    return null;
+    return [];
   }
 };

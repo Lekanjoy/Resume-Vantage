@@ -8,13 +8,13 @@ type ViewProps = {
 
 const View = ({ resume }: ViewProps) => {
   const resumeData = {
-    fname: resume.firstName,
-    lname: resume.lastName,
-    title: resume.profession,
-    email: resume.publicEmail,
-    city: resume.city,
-    country: resume.country,
-    phone: resume.phoneNumber,
+    fname: resume.firstName || "",
+    lname: resume.lastName || "",
+    title: resume.profession || "",
+    email: resume.publicEmail || "",
+    city: resume.city || "",
+    country: resume.country || "",
+    phone: resume.phoneNumber || "",
     summary: resume.summary || "",
     skills: resume.skills || [],
     experience: resume.jobExperiences || [],

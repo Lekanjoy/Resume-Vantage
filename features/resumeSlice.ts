@@ -18,7 +18,7 @@ export interface Experience {
 const initialState = resumeData;
 
 export const fetchResumeData = createAsyncThunk<
-  resumeDataType[] | null,
+  resumeDataType[],
   string,
   { rejectValue: string }
 >(
@@ -26,7 +26,7 @@ export const fetchResumeData = createAsyncThunk<
   async (id: string, { rejectWithValue }) => {
     try {
       const resume = await fetchResumes(id);
-      if (resume === null) {
+      if (resume.length < 1) {
         return rejectWithValue('Failed to fetch resume data');
       }
       return resume;
@@ -121,15 +121,15 @@ const resumeSlice = createSlice({
         state.status = "success";
         if (action.payload) {
           state.resumeId = action.payload[0]?._id
-          state.fname = action.payload[0]?.firstName;
-          state.lname = action.payload[0]?.lastName;
-          state.title = action.payload[0]?.profession;
-          state.email = action.payload[0]?.publicEmail;
-          state.city = action.payload[0]?.city;
-          state.country = action.payload[0]?.country;
-          state.phone = action.payload[0]?.phoneNumber;
-          state.summary = action.payload[0]?.summary;
-          state.skills = action.payload[0]?.skills;
+          state.fname = action.payload[0]?.firstName || '';
+          state.lname = action.payload[0]?.lastName || '';
+          state.title = action.payload[0]?.profession || '';
+          state.email = action.payload[0]?.publicEmail || '';
+          state.city = action.payload[0]?.city || '';
+          state.country = action.payload[0]?.country || '';
+          state.phone = action.payload[0]?.phoneNumber || '';
+          state.summary = action.payload[0]?.summary || '';
+          state.skills = action.payload[0]?.skills || [];
           
           // Ensure each experience has a responsibilities section
           state.experience = action.payload[0]?.jobExperiences.map((exp: any) => ({

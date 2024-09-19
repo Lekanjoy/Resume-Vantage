@@ -21,7 +21,8 @@ const UserHeader = ({
   const searchParams = useSearchParams();
 
   const resumeId = searchParams.get("resumeId") as string;
-  const { status, fname, lname, title, email, city, country, phone } = resumeData;
+  const { status, fname, lname, title, email, city, country, phone } =
+    resumeData;
   const address = city + ", " + country || "";
 
   const [editedFields, setEditedFields] = useState<Record<string, boolean>>({});
@@ -30,7 +31,7 @@ const UserHeader = ({
   // Check if Current resume fetch is successfull
   useEffect(() => {
     if (status === "failed") {
-      showToast("Something went wrong! Failed to fetch resume", "error");
+      showToast("Failed to fetch resume! Please refresh", "error");
     }
   }, []);
 
@@ -63,6 +64,7 @@ const UserHeader = ({
       showToast(res.error, "error");
       console.error(res.error);
     }
+    setLoading(false);
   };
 
   return (
