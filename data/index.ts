@@ -4,6 +4,7 @@ import template3 from "@/public/assets/landing-page/template-3.png";
 import add from "@/public/assets/dashboard/add.svg";
 import upload from "@/public/assets/dashboard/upload.svg";
 import { StaticImageData } from "next/image";
+import { Experience } from "@/features/resumeSlice";
 
 export const addOrUploadResumeCardData = [
   {
@@ -152,11 +153,13 @@ export const resumeData = {
           "Improved code quality and efficiency by implementing automated testing and code reviews.",
         ],
       },
-      // description: [
-      //   "Developed multiple web applications using React and Node.js.",
-      //   "Collaborated with cross-functional teams to design and implement new features.",
-      //   "Improved code quality and efficiency by implementing automated testing and code reviews.",
-      // ],
+      rawResponsibilities: {
+        responsibilities: [
+          "Developed multiple web applications using React and Node.js.",
+          "Collaborated with cross-functional teams to design and implement new features.",
+          "Improved code quality and efficiency by implementing automated testing and code reviews.",
+        ],
+      },
     },
   ],
   education: [
@@ -175,10 +178,4 @@ export const resumeData = {
   ],
 };
 
-export const resultData = [
-  "Carried out interviews and User research to understand users’ pain points.",
-  "Developed user stories, user journey maps, and user personas.",
-  "Brainstormed features to serve as solutions to the problems of users.",
-  "Created wireframes and high fidelity designs to showcase the user interface of the product.",
-  "Performed usability testing to showcase the flow of the product and identify areas to improve.",
-];
+export const resultData: string[] = [];

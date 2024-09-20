@@ -9,10 +9,20 @@ interface searchResultProps {
 }
 
 const SearchResults = ({ role }: searchResultProps) => {
+  const experiences = useTypedSelector((store) => store.resume.experience);
+  const currentEditingIndex = useTypedSelector(
+    (state) => state.resume.currentEditingIndex
+  );
   const resultData = useTypedSelector((store) => store.suggestions);
-  const isPaidUser = false;
+  const rawExperienceSuggestions =
+    experiences[currentEditingIndex!]?.rawResponsibilities?.responsibilities;
 
-  const displayedResults = isPaidUser ? resultData : resultData.slice(0, 2);
+  const isPaidUser = false;
+  const AISuggestions =
+    resultData.length < 1 ? rawExperienceSuggestions : resultData;
+  const displayedResults = isPaidUser
+    ? AISuggestions
+    : AISuggestions?.slice(0, 3);
 
   return (
     <div className="components-dashboard-describe-experience-SearchResults w-full bg-[#F7F5FE] p-5 h-[400px] overflow-x-auto border border-[#B9BBBE] rounded lg:h-[600px] lg:rounded-md lg:w-1/2 xl:p-8">
@@ -35,18 +45,18 @@ const SearchResults = ({ role }: searchResultProps) => {
       </div>
       <div className="results mt-4 lg:mt-6">
         <p className="text-xs my-4  md:text-sm lg:my-6">
-          Showing {resultData.length} search results for {" "}
+          Showing {AISuggestions.length} search results for{" "}
           <span className="font-bold">{role}</span>
         </p>
 
         <div className="flex flex-col gap-y-2 lg:gap-y-3">
-          {displayedResults.map((result) => (
+          {displayedResults?.map((result) => (
             <Result key={result} result={result} />
           ))}
 
           {!isPaidUser &&
-            resultData.length > 2 &&
-            Array.from({ length: resultData.length - 2 }).map((_, index) => (
+            AISuggestions.length > 2 &&
+            Array.from({ length: AISuggestions.length - 2 }).map((_, index) => (
               <div
                 key={index}
                 className="flex justify-between gap-x-2 p-4 bg-[#E6E6E6] w-full cursor-not-allowed border border-[#B9BBBE] rounded-sm lg:rounded-md  xl:p-5 xl:gap-x-6"

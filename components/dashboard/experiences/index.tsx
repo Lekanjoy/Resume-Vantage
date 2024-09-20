@@ -53,6 +53,7 @@ const Experiences = ({
     city: "",
     country: "",
     responsibilities: { responsibilities: [] },
+    rawResponsibilities: { responsibilities: [] },
   });
 
   const editing = searchParams.get("editing") as string;
@@ -92,6 +93,8 @@ const Experiences = ({
         city: "",
         country: "",
         responsibilities: { responsibilities: [] },
+    rawResponsibilities: { responsibilities: [] },
+
       });
       setIsChecked(false);
     }

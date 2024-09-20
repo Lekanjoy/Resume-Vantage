@@ -35,7 +35,6 @@ const UserDashboard = ({ resumes, error }: UserDashboardProps) => {
       setCompleted(completedResumes);
     }
   }, [error, resumes, showToast]);
-
   // Function to render resume views
   const renderResumeViews = () => {
     const currentResumes = selectedView === 0 ? drafts : completed;

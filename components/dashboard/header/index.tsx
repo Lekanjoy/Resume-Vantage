@@ -65,6 +65,7 @@ const UserHeader = ({
       console.error(res.error);
     }
     setLoading(false);
+
   };
 
   return (
