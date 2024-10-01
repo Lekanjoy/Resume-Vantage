@@ -1,5 +1,5 @@
 "use client";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
 import Steps from "./Steps";
@@ -48,7 +48,7 @@ const Sidebar = ({ steps, isToggle, setIsToggle }: sidebarProps) => {
             isToggle={isToggle}
             className={`
               ${index === steps.length - 1 ? "after:hidden" : ""}
-              ${index === 0 || index === 3 || index === 4 ? "hidden" : ""}
+              ${index === 0 || index === 3 || index === 4 || index === 6 ? "hidden" : ""}
             `.trim()}
           />
         ))}

@@ -11,9 +11,9 @@ const EducationPreview = ({ resumeData }: resumeDataProps) => {
       {resumeData?.education?.map((edu, index) => {
         return (
           <div key={index} className="flex flex-col mb-[1px]">
-            <h4 className="text-[8px] font-medium ">{edu.degree}</h4>
-            <p className="text-[6px] font-medium mb-[1px]">{edu.institution}</p>
-            <p className="text-[6px] text-gray-400">{edu.dates}</p>
+            <h4 className="text-[8px] font-medium ">{edu.degreeType} in {edu.studyField}</h4>
+            <p className="text-[6px] font-medium mb-[1px]">{edu.schoolName}</p>
+            <p className="text-[6px] text-gray-400"> {edu.startDate} {edu.stillEnrolled ? "-" : ""} {edu.gradDate}</p>
           </div>
         );
       })}

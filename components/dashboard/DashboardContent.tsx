@@ -12,7 +12,10 @@ import Sidebar from "@/components/dashboard/sidebar";
 import Experiences, {
   ExtendedExperienceProps,
 } from "@/components/dashboard/experiences";
-import Education from "@/components/dashboard/education";
+import Education, {
+  ExtendedEducationProps,
+} from "@/components/dashboard/education";
+import EducationReview from "./review-education";
 import ExperienceDescription from "./describe-experience";
 import ExperienceReview, { ExperienceReviewProps } from "./review-experience";
 import Skills from "./skills";
@@ -49,6 +52,7 @@ const DashboardContent = ({ id }: { id: string | string[] | undefined }) => {
     // Clear sessionStorage on page refresh
     const handleBeforeUnload = () => {
       sessionStorage.removeItem("hasNavigatedToExperiences");
+      sessionStorage.removeItem("hasNavigatedToEducation");
     };
 
     window.addEventListener("beforeunload", handleBeforeUnload);
@@ -87,6 +91,10 @@ const DashboardContent = ({ id }: { id: string | string[] | undefined }) => {
     setCurrentIndex(2);
   };
 
+  const handleEditEducation = () => {
+    setCurrentIndex(5);
+  };
+
   const sectionData = [
     (props: JSX.IntrinsicAttributes & ButtonProps) => (
       <CreationMethod key="create-or-upload" {...props} />
@@ -107,8 +115,15 @@ const DashboardContent = ({ id }: { id: string | string[] | undefined }) => {
         onEditExperience={handleEditExperience}
       />
     ),
-    (props: JSX.IntrinsicAttributes & ButtonProps) => (
+    (props: JSX.IntrinsicAttributes & ExtendedEducationProps) => (
       <Education key="education" {...props} />
+    ),
+    (props: JSX.IntrinsicAttributes & ExperienceReviewProps) => (
+      <EducationReview
+        key="edu-preview"
+        {...props}
+        onEditEducation={handleEditEducation}
+      />
     ),
     (props: JSX.IntrinsicAttributes & ButtonProps) => (
       <Skills key="skills" {...props} />

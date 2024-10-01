@@ -1,3 +1,7 @@
+import spinner from "@/public/assets/auth/spinner.svg";
+import Image from "next/image";
+
+
 export interface ButtonProps {
   currentIndex: number;
   handlePrev: () => void;
@@ -24,10 +28,13 @@ const Button = ({
 
       <button
         onClick={handleNext}
-        className="bg-primaryColor text-white p-4 rounded-md w-full ease-in-out duration-300 lg:max-w-[330px] hover:bg-primaryColor-100 disabled:cursor-wait"
+        className="flex items-center justify-center gap-x-1 bg-primaryColor text-white p-4 rounded-md w-full ease-in-out duration-300 lg:max-w-[330px] hover:bg-primaryColor-100 disabled:cursor-wait"
         disabled={loading}
       >
-        Continue
+        <span>Continue</span>
+        {loading && (
+              <Image src={spinner} alt="spinner" className="w-4 h-4" />
+            )}
       </button>
     </div>
   );

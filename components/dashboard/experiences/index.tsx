@@ -79,7 +79,7 @@ const Experiences = ({
 
   useEffect(() => {
     const today = new Date();
-      const todayDate = today.toISOString().split("T")[0];
+    const todayDate = today.toISOString().split("T")[0];
     if (currentEditingIndex !== null && experiences[currentEditingIndex]) {
       setCurrentExperience(experiences[currentEditingIndex]);
       setIsChecked(experiences[currentEditingIndex].endDate === "Present");
@@ -93,8 +93,7 @@ const Experiences = ({
         city: "",
         country: "",
         responsibilities: { responsibilities: [] },
-    rawResponsibilities: { responsibilities: [] },
-
+        rawResponsibilities: { responsibilities: [] },
       });
       setIsChecked(false);
     }

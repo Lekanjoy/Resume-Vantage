@@ -19,6 +19,17 @@ export interface Experience {
   };
 }
 
+export interface Education {
+  _id: string;
+  schoolName: string;
+  schoolLocation: string;
+  degreeType: string;
+  studyField: string;
+  startDate: string;
+  gradDate: string;
+  stillEnrolled: boolean;
+}
+
 const initialState = resumeData;
 
 export const fetchResumeData = createAsyncThunk<
@@ -102,19 +113,15 @@ const resumeSlice = createSlice({
     },
     addEducation: (state, action) => {
       state.education.push(action.payload);
+      state.currentEditingIndex = state.education.length - 1;
     },
-    updateEducation: (state, action) => {
-      const index = state.education.findIndex(
-        (edu) => edu.institution === action.payload.institution
-      );
-      if (index !== -1) {
-        state.education[index] = action.payload;
+    updateEducation: (
+      state,
+      action: PayloadAction<{ education: Education }>
+    ) => {
+      if (state.currentEditingIndex !== null) {
+        state.education[state.currentEditingIndex] = action.payload.education;
       }
-    },
-    removeEducation: (state, action) => {
-      state.education = state.education.filter(
-        (edu) => edu.institution !== action.payload
-      );
     },
     addCertification: (state, action) => {
       state.certifications.push(action.payload);
@@ -186,7 +193,6 @@ export const {
   removeExperience,
   addEducation,
   updateEducation,
-  removeEducation,
   addCertification,
   updateCertification,
   removeCertification,

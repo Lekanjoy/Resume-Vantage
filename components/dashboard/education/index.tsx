@@ -1,96 +1,160 @@
-import { ChangeEvent, useEffect, useState } from "react";
-import Image from "next/image";
+import {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import CustomInput from "@/components/input";
-import plus from "@/public/assets/dashboard/plusIcon.svg";
 import ResumePreview from "@/components/resume-preview";
 import Button, { ButtonProps as EducationProps } from "../button";
+import { useAppDispatch, useTypedSelector } from "@/store/store";
+import {
+  addEducation,
+  fetchResumeData,
+  setCurrentEditingIndex,
+  updateEducation,
+} from "@/features/resumeSlice";
+import { createResumeEducation } from "@/app/actions/createResume";
+import Toast from "@/components/toast";
+import { useToast } from "@/components/toast/ShowToast";
+import { useSearchParams } from "next/navigation";
+import { ButtonProps as ExperienceProps } from "../button";
 
-interface FormState {
-  id: number;
-  startDate: string;
-  gradDate: string;
-  isChecked: boolean;
-  name: string;
-  location: string;
-  degree: string;
-  field: string;
+export interface ExtendedEducationProps extends ExperienceProps {
+  setCurrentIndex: Dispatch<SetStateAction<number>>;
 }
 
-// Define types for the event handlers
-type CheckboxChangeEvent = ChangeEvent<HTMLInputElement>;
-type InputChangeEvent = ChangeEvent<HTMLInputElement>;
+const Education = ({
+  currentIndex,
+  setCurrentIndex,
+  handleNext,
+  handlePrev,
+}: ExtendedEducationProps) => {
+  const searchParams = useSearchParams();
+  const dispatch = useAppDispatch();
+  const { showToast, toastState } = useToast();
+  const education = useTypedSelector((store) => store.resume.education);
+  const resumeId = useTypedSelector((state) => state.resume.resumeId);
+  const [isChecked, setIsChecked] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-const Education = ({currentIndex, handleNext, handlePrev}: EducationProps) => {
-  const [todayDate, setTodayDate] = useState<string>("");
-  const [forms, setForms] = useState<FormState[]>([
-    {
-      id: 1,
-      startDate: todayDate,
-      gradDate: todayDate,
-      isChecked: false,
-      name: "",
-      location: "",
-      degree: "",
-      field: "",
-    },
-  ]);
+  const currentEditingIndex = useTypedSelector(
+    (state) => state.resume.currentEditingIndex
+  );
+  const [currentEducation, setCurrentEducation] = useState({
+    _id: "",
+    schoolName: "",
+    schoolLocation: "",
+    degreeType: "",
+    studyField: "",
+    startDate: "",
+    gradDate: "",
+    stillEnrolled: isChecked,
+  });
+
+  const editing = searchParams.get("editing") as string;
+  const toBoolean =
+    sessionStorage.getItem("hasNavigatedToEducation") === "true" ? true : false;
+  const [hasNavigated, setHasNavigated] = useState(toBoolean);
+
+  useEffect(() => {
+    const isEditing = editing === "true";
+    if (isEditing && !hasNavigated) {
+      setCurrentIndex(6);
+      setHasNavigated(true);
+      // Store the navigation state in sessionStorage
+      sessionStorage.setItem("hasNavigatedToEducation", "true");
+    } else if (!isEditing) {
+      // Clear the navigation state when not editing
+      sessionStorage.removeItem("hasNavigatedToEducation");
+      setHasNavigated(false);
+    }
+  }, [editing, setCurrentIndex, hasNavigated]);
 
   useEffect(() => {
     const today = new Date();
-    const day = String(today.getDate()).padStart(2, "0");
-    const month = String(today.getMonth() + 1).padStart(2, "0");
-    const year = today.getFullYear();
-
-    const todayDate = `${year}-${month}-${day}`;
-    setTodayDate(todayDate);
-    setForms([
-      {
-        id: 1,
-        startDate: todayDate,
-        gradDate: todayDate,
-        isChecked: false,
-        field: "",
-        name: "",
-        location: "",
-        degree: "",
-      },
-    ]);
-  }, []);
-
-  const handleAddForm = () => {
-    setForms((prevForms) => [
-      ...prevForms,
-      {
-        id: prevForms.length + 1,
-        startDate: todayDate,
-        gradDate: todayDate,
-        isChecked: false,
-        field: "",
-        name: "",
-        location: "",
-        degree: "",
-      },
-    ]);
-  };
-
-  const handleCheckboxChange = (index: number) => (e: CheckboxChangeEvent) => {
-    const newForms = [...forms];
-    newForms[index].isChecked = e.target.checked;
-    if (newForms[index].isChecked === true) {
-      newForms[index].gradDate = "Present";
+    const todayDate = today.toISOString().split("T")[0];
+    if (currentEditingIndex !== null && education[currentEditingIndex]) {
+      setCurrentEducation(education[currentEditingIndex]);
+      setIsChecked(education[currentEditingIndex].gradDate === "Present");
     } else {
-      newForms[index].gradDate = todayDate;
+      setCurrentEducation({
+        _id: "",
+        schoolName: "",
+        schoolLocation: "",
+        degreeType: "",
+        studyField: "",
+        startDate: todayDate,
+        gradDate: todayDate,
+        stillEnrolled: false,
+      });
+      setIsChecked(false);
     }
-    setForms(newForms);
+  }, [currentEditingIndex, education]);
+
+  const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setIsChecked(event.target.checked);
+    const gradDate = event.target.checked
+      ? "Present"
+      : currentEducation.gradDate;
+    setCurrentEducation((prev) => ({
+      ...prev,
+      gradDate,
+      stillEnrolled: isChecked,
+    }));
   };
 
   const handleInputChange =
-    (index: number, field: keyof FormState) => (e: InputChangeEvent) => {
-      const newForms = [...forms];
-      if (field === "id" || field === "isChecked") return;
-      newForms[index][field] = e.target.value;
-      setForms(newForms);
+    (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      setCurrentEducation((prev) => ({
+        ...prev,
+        [field]: e.target.value,
+      }));
     };
+
+  const handleSubmitEducation = async () => {
+    setLoading(true);
+    const educationInput = {
+      resumeId,
+      schoolName: currentEducation.schoolName,
+      schoolLocation: currentEducation.schoolLocation,
+      degreeType: currentEducation.degreeType,
+      studyField: currentEducation.studyField,
+      startDate: currentEducation.startDate,
+      gradDate: currentEducation.gradDate,
+      stillEnrolled: isChecked,
+    };
+
+    const result = await createResumeEducation(educationInput);
+    if (result.success) {
+      if (currentEditingIndex !== null) {
+        const educationToUpdate = {
+          ...currentEducation,
+          stillEnrolled: isChecked,
+        };
+        dispatch(updateEducation({ education: educationToUpdate }));
+        showToast("Education updated", "success");
+      } else {
+        const newEducation = {
+          ...currentEducation,
+          stillEnrolled: isChecked,
+        };
+        dispatch(addEducation(newEducation));
+        dispatch(setCurrentEditingIndex(education.length));
+        showToast("Education created successfully", "success");
+      }
+      dispatch(fetchResumeData(resumeId as string));
+      setTimeout(() => {
+        handleNext();
+        setLoading(false);
+      }, 3000);
+      setLoading(false);
+    } else {
+      showToast(result.error, "error");
+      console.error("Failed to create education:", result.error);
+    }
+  };
 
   return (
     <>
@@ -105,97 +169,90 @@ const Education = ({currentIndex, handleNext, handlePrev}: EducationProps) => {
       </div>
 
       <div className="relative w-full flex flex-col gap-y-12 lg:justify-between">
-        {forms.map((form, index) => (
-          <form
-            key={form.id}
-            className="flex flex-col flex-shrink-0 gap-y-6 lg:grid lg:w-[70%] lg:grid-cols-2 lg:gap-x-8"
-          >
-            <CustomInput
-              id={`name-${form.id}`}
-              type="text"
-              label="Name of your School"
-              placeholder="Harvard University"
-              value={form.name}
-              onChange={handleInputChange(index, "name")}
+        <form className="flex flex-col flex-shrink-0 gap-y-6 lg:grid lg:w-[70%] lg:grid-cols-2 lg:gap-x-8">
+          <CustomInput
+            id="schoolName"
+            type="text"
+            label="Name of your School"
+            placeholder="Harvard University"
+            value={currentEducation.schoolName}
+            onChange={handleInputChange("schoolName")}
+          />
+          <CustomInput
+            id="schoolLocation"
+            type="text"
+            label="School Location"
+            placeholder="Boston, USA"
+            value={currentEducation.schoolLocation}
+            onChange={handleInputChange("schoolLocation")}
+          />
+          <CustomInput
+            id="degreeType"
+            type="text"
+            label="Type of Degree"
+            placeholder="M.D."
+            value={currentEducation.degreeType}
+            onChange={handleInputChange("degreeType")}
+          />
+          <CustomInput
+            id="studyField"
+            type="text"
+            label="Field of Study"
+            placeholder="Surgery"
+            value={currentEducation.studyField}
+            onChange={handleInputChange("studyField")}
+          />
+          <CustomInput
+            id="startDate"
+            type="date"
+            label="Start Date"
+            value={currentEducation.startDate}
+            onChange={handleInputChange("startDate")}
+          />
+          <CustomInput
+            id="gradDate"
+            type={isChecked ? "text" : "date"}
+            label="Graduation Date"
+            value={currentEducation.gradDate}
+            onChange={handleInputChange("gradDate")}
+            isDisabled={isChecked}
+          />
+          <div className="flex items-center gap-x-4">
+            <input
+              type="checkbox"
+              name="checkbox"
+              id="checkbox"
+              checked={isChecked}
+              onChange={handleCheckboxChange}
             />
-            <CustomInput
-              id={`location-${form.id}`}
-              type="text"
-              label="School Location"
-              placeholder="Boston, USA"
-              value={form.location}
-              onChange={handleInputChange(index, "location")}
-            />
-            <CustomInput
-              id={`degree-${form.id}`}
-              type="text"
-              label="Type of Degree"
-              placeholder="M.D."
-              value={form.degree}
-              onChange={handleInputChange(index, "degree")}
-            />
-            <CustomInput
-              id={`field-${form.id}`}
-              type="text"
-              label="Field of Study"
-              placeholder="Surgery"
-              value={form.field}
-              onChange={handleInputChange(index, "field")}
-            />
-            <CustomInput
-              id={`start-${form.id}`}
-              type="date"
-              label="Start Date"
-              value={form.startDate}
-              onChange={handleInputChange(index, "startDate")}
-            />
-            <CustomInput
-              id={`end-${form.id}`}
-              type="date"
-              label="Graduation Date"
-              isDisabled={form.isChecked}
-              value={form.isChecked === true ? "" : form.gradDate}
-              onChange={handleInputChange(index, "gradDate")}
-            />
-            <div className="flex items-center gap-x-4">
-              <input
-                type="checkbox"
-                name={`checkbox-${form.id}`}
-                id={`checkbox-${form.id}`}
-                checked={form.isChecked}
-                onChange={handleCheckboxChange(index)}
-              />
-              <label
-                htmlFor={`checkbox-${form.id}`}
-                className="text-xs text-secondaryColor-100 lg:text-sm"
-              >
-                I’m still enrolled
-              </label>
-            </div>
-          </form>
-        ))}
+            <label
+              htmlFor="checkbox"
+              className="text-xs text-secondaryColor-100 lg:text-sm"
+            >
+              I&apos;m still enrolled
+            </label>
+          </div>
+        </form>
 
         <div className="w-full lg:absolute lg:-right-10 lg:top-0 lg:w-[30%]">
           <ResumePreview />
         </div>
       </div>
-      <button
-        onClick={handleAddForm}
-        className="mt-12 w-full flex items-center justify-center border border-[#B9BBBE] rounded-md py-4 gap-x-3 lg:max-w-[300px]"
-      >
-        <Image src={plus} alt="add icon" />
-        <span className="text-xs text-secondaryColor-100 lg:text-sm">
-          Add another institution or course
-        </span>
-      </button>
 
       <div className="w-full my-20 flex justify-center items-center">
         <Button
           currentIndex={currentIndex}
-          handleNext={handleNext}
+          handleNext={handleSubmitEducation}
           handlePrev={handlePrev}
+          loading={loading}
         />
       </div>
+
+      <Toast
+        message={toastState.message}
+        variant={toastState.variant}
+        isVisible={toastState.visible}
+      />
     </>
   );
 };

@@ -73,9 +73,9 @@ const SimpleTemplate = () => {
         {resumeData.education.map((edu, index) => {
           return (
             <div key={index} className="flex flex-col mb-4">
-              <h4 className="text-lg font-bold ">{edu.degree}</h4>
-              <p className="text-sm font-semibold mb-1">{edu.institution}</p>
-              <p className="mt-1 text-xs text-gray-400">{edu.dates}</p>
+              <h4 className="text-lg font-bold ">{edu.degreeType}</h4>
+              <p className="text-sm font-semibold mb-1">{edu.schoolName}</p>
+              <p className="mt-1 text-xs text-gray-400"> {edu.startDate} {edu.stillEnrolled ? "-" : ""} {edu.gradDate}</p>
             </div>
           );
         })}

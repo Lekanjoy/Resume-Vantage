@@ -4,7 +4,6 @@ import template3 from "@/public/assets/landing-page/template-3.png";
 import add from "@/public/assets/dashboard/add.svg";
 import upload from "@/public/assets/dashboard/upload.svg";
 import { StaticImageData } from "next/image";
-import { Experience } from "@/features/resumeSlice";
 
 export const addOrUploadResumeCardData = [
   {
@@ -106,6 +105,7 @@ export const stepsData = [
   { title: "Experience Description", checked: false },
   { title: "Experience Review", checked: false },
   { title: "Education History", checked: false },
+  { title: "Education Review", checked: false },
   { title: "Your Skills", checked: false },
   { title: "Summary", checked: false },
   { title: "Additional Details", checked: false },
@@ -164,9 +164,14 @@ export const resumeData = {
   ],
   education: [
     {
-      institution: "New York University",
-      degree: "Diploma in Frontend Engineering",
-      dates: "2018-2022",
+      _id: "1drrf54fgnfg",
+      schoolName: "New York University",
+      schoolLocation: "New York, United States",
+      degreeType: "Diploma",
+      studyField: "Frontend Engineering",
+      startDate: "2018",
+      gradDate: "2022",
+      stillEnrolled: false,
     },
   ],
   certifications: [

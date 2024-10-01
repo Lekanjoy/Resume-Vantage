@@ -22,9 +22,14 @@ export type resumeDataProps = {
       };
     }[];
     education: {
-      institution: string;
-      degree: string;
-      dates: string;
+      _id: string;
+      schoolName: string;
+      schoolLocation: string;
+      degreeType: string;
+      studyField: string;
+      startDate: string;
+      gradDate?: string;
+      stillEnrolled: boolean;
     }[];
     certifications: {
       title: string;
