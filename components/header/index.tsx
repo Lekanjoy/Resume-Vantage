@@ -11,10 +11,12 @@ import Button from "../button";
 import { navItems } from "@/data";
 import { useAuthStatus } from "@/hooks/useAuthStatus";
 import { logOutUser } from "@/app/actions/auth";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { twMerge } from "tailwind-merge";
 
 const Header = () => {
   const router = useRouter();
+  const pathname = usePathname();
   const [showNav, setShowNav] = useState(false);
   const { isLoggedIn } = useAuthStatus();
 
@@ -52,7 +54,7 @@ const Header = () => {
           <Link
             key={item.name}
             href={item.href}
-            className="text-sm text-secondaryColor hover:text-secondaryColor-100 xl:text-base"
+            className={twMerge("text-sm  hover:text-secondaryColor-100 xl:text-base", pathname === item.href ? "text-primaryColor" : "text-secondaryColor")}
           >
             {item.name}
           </Link>
