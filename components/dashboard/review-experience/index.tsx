@@ -85,7 +85,7 @@ const ExperienceReview = ({
             </div>
           ))}
         </div>
-        <div className="w-full lg:w-[30%]">
+        <div className="w-full min-h-full flex justify-center items-center  lg:w-[30%] lg:block">
           <ResumePreview />
         </div>
       </div>

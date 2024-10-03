@@ -65,7 +65,6 @@ const UserHeader = ({
       console.error(res.error);
     }
     setLoading(false);
-
   };
 
   return (
@@ -155,9 +154,9 @@ const UserHeader = ({
             isEdited={editedFields["email"]}
           />
         </form>
-        <div className="w-full min-h-full lg:w-[30%]">
-          <ResumePreview />
-        </div>
+          <div className="w-full min-h-full flex justify-center items-center  lg:w-[30%] lg:block">
+            <ResumePreview />
+          </div>
       </div>
 
       <div className="w-full my-20 flex justify-center items-center">

@@ -246,9 +246,9 @@ const Experiences = ({
             </label>
           </div>
         </form>
-        <div className="w-full lg:w-[30%]">
-          <ResumePreview />
-        </div>
+        <div className="w-full min-h-full flex justify-center items-center  lg:w-[30%] lg:block">
+            <ResumePreview />
+          </div>
       </div>
 
       <div className="w-full my-20 flex justify-center items-center">

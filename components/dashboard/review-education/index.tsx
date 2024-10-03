@@ -61,7 +61,8 @@ const EducationReview = ({
                     {edu.schoolName}, {edu.schoolLocation}
                   </p>
                   <p className="text-xs">
-                    {edu.startDate} {edu.stillEnrolled ? "-" : ""} {edu.gradDate}
+                    {edu.startDate} {edu.stillEnrolled ? "-" : ""}{" "}
+                    {edu.gradDate}
                   </p>
                 </div>
                 <div className="flex gap-x-3 items-center cursor-pointer xl:gap-x-6">
@@ -81,7 +82,7 @@ const EducationReview = ({
             </div>
           ))}
         </div>
-        <div className="w-full lg:w-[30%]">
+        <div className="w-full min-h-full flex justify-center items-center  lg:w-[30%] lg:block">
           <ResumePreview />
         </div>
       </div>

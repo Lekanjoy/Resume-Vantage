@@ -234,7 +234,7 @@ const Education = ({
           </div>
         </form>
 
-        <div className="w-full lg:absolute lg:-right-10 lg:top-0 lg:w-[30%]">
+        <div className="w-full min-h-full flex justify-center items-center lg:absolute lg:-right-10 lg:top-0 lg:w-[30%] lg:block">
           <ResumePreview />
         </div>
       </div>

@@ -63,6 +63,15 @@ background-color: transparent !important;
   border-radius: 10px; /* Rounded corners */
 }
 
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
+}
+
 @media (min-width: 1024px) {
   .rsw-editor {
     width: 50%;

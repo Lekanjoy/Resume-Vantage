@@ -1,5 +1,6 @@
 "use client";
 import React, { Dispatch, SetStateAction } from "react";
+import Link from "next/link";
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
 import Steps from "./Steps";
@@ -28,10 +29,10 @@ const Sidebar = ({ steps, isToggle, setIsToggle }: sidebarProps) => {
       )}
     >
       <div className="">
-        <div className=" text-lg font-bold text-primaryColor-100  absolute top-10 left-[90px] lg:text-[#FAFAFA] lg:text-xl lg:relative lg:top-0 lg:left-0">
+        <Link href='/' className=" text-lg font-bold text-primaryColor-100  absolute top-10 left-[90px] lg:text-[#FAFAFA] lg:text-xl lg:relative lg:top-0 lg:left-0">
           <span className="text-primaryColor lg:text-[#D8CFFC]">Resume</span>
           Vantage.
-        </div>
+        </Link>
         <Image
           src={isToggle ? close : hamburger}
           alt="hamburger icon"
