@@ -50,7 +50,7 @@ const ExperienceReview = ({
           {experiences.map((experience, index) => (
             <div
               key={experience._id}
-              className="w-full flex flex-col gap-y-3 bg-[#F7F5FE] py-4 px-4 text-secondaryColor-100 rounded-md border border-[#B9BBBE] lg:gap-y-4 xl:p-6 2xl:p-8"
+              className="w-full h-fit flex flex-col gap-y-3 bg-[#F7F5FE] py-4 px-4 text-secondaryColor-100 rounded-md border border-[#B9BBBE] lg:gap-y-4 xl:p-6 2xl:p-8"
             >
               <div className="flex justify-between items-center">
                 <div className="flex flex-col gap-y-[2px]">

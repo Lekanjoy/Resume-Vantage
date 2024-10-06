@@ -46,6 +46,7 @@ export type resumeData = {
   jobExperiences: [];
   education: [];
   skills: [];
+  rawSkills: string[];
   certifications: [];
   createdAt: string;
   updatedAt: string;

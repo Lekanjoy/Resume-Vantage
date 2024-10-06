@@ -55,11 +55,15 @@ const resumeSlice = createSlice({
     updatePersonalInfo: (state, action) => {
       return { ...state, ...action.payload };
     },
-    addSkill: (state, action) => {
-      state.skills.push(action.payload);
-    },
-    removeSkill: (state, action) => {
-      state.skills = state.skills.filter((skill) => skill !== action.payload);
+    toggleSkill: (state, action: PayloadAction<string>) => {
+      const skillIndex = state.skills.indexOf(action.payload);
+      if (skillIndex === -1) {
+        // Skill doesn't exist, so add it
+        state.skills.push(action.payload);
+      } else {
+        // Skill exists, so remove it
+        state.skills.splice(skillIndex, 1);
+      }
     },
     addExperience: (
       state,
@@ -158,6 +162,7 @@ const resumeSlice = createSlice({
           state.phone = action.payload[0]?.phoneNumber || "";
           state.summary = action.payload[0]?.summary || "";
           state.skills = action.payload[0]?.skills || [];
+          state.rawSkills = action.payload[0]?.rawSkills || [];
 
           // Ensure each experience has a responsibilities section
           state.experience = action.payload[0]?.jobExperiences.map(
@@ -184,8 +189,7 @@ const resumeSlice = createSlice({
 
 export const {
   updatePersonalInfo,
-  addSkill,
-  removeSkill,
+  toggleSkill,
   addExperience,
   updateExperience,
   toggleDescriptionInCurrentExperience,

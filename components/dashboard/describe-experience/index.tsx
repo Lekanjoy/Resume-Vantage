@@ -1,17 +1,22 @@
-import { useState } from "react";
-import { useTypedSelector } from "@/store/store";
+import { useMemo, useState } from "react";
+import { useAppDispatch, useTypedSelector } from "@/store/store";
 import { addResponsibilitiesAction } from "@/app/actions/addResponsiblilities";
 import { useToast } from "@/components/toast/ShowToast";
 import Button, { ButtonProps as DescriptionProps } from "../button";
 import SearchBox from "./SearchBox";
 import RichTextEditor from "../editor";
 import Toast from "@/components/toast";
+import {
+  toggleDescriptionInCurrentExperience,
+  updateExperience,
+} from "@/features/resumeSlice";
 
 const ExperienceDescription = ({
   currentIndex,
   handlePrev,
   handleNext,
 }: DescriptionProps) => {
+  const dispatch = useAppDispatch();
   const { showToast, toastState } = useToast();
   const experiences = useTypedSelector((store) => store.resume.experience);
   const currentEditingIndex = useTypedSelector(
@@ -42,11 +47,54 @@ const ExperienceDescription = ({
       setLoading(false);
     } else {
       setLoading(false);
-      showToast(result.error, "error");
+      showToast(result.error, "error");    
       console.error(result.error);
     }
   }
+  // Responsibilities to display based on subscription status
+  const isPaidUser = false;
+  const resultData = useTypedSelector((store) => store.suggestions);
+  const rawExperienceSuggestions =
+    experiences[currentEditingIndex!]?.rawResponsibilities?.responsibilities;
 
+  const AISuggestions =
+    resultData.length < 1 ? rawExperienceSuggestions : resultData;
+  const displayedResults = isPaidUser
+    ? AISuggestions
+    : AISuggestions?.slice(0, 3);
+
+  // Check if responsibilities is selected or not
+  const isSelected = useMemo(() => {
+    return (result: string) => {
+      if (currentEditingIndex !== null && experiences[currentEditingIndex]) {
+        return experiences[
+          currentEditingIndex
+        ].responsibilities?.responsibilities?.includes(result);
+      }
+      return false;
+    };
+  }, [experiences, currentEditingIndex]);
+
+  // Add or remove responsibilities
+  const handleAddDescription = (result: string) => {
+    dispatch(toggleDescriptionInCurrentExperience(result));
+  };
+
+  // Editor content
+  if (currentEditingIndex === null) return null;
+  const currentExperience = experiences[currentEditingIndex];
+  const responsibilities =
+    currentExperience.responsibilities?.responsibilities || [];
+
+  const handleUpdate = (newContent: string[]) => {
+    const updatedExperience = {
+      ...currentExperience,
+      responsibilities: {
+        responsibilities: newContent,
+      },
+    };
+    dispatch(updateExperience({ experience: updatedExperience }));
+  };
   return (
     <>
       <div className="mb-10 flex flex-col gap-y-1 lg:gap-y-3 lg:mb-12">
@@ -59,8 +107,17 @@ const ExperienceDescription = ({
       </div>
 
       <div className="w-full flex justify-between flex-col gap-y-10 lg:flex-row lg:gap-x-5 xl:gap-x-8">
-        <SearchBox role={role} />
-        <RichTextEditor />
+        <SearchBox
+          role={role}
+          AISuggestions={AISuggestions}
+          displayedResults={displayedResults}
+          isSelected={isSelected}
+          handleAddDescription={handleAddDescription}
+        />
+        <RichTextEditor
+          initialContent={responsibilities}
+          onUpdate={handleUpdate}
+        />
       </div>
       <div className="w-full my-20 flex justify-center items-center">
         <Button

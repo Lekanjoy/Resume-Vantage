@@ -11,24 +11,20 @@ import {
   ContentEditableEvent,
 } from "react-simple-wysiwyg";
 import Image from "next/image";
-import { useTypedSelector, useAppDispatch } from "@/store/store";
-import { updateExperience } from "@/features/resumeSlice";
 import stars from "@/public/assets/dashboard/stars.svg";
 
-function RichTextEditor() {
-  const dispatch = useAppDispatch();
-  const experiences = useTypedSelector((state) => state.resume.experience);
-  const currentEditingIndex = useTypedSelector((state) => state.resume.currentEditingIndex);
+interface RichTextEditorProps {
+  initialContent: string[];
+  onUpdate: (newContent: string[]) => void;
+}
 
+function RichTextEditor({ initialContent, onUpdate }: RichTextEditorProps) {
   const [editorContent, setEditorContent] = useState("");
 
   useEffect(() => {
-    if (currentEditingIndex !== null && experiences[currentEditingIndex]) {
-      const responsibilities = experiences[currentEditingIndex].responsibilities?.responsibilities?.map(item => `<li>${item}</li>`)
-        .join('');
-      setEditorContent(`<ul>${responsibilities}</ul>`);
-    }
-  }, [currentEditingIndex, experiences]);
+    const listItems = initialContent?.map(item => `<li>${item}</li>`).join('');
+    setEditorContent(`<ul>${listItems}</ul>`);
+  }, [initialContent]);
 
   const handleContentChange = (event: ContentEditableEvent) => {
     let newContent = event.target.value;
@@ -51,15 +47,8 @@ function RichTextEditor() {
 
     setEditorContent(newContent);
 
-    if (currentEditingIndex !== null) {
-      const updatedExperience = {
-        ...experiences[currentEditingIndex],
-        responsibilities: {
-          responsibilities: newContent.match(/<li>(.*?)<\/li>/g)?.map(item => item.replace(/<\/?li>/g, '')) || []
-        }
-      };
-      dispatch(updateExperience({ experience: updatedExperience }));
-    }
+    const updatedContent = newContent.match(/<li>(.*?)<\/li>/g)?.map(item => item.replace(/<\/?li>/g, '')) || [];
+    onUpdate(updatedContent);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent) => {

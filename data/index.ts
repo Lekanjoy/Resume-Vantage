@@ -137,6 +137,7 @@ export const resumeData = {
     "Scrum",
     "Team Collaboration",
   ],
+  rawSkills: ["JavaScript", "React", "Node.js"],
   experience: [
     {
       _id: "66d4ee36ab71f75fc3fbbdc1",
@@ -184,3 +185,4 @@ export const resumeData = {
 };
 
 export const resultData: string[] = [];
+export const skillsResultData: string[] = [];

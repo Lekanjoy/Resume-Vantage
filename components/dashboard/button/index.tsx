@@ -28,7 +28,7 @@ const Button = ({
 
       <button
         onClick={handleNext}
-        className="flex items-center justify-center gap-x-1 bg-primaryColor text-white p-4 rounded-md w-full ease-in-out duration-300 lg:max-w-[330px] hover:bg-primaryColor-100 disabled:cursor-wait"
+        className="flex items-center justify-center gap-x-1 bg-primaryColor text-white p-4 rounded-md w-full ease-in-out duration-300 lg:max-w-[330px] hover:bg-primaryColor-100 disabled:cursor-not-allowed"
         disabled={loading}
       >
         <span>Continue</span>

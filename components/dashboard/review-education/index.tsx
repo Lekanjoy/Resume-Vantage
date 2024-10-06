@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { setCurrentEditingIndex } from "@/features/resumeSlice";
 import { useAppDispatch, useTypedSelector } from "@/store/store";
 import Button, { ButtonProps } from "../button";
@@ -7,6 +7,8 @@ import ResumePreview from "@/components/resume-preview";
 import plus from "@/public/assets/dashboard/plusIcon.svg";
 import deleteIcon from "@/public/assets/dashboard/delete.svg";
 import editIcon from "@/public/assets/dashboard/edit.svg";
+import { getSkillsSuggestions } from "@/app/actions/addResponsiblilities";
+import { updateSkillsSuggestions } from "@/features/SkillsSuggestionSlice";
 
 export interface ExperienceReviewProps extends ButtonProps {
   setCurrentIndex: Dispatch<SetStateAction<number>>;
@@ -22,6 +24,8 @@ const EducationReview = ({
 }: ExperienceReviewProps) => {
   const dispatch = useAppDispatch();
   const education = useTypedSelector((state) => state.resume.education);
+  const [loading, setLoading] = useState(false);
+  const resumeId = useTypedSelector((store) => store.resume.resumeId);
 
   const handleAddEducation = () => {
     setCurrentIndex(5);
@@ -31,6 +35,23 @@ const EducationReview = ({
   const handleEditEducation = (index: number) => {
     dispatch(setCurrentEditingIndex(index));
     onEditEducation();
+  };
+
+  const handleSkillSuggestions = async () => {
+    setLoading(true);
+    const input = {
+      resumeId,
+    };
+
+    const result = await getSkillsSuggestions(input);
+    if (result.success) {
+      setLoading(false);
+      dispatch(updateSkillsSuggestions(result.data?.payload?.rawSkills));
+      handleNext();     
+    } else {
+      setLoading(false);
+      console.error(result.error);
+    }
   };
 
   return (
@@ -98,8 +119,9 @@ const EducationReview = ({
       <div className="w-full my-20 flex justify-center items-center">
         <Button
           currentIndex={currentIndex}
-          handleNext={handleNext}
+          handleNext={handleSkillSuggestions}
           handlePrev={handlePrev}
+          loading={loading}
         />
       </div>
     </>

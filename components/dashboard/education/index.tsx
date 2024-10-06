@@ -145,12 +145,12 @@ const Education = ({
         showToast("Education created successfully", "success");
       }
       dispatch(fetchResumeData(resumeId as string));
+      setLoading(false);
       setTimeout(() => {
         handleNext();
-        setLoading(false);
       }, 3000);
-      setLoading(false);
     } else {
+      setLoading(false);
       showToast(result.error, "error");
       console.error("Failed to create education:", result.error);
     }

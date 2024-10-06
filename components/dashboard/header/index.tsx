@@ -64,7 +64,7 @@ const UserHeader = ({
       showToast(res.error, "error");
       console.error(res.error);
     }
-    setLoading(false);
+    setLoading(false); 
   };
 
   return (

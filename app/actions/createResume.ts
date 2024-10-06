@@ -147,8 +147,8 @@ export async function createResumeExperience(input: ExperienceInput) {
 
 // Create Resume Education
 const educationSchema = z.object({
-  schoolName: z.string().min(2, "School name must be at least 2 characters long"),
   resumeId: z.string().min(10, "Invalid Resume ID"),
+  schoolName: z.string().min(2, "School name must be at least 2 characters long"),
   schoolLocation: z.string().min(2, "Location must be at least 2 characters long"),
   degreeType: z.string().min(2, "Degree type must be at least 2 characters long"),
   studyField: z.string().min(2, "Study field name must be at least 2 characters long"),
