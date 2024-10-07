@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
 import "./globals.css";
-import ReduxProvider from "@/providers/ReduxProvider";
+import ReduxProvider from "@/providers/Redux_Cookie_Provider";
 
 const manrope = Manrope({ subsets: ["latin"] });
 

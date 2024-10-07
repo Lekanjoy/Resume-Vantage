@@ -6,7 +6,7 @@ import Toast from "@/components/toast";
 import { useAppDispatch, useTypedSelector } from "@/store/store";
 import { useToast } from "@/components/toast/ShowToast";
 import { toggleSkill } from "@/features/resumeSlice";
-import { addSkills } from "@/app/actions/addResponsiblilities";
+import { addSkills } from "@/app/actions/skillsAction";
 
 const Skills = ({ currentIndex, handlePrev, handleNext }: SkillsProps) => {
   const dispatch = useAppDispatch();

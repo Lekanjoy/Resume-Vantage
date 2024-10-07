@@ -15,7 +15,7 @@ import {
   setCurrentEditingIndex,
   updateEducation,
 } from "@/features/resumeSlice";
-import { createResumeEducation } from "@/app/actions/createResume";
+import { createResumeEducation } from "@/app/actions/educationAction";
 import Toast from "@/components/toast";
 import { useToast } from "@/components/toast/ShowToast";
 import { useSearchParams } from "next/navigation";

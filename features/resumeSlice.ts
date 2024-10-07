@@ -1,4 +1,4 @@
-import { fetchResumes } from "@/app/actions/createResume";
+import { fetchResumes } from "@/app/actions/getUser_Resume";
 import { resumeData } from "@/data";
 import { resumeData as resumeDataType } from "@/types";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";

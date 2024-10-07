@@ -16,7 +16,7 @@ import {
   updateExperience,
 } from "@/features/resumeSlice";
 import { useAppDispatch, useTypedSelector } from "@/store/store";
-import { createResumeExperience } from "@/app/actions/createResume";
+import { createResumeExperience } from "@/app/actions/experienceAction";
 import { useToast } from "@/components/toast/ShowToast";
 import Toast from "@/components/toast";
 import { useSearchParams } from "next/navigation";

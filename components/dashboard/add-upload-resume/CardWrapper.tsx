@@ -21,8 +21,6 @@ const CreateOrUpload = ({
   const [selectedCardId, setSelectedCardId] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
 
-
-
   //Move page to Next Step if there is a resumeId in the URL
   useEffect(() => {
     const resumeId = searchParams.get("resumeId");

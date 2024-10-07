@@ -7,7 +7,7 @@ import ResumePreview from "@/components/resume-preview";
 import plus from "@/public/assets/dashboard/plusIcon.svg";
 import deleteIcon from "@/public/assets/dashboard/delete.svg";
 import editIcon from "@/public/assets/dashboard/edit.svg";
-import { getSkillsSuggestions } from "@/app/actions/addResponsiblilities";
+import { getSkillsSuggestions } from "@/app/actions/skillsAction";
 import { updateSkillsSuggestions } from "@/features/SkillsSuggestionSlice";
 
 export interface ExperienceReviewProps extends ButtonProps {
