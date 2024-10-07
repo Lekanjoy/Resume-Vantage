@@ -7,7 +7,7 @@ import { resumeDataProps } from "@/types";
 
 const Resume = ({ resumeData }: resumeDataProps) => {
   return (
-    <section className="bg-white max-w-full min-h-full border border-secondaryColor-100/50 rounded-md p-1 flex flex-col">
+    <section className="bg-white max-w-full h-[250px] overflow-y-auto scrollbar-hide border border-secondaryColor-100/50 rounded-md p-1 flex flex-col lg:min-w-full">
       <PreviewHeader resumeData={resumeData} />
       <SkillsPreview resumeData={resumeData} />
       <ExperiencePreview resumeData={resumeData} />

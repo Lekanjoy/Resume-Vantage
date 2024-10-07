@@ -61,7 +61,7 @@ const ExperienceDescription = ({
     resultData.length < 1 ? rawExperienceSuggestions : resultData;
   const displayedResults = isPaidUser
     ? AISuggestions
-    : AISuggestions?.slice(0, 3);
+    : AISuggestions?.slice(0, 4);
 
   // Check if responsibilities is selected or not
   const isSelected = useMemo(() => {

@@ -3,12 +3,14 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import resumeSlice from '@/features/resumeSlice';
 import AISuggestionsSlice from '@/features/AISuggestionsSlice';
 import SkillsSuggestionSlice from '@/features/SkillsSuggestionSlice';
+import SummarySuggestionSlice from '@/features/SummarySuggestionSlice';
 
 export const store = configureStore({
   reducer: {
     resume: resumeSlice,
     suggestions: AISuggestionsSlice,
     skillsSuggestions: SkillsSuggestionSlice,
+    summarySuggestions: SummarySuggestionSlice,
   },
 });
 

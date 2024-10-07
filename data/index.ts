@@ -123,8 +123,9 @@ export const resumeData = {
   city: "London",
   country: "United Kingdom",
   phone: "+44 1234 56789",
-  summary:
+  careerSummary:
     "Highly motivated and detail-oriented software engineer with a passion for building scalable and efficient software solutions.",
+  rawCareerSummary: ['Dedicated and passionate developer'],
   skills: [
     "JavaScript",
     "React",
@@ -186,3 +187,4 @@ export const resumeData = {
 
 export const resultData: string[] = [];
 export const skillsResultData: string[] = [];
+export const summaryResultData: string[] = [];

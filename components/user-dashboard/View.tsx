@@ -15,7 +15,7 @@ const View = ({ resume }: ViewProps) => {
     city: resume.city || "",
     country: resume.country || "",
     phone: resume.phoneNumber || "",
-    summary: resume.summary || "",
+    careerSummary: resume.careerSummary || "",
     skills: resume.skills || [],
     experience: resume.jobExperiences || [],
     education: resume.education || [],
@@ -24,7 +24,7 @@ const View = ({ resume }: ViewProps) => {
   return (
     <Link
       href={`/dashboard/?resumeId=${resume?._id}&editing=true`}
-      className="flex flex-col w-[200px] h-[250px]"
+      className="flex flex-col w-[200px] min-h-full"
     >
       <Resume resumeData={resumeData} />
     </Link>

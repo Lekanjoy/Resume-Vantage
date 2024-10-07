@@ -7,6 +7,8 @@ import { useAppDispatch, useTypedSelector } from "@/store/store";
 import { useToast } from "@/components/toast/ShowToast";
 import { toggleSkill } from "@/features/resumeSlice";
 import { addSkills } from "@/app/actions/skillsAction";
+import { getSummarySuggestions } from "@/app/actions/summaryAction";
+import { updateSummarySuggestions } from "@/features/SummarySuggestionSlice";
 
 const Skills = ({ currentIndex, handlePrev, handleNext }: SkillsProps) => {
   const dispatch = useAppDispatch();
@@ -25,7 +27,7 @@ const Skills = ({ currentIndex, handlePrev, handleNext }: SkillsProps) => {
   const AISuggestions = resultData.length < 1 ? rawSkills : resultData;
   const displayedResults = isPaidUser
     ? AISuggestions
-    : AISuggestions?.slice(0, 3);
+    : AISuggestions?.slice(0, 4);
 
   // Check if skill is selected or not
   const isSelected = useMemo(() => {
@@ -62,27 +64,41 @@ const Skills = ({ currentIndex, handlePrev, handleNext }: SkillsProps) => {
     });
   };
 
-  // Add Skills to Database
-  const handleAddSkills = async () => {
-    setLoading(true);
-    const input = {
+  // // Add Skills to Database and get Career Summary suggestions  
+  const handleAddSkillsAndSuggestSummary = async () => {
+    setLoading(true); 
+    // First, add skills
+    const skillsInput = {
       resumeId,
       payload: skills,
     };
-
-    const result = await addSkills(input);
-    if (result.success) {
-      setLoading(false);
+  
+    const skillsResult = await addSkills(skillsInput);
+    
+    if (skillsResult.success) {
       showToast("Skills added", "success");
-      setTimeout(() => {
-        handleNext();
-      }, 3000);
+      // If skills were added successfully, get summary suggestions
+      const summaryInput = {
+        resumeId,
+      };
+  
+      const summaryResult = await getSummarySuggestions(summaryInput);
+      
+      if (summaryResult.success) {
+        dispatch(updateSummarySuggestions(summaryResult.data?.payload?.rawCareerSummary));
+          handleNext();
+      } else {
+        showToast("Summary suggestions failed!", "error");
+        console.error(summaryResult.error);
+      }
     } else {
-      setLoading(false);
-      showToast("Skills addition failed!", "success");
-      console.error(result.error);
+      showToast("Skills addition failed!", "error");
+      console.error(skillsResult.error);
     }
+  
+    setLoading(false);
   };
+  
   return (
     <>
       <div className="mb-10 flex flex-col gap-y-1 lg:gap-y-3 lg:mb-12">
@@ -107,7 +123,7 @@ const Skills = ({ currentIndex, handlePrev, handleNext }: SkillsProps) => {
       <div className="w-full my-20 flex justify-center items-center">
         <Button
           currentIndex={currentIndex}
-          handleNext={handleAddSkills}
+          handleNext={handleAddSkillsAndSuggestSummary}
           handlePrev={handlePrev}
           loading={loading}
         />

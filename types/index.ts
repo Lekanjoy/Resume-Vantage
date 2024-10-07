@@ -7,7 +7,7 @@ export type resumeDataProps = {
     city: string;
     country: string;
     phone: string;
-    summary: string;
+    careerSummary: string;
     skills: string[];
     experience: {
       _id: string;
@@ -57,5 +57,6 @@ export type resumeData = {
   phoneNumber: string;
   profession: string;
   publicEmail: string;
-  summary: string;
+  careerSummary: string;
+  rawCareerSummary: string[];
 };

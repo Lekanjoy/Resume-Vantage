@@ -65,6 +65,9 @@ const resumeSlice = createSlice({
         state.skills.splice(skillIndex, 1);
       }
     },
+    updateSummary: (state, action: PayloadAction<string>) => {
+      state.careerSummary = action.payload;
+    },
     addExperience: (
       state,
       action: PayloadAction<Omit<Experience, "responsibilities">>
@@ -160,7 +163,8 @@ const resumeSlice = createSlice({
           state.city = action.payload[0]?.city || "";
           state.country = action.payload[0]?.country || "";
           state.phone = action.payload[0]?.phoneNumber || "";
-          state.summary = action.payload[0]?.summary || "";
+          state.careerSummary = action.payload[0]?.careerSummary || "";
+          state.rawCareerSummary = action.payload[0]?.rawCareerSummary
           state.skills = action.payload[0]?.skills || [];
           state.rawSkills = action.payload[0]?.rawSkills || [];
 
@@ -190,6 +194,7 @@ const resumeSlice = createSlice({
 export const {
   updatePersonalInfo,
   toggleSkill,
+  updateSummary,
   addExperience,
   updateExperience,
   toggleDescriptionInCurrentExperience,
