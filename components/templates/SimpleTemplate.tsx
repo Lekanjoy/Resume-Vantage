@@ -13,7 +13,7 @@ const SimpleTemplate = () => {
             {resumeData.title}
           </p>
           <p className="text-blue-950 font-semibold text-xs leading-tight">
-            {resumeData.summary}
+            {resumeData.careerSummary}
           </p>
         </div>
         <div className="flex flex-col gap-y-1">
