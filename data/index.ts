@@ -173,7 +173,7 @@ export const resumeData = {
       studyField: "Frontend Engineering",
       startDate: "2018",
       gradDate: "2022",
-      stillEnrolled: false,
+      stillEnrolled: true,
     },
   ],
   certifications: [

@@ -142,4 +142,7 @@ background-color: transparent !important;
   body {
     @apply bg-background text-foreground;
   }
+  img {
+    display: initial;
+  }
 }
