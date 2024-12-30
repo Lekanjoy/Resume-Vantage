@@ -1,104 +1,185 @@
-import { resumeData } from "@/data";
+"use client";
+import { useTypedSelector } from "@/store/store";
+import { resumeDataProps } from "@/types";
+import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
 
-const SimpleTemplate = () => {
-  const fullName = resumeData.fname + ' ' + resumeData.lname;
-  const location = resumeData.city + ', ' + resumeData.country;
+const styles = StyleSheet.create({
+  page: {
+    padding: 30,
+    fontFamily: "Helvetica",
+  },
+  header: {
+    marginBottom: 20,
+  },
+  name: {
+    fontSize: 24,
+    color: "#003366",
+    marginBottom: 5,
+  },
+  title: {
+    fontSize: 16,
+    color: "#666666",
+    marginBottom: 10,
+  },
+  contact: {
+    position: "absolute",
+    right: 30,
+    top: 30,
+    textAlign: "right",
+  },
+  contactItem: {
+    marginBottom: 5,
+    fontSize: 10,
+  },
+  summary: {
+    fontSize: 10,
+    marginBottom: 20,
+    lineHeight: 1.5,
+    width: "60%",
+  },
+  sectionTitle: {
+    fontSize: 14,
+    color: "#003366",
+    borderBottom: 1,
+    borderBottomColor: "#003366",
+    paddingBottom: 5,
+    marginBottom: 10,
+    marginTop: 20,
+    textAlign: "center",
+  },
+  skillsContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8,
+    marginBottom: 20,
+  },
+  skillPill: {
+    backgroundColor: "#003366",
+    color: "white",
+    padding: "4 8",
+    borderRadius: 4,
+    fontSize: 10,
+  },
+  experienceItem: {
+    marginBottom: 15,
+  },
+  jobTitle: {
+    fontSize: 12,
+    fontWeight: "bold",
+    marginBottom: 2,
+  },
+  company: {
+    fontSize: 12,
+    marginBottom: 2,
+  },
+  date: {
+    fontSize: 10,
+    color: "#666666",
+    marginBottom: 5,
+  },
+  bulletPoint: {
+    fontSize: 10,
+    marginBottom: 3,
+    lineHeight: 1.5,
+  },
+  location: {
+    position: "absolute",
+    right: 0,
+    fontSize: 10,
+    color: "#666666",
+  },
+});
+
+export default function SimpleTemplate({resumeData}: resumeDataProps) {
+  
+  const {
+    fname,
+    lname,
+    title,
+    email,
+    phone,
+    city,
+    country,
+    careerSummary,
+    experience,
+    education,
+    skills,
+  } = resumeData;
 
   return (
-    <section className="bg-white max-w-[8.5in] rounded-md p-8 flex flex-col">
-      <div className="header mb-5 flex justify-between gap-x-8 w-full">
-        <div className="max-w-3/5 text-blue-900">
-          <h1 className="font-semibold text-xl">{fullName}</h1>
-          <p className="text-gray-500 text-sm font-normal mb-2">
-            {resumeData.title}
-          </p>
-          <p className="text-blue-950 font-semibold text-xs leading-tight">
-            {resumeData.careerSummary}
-          </p>
-        </div>
-        <div className="flex flex-col gap-y-1">
-          <p className="text-xs">{resumeData.email}</p>
-          <p className="text-xs">{resumeData.phone}</p>
-          <p className="text-xs">{location}</p>
-        </div>
-      </div>
+    <Document>
+      <Page size="A4" style={styles.page}>
+        {/* Header */}
+        <View style={styles.header}>
+          <Text style={styles.name}>{fname + " " + lname}</Text>
+          <Text style={styles.title}>{title}</Text>
+          <View style={styles.contact}>
+            <Text style={styles.contactItem}>{email}</Text>
+            <Text style={styles.contactItem}>{phone}</Text>
+            <Text style={styles.contactItem}>{city}, {country}</Text>
+          </View>
+          <Text style={styles.summary}>{careerSummary}</Text>
+        </View>
 
-      <div className="skills">
-        <h2 className="text-lg font-bold mb-2 text-center text-blue-900 border-y border-blue-900">
-          SKILLS
-        </h2>
-        <div className="flex flex-wrap gap-2">
-          {resumeData.skills.map((skill, index) => {
-            return (
-              <p
-                key={index}
-                className="bg-blue-900 text-white text-xs px-2 py-[2px] rounded"
-              >
-                {skill}
-              </p>
-            );
-          })}
-        </div>
-      </div>
+        {/* Skills */}
+        <Text style={styles.sectionTitle}>SKILLS</Text>
+        <View style={styles.skillsContainer}>
+          {skills.map((skill, index) => (
+            <Text key={index} style={styles.skillPill}>
+              {skill}
+            </Text>
+          ))}
+        </View>
 
-      <div className="experience mt-5">
-        <h3 className="text-lg font-bold mb-2 text-center text-blue-900 border-y border-blue-900">
-          WORK EXPERIENCE
-        </h3>
-        {resumeData.experience.map((exp, index) => {
+        {/* Work Experience */}
+        <Text style={styles.sectionTitle}>WORK EXPERIENCE</Text>
+        {experience.map((exp) => {
           return (
-            <div key={index} className="text-blue-950 mb-4">
-              <h4 className="text-lg font-bold ">{exp.jobTitle}</h4>
-              <p className="text-sm font-semibold mb-1">{exp.company}</p>
-              <div className="flex justify-between text-xs text-gray-400 mb-1">
-                <p>{exp.startDate} - {exp.endDate}</p>
-                <p>{exp.city + ", " + exp.country}</p>
-              </div>
-              {exp?.responsibilities?.responsibilities?.map((desc, id) => {
+            <View key={exp._id} style={styles.experienceItem}>
+              <Text style={styles.jobTitle}>{exp.jobTitle}</Text>
+              <Text style={styles.company}>{exp.company}</Text>
+              <Text style={styles.date}>
+                {exp.startDate} - {exp.endDate}
+              </Text>
+              {exp.responsibilities.responsibilities.map((resp, index) => {
                 return (
-                  <div key={id} className="flex flex-col gap-y-1">
-                    <p className="text-xs">- {desc}</p>
-                  </div>
+                  <Text key={index} style={styles.bulletPoint}>
+                    • {resp}
+                  </Text>
                 );
               })}
-            </div>
+            </View>
           );
         })}
-      </div>
 
-      <div className="education mt-5">
-        <h3 className="text-lg font-bold mb-2 text-center text-blue-900 border-y border-blue-900">
-          EDUCATION
-        </h3>
-        {resumeData.education.map((edu, index) => {
+        {/* Education */}
+        <Text style={styles.sectionTitle}>EDUCATION</Text>
+        {education.map((edu) => {
           return (
-            <div key={index} className="flex flex-col mb-4">
-              <h4 className="text-lg font-bold ">{edu.degreeType}</h4>
-              <p className="text-sm font-semibold mb-1">{edu.schoolName}</p>
-              <p className="mt-1 text-xs text-gray-400"> {edu.startDate} {edu.stillEnrolled ? "-" : ""} {edu.gradDate}</p>
-            </div>
+            <View key={edu._id} style={styles.experienceItem}>
+              <Text style={styles.jobTitle}>
+               { edu.degreeType} in {edu.studyField}
+              </Text>
+              <Text style={styles.company}>{edu.schoolName}</Text>
+              <Text style={styles.date}>{edu.startDate} - {edu.gradDate}</Text>
+            </View>
           );
         })}
-      </div>
 
-      <div className="details mt-5">
-        <h3 className="text-lg font-bold mb-2 text-center text-blue-900 border-y border-blue-900">
-          CERTIFICATIONS
-        </h3>
-        {resumeData.certifications.map((det, index) => {
-          return (
-            <div key={index} className="flex flex-col mb-4">
-              <h4 className="text-lg font-bold ">{det.title}</h4>
-              <p className="text-sm font-semibold mb-[2px]">
-                {det.institution}
-              </p>
-              <p className="mt-1 text-xs text-gray-400">{det.date}</p>
-            </div>
-          );
-        })}
-      </div>
-    </section>
+        {/* Organizations
+        <Text style={styles.sectionTitle}>ORGANIZATIONS</Text>
+        <View style={styles.experienceItem}>
+          <Text style={styles.bulletPoint}>
+            • American Management Association (2015 - Present)
+          </Text>
+          <Text style={styles.bulletPoint}>
+            • Association of Private Enterprise Education (2014 - Present)
+          </Text>
+          <Text style={styles.bulletPoint}>
+            • eBusiness Association (eBA) (2013 - Present)
+          </Text>
+        </View> */}
+      </Page>
+    </Document>
   );
-};
-
-export default SimpleTemplate;
+}

@@ -4,13 +4,15 @@ import { resumeData } from "@/types";
 import { useToast } from "../toast/ShowToast";
 import View from "./View";
 import Toast from "../toast";
+import SimpleTemplate from "@/components/templates/SimpleTemplate";
+
 
 type UserDashboardProps = {
   resumes: resumeData[];
   error: string | undefined;
 };
 
-const UserDashboard = ({ resumes, error }: UserDashboardProps) => {
+const UserDashboard = ({ resumes, error }: UserDashboardProps) => {  
   const { showToast, toastState } = useToast();
   // State for drafts and completed resumes
   const [drafts, setDrafts] = useState<resumeData[]>([]);
@@ -35,6 +37,7 @@ const UserDashboard = ({ resumes, error }: UserDashboardProps) => {
       setCompleted(completedResumes);
     }
   }, [error, resumes, showToast]);
+  
   // Function to render resume views
   const renderResumeViews = () => {
     const currentResumes = selectedView === 0 ? drafts : completed;
@@ -71,7 +74,6 @@ const UserDashboard = ({ resumes, error }: UserDashboardProps) => {
       <div className="mt-5 flex gap-x-2 xl:mt-16">
         {renderResumeViews()}
       </div>
-
       <Toast
         message={toastState.message}
         variant={toastState.variant}
