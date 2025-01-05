@@ -1,5 +1,5 @@
 'use client'
-
+import { resumeDataProps } from '@/types'
 import { 
   Document, 
   Page, 
@@ -165,7 +165,7 @@ const languages = [
   { name: 'French', level: 2 },
 ]
 
-export default function Template2() {
+export default function Template2({resumeData}: resumeDataProps) {
   return (
       <Document>
         <Page size="A4" style={styles.page}>

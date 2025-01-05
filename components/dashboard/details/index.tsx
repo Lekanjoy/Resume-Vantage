@@ -1,9 +1,12 @@
+"use client";
 import React from "react";
 import Button, { ButtonProps as DetailsProps } from "../button";
 import { FileDown } from "lucide-react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { useTypedSelector } from "@/store/store";
 import SimpleTemplate from "@/components/templates/SimpleTemplate";
+import Template2 from "@/components/templates/Template2";
+
 
 const AdditionalDetails = ({
   currentIndex,
@@ -13,8 +16,8 @@ const AdditionalDetails = ({
   const resumeData = useTypedSelector((store) => store.resume);
 
   return (
-    <div>
-      AdditionalDetails
+    <>
+    Additional Details
       <PDFDownloadLink
         document={<SimpleTemplate resumeData={resumeData} />}
         fileName="resume.pdf"
@@ -31,7 +34,7 @@ const AdditionalDetails = ({
           handlePrev={handlePrev}
         />
       </div>
-    </div>
+    </>
   );
 };
 
