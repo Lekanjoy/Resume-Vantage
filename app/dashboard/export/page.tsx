@@ -1,11 +1,17 @@
 import Image from "next/image";
 import editIcon from "@/public/assets/dashboard/editIcon.svg";
-import downloadIcon from "@/public/assets/dashboard/download.svg";
 import emailSendIcon from "@/public/assets/dashboard/emailSend.svg";
 import BrandName from "@/components/brand-name";
-import template from "@/public/assets/landing-page/template-1.png";
+import Link from "next/link";
+import ResumeExportPreview from "./ResumeExportPreview";
+import DownloadResume from "./components/DownloadResume";
 
-const ExportResume = () => {
+const ExportResume = ({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) => {
+  const id = searchParams?.resumeId;
   return (
     <section className="p-4 lg:px-8 lg:py-6 ">
       <BrandName className="lg:text-xl" />
@@ -22,16 +28,14 @@ const ExportResume = () => {
 
       {/* Export Buttons */}
       <div className="mx-auto mb-10 w-fit flex justify-between text-sm text-[#40444B] gap-x-3 bg-[#FAFAFA] p-4 border-[#BDBDBD]/50 border rounded-xl lg:gap-x-10 lg:rounded-2xl">
-        <button className="flex items-center gap-x-2 lg:gap-x-3">
+        <Link
+          href={`/dashboard/?resumeId=${id}&editing=true`}
+          className="flex items-center gap-x-2 lg:gap-x-3"
+        >
           <Image src={editIcon} alt="edit icon" className="w-4 h-4" />
           <span>Edit resume</span>
-        </button>
-
-        <button className="flex items-center gap-x-2 lg:gap-x-3">
-          <Image src={downloadIcon} alt="download icon" className="w-4 h-4" />
-          <span>Download</span>
-        </button>
-
+        </Link>
+        <DownloadResume />
         <button className="flex items-center gap-x-2 lg:gap-x-3">
           <Image
             src={emailSendIcon}
@@ -43,15 +47,15 @@ const ExportResume = () => {
       </div>
 
       {/* Resume Preview */}
-      <div className="w-full border rounded-2xl mb-10 lg:mb-20 lg:w-[552px] mx-auto">
-        <Image src={template} alt="resume template" className="w-full" />
+      <div className="w-full max-w-[252px] justify-center items-center border rounded-2xl mb-10 lg:mb-20  mx-auto">
+        <ResumeExportPreview id={id} />
       </div>
 
       <div className="w-full flex justify-center items-center gap-x-12 lg:gap-x-28">
-        <button className="p-4 border border-[#7758F3] bg-[#FAFAFA] text-[#7758F3] font-semibold lg:w-[327px]">
+        <button className="p-4 border border-[#7758F3] bg-[#FAFAFA] text-[#7758F3] font-semibold lg:min-w-[327px]">
           Back
         </button>
-        <button className="p-4 bg-[#7758F3] text-[#FAFAFA] font-semibold lg:w-[327px]">
+        <button className="p-4 bg-[#7758F3] text-[#FAFAFA] font-semibold lg:min-w-[327px]">
           Save to drafts
         </button>
       </div>

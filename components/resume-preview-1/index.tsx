@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import Image from "next/image";
 import { useTypedSelector } from "@/store/store";
 import PreviewHeader from "./PreviewHeader";
@@ -7,18 +6,11 @@ import SkillsPreview from "./SkillsPreview";
 import ExperiencePreview from "./ExperiencePreview";
 import EducationPreview from "./EducationPreview";
 import CertificationPreview from "./CertificationPreview";
-import { CgTemplate } from "react-icons/cg";
 import scanning from "@/public/assets/dashboard/scanning_doc.gif";
-
-import TemplateModal from "../dashboard/template-modal/TemplateModal";
 
 const ResumePreview1 = () => {
   const resumeData = useTypedSelector((state) => state.resume);
   const { status } = resumeData;
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-
-  const openModal = () => setModalIsOpen(true);
-  const closeModal = () => setModalIsOpen(false);
 
   return (
     <>

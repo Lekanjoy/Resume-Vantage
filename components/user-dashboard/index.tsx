@@ -4,7 +4,6 @@ import { resumeData } from "@/types";
 import { useToast } from "../toast/ShowToast";
 import View from "./View";
 import Toast from "../toast";
-import SimpleTemplate from "@/components/templates/SimpleTemplate";
 
 
 type UserDashboardProps = {

@@ -6,11 +6,8 @@ import { useSearchParams } from "next/navigation";
 import { createResumeHeader } from "@/app/actions/createResume";
 import { useToast } from "@/components/toast/ShowToast";
 import Button, { ButtonProps as UserHeaderProps } from "../button";
-import ResumePreview1 from "@/components/resume-preview-1";
 import CustomInput from "@/components/input";
 import Toast from "@/components/toast";
-import ResumePreview3 from "@/components/resume-preview-3";
-import ResumePreview2 from "@/components/resume-preview-2";
 import Preview from "../Preview";
 
 const UserHeader = ({
