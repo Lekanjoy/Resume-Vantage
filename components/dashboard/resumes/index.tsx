@@ -1,8 +1,8 @@
-import CertificationPreview from "@/components/resume-preview/CertificationPreview";
-import EducationPreview from "@/components/resume-preview/EducationPreview";
-import ExperiencePreview from "@/components/resume-preview/ExperiencePreview";
-import PreviewHeader from "@/components/resume-preview/PreviewHeader";
-import SkillsPreview from "@/components/resume-preview/SkillsPreview";
+import CertificationPreview from "@/components/resume-preview-1/CertificationPreview";
+import EducationPreview from "@/components/resume-preview-1/EducationPreview";
+import ExperiencePreview from "@/components/resume-preview-1/ExperiencePreview";
+import PreviewHeader from "@/components/resume-preview-1/PreviewHeader";
+import SkillsPreview from "@/components/resume-preview-1/SkillsPreview";
 import { resumeDataProps } from "@/types";
 
 const Resume = ({ resumeData }: resumeDataProps) => {

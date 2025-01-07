@@ -3,7 +3,7 @@ import editIcon from "@/public/assets/dashboard/editIcon.svg";
 import downloadIcon from "@/public/assets/dashboard/download.svg";
 import emailSendIcon from "@/public/assets/dashboard/emailSend.svg";
 import BrandName from "@/components/brand-name";
-import template from "@/public/assets/landing-page/template-3.png";
+import template from "@/public/assets/landing-page/template-1.png";
 
 const ExportResume = () => {
   return (
@@ -47,7 +47,7 @@ const ExportResume = () => {
         <Image src={template} alt="resume template" className="w-full" />
       </div>
 
-      <div className="flex justify-between mx-auto">
+      <div className="w-full flex justify-center items-center gap-x-12 lg:gap-x-28">
         <button className="p-4 border border-[#7758F3] bg-[#FAFAFA] text-[#7758F3] font-semibold lg:w-[327px]">
           Back
         </button>

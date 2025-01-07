@@ -24,6 +24,8 @@ import AdditionalDetails from "./details";
 import Confirm from "./confirm";
 import CreationMethod from "./add-upload-resume/CreationMethod";
 import bulb from "@/public/assets/dashboard/insight.svg";
+import TemplateModal from "./template-modal/TemplateModal";
+import { CgTemplate } from "react-icons/cg";
 
 const DashboardContent = ({ id }: { id: string | string[] | undefined }) => {
   const searchParams = useSearchParams();
@@ -96,48 +98,53 @@ const DashboardContent = ({ id }: { id: string | string[] | undefined }) => {
   };
 
   const sectionData = [
-    (props: JSX.IntrinsicAttributes & ButtonProps) => (
+     (props: JSX.IntrinsicAttributes & ButtonProps) => (
       <CreationMethod key="create-or-upload" {...props} />
     ),
     (props: JSX.IntrinsicAttributes & ButtonProps) => (
       <UserHeader key="user-header" {...props} />
     ),
-    (props: JSX.IntrinsicAttributes & ExtendedExperienceProps) => (
-      <Experiences key="experiences" {...props} id={id} />
-    ),
-    (props: JSX.IntrinsicAttributes & ButtonProps) => (
-      <ExperienceDescription key="exp-describe" {...props} />
-    ),
-    (props: JSX.IntrinsicAttributes & ExperienceReviewProps) => (
-      <ExperienceReview
-        key="exp-preview"
-        {...props}
-        onEditExperience={handleEditExperience}
-      />
-    ),
-    (props: JSX.IntrinsicAttributes & ExtendedEducationProps) => (
-      <Education key="education" {...props} />
-    ),
-    (props: JSX.IntrinsicAttributes & ExperienceReviewProps) => (
-      <EducationReview
-        key="edu-preview"
-        {...props}
-        onEditEducation={handleEditEducation}
-      />
-    ),
-    (props: JSX.IntrinsicAttributes & ButtonProps) => (
-      <Skills key="skills" {...props} />
-    ),
-    (props: JSX.IntrinsicAttributes & ButtonProps) => (
-      <Summary key="summary" {...props} />
-    ),
-    (props: JSX.IntrinsicAttributes & ButtonProps) => (
-      <AdditionalDetails key="details" {...props} />
-    ),
-    (props: JSX.IntrinsicAttributes & ButtonProps) => (
-      <Confirm key="confirm" {...props} />
-    ),
+     (props: JSX.IntrinsicAttributes & ExtendedExperienceProps) => (
+       <Experiences key="experiences" {...props} id={id} />
+     ),
+     (props: JSX.IntrinsicAttributes & ButtonProps) => (
+       <ExperienceDescription key="exp-describe" {...props} />
+     ),
+     (props: JSX.IntrinsicAttributes & ExperienceReviewProps) => (
+       <ExperienceReview
+         key="exp-preview"
+         {...props}
+         onEditExperience={handleEditExperience}
+       />
+     ),
+     (props: JSX.IntrinsicAttributes & ExtendedEducationProps) => (
+       <Education key="education" {...props} />
+     ),
+     (props: JSX.IntrinsicAttributes & ExperienceReviewProps) => (
+       <EducationReview
+         key="edu-preview"
+         {...props}
+         onEditEducation={handleEditEducation}
+       />
+     ),
+     (props: JSX.IntrinsicAttributes & ButtonProps) => (
+       <Skills key="skills" {...props} />
+     ),
+     (props: JSX.IntrinsicAttributes & ButtonProps) => (
+       <Summary key="summary" {...props} />
+     ),
+     (props: JSX.IntrinsicAttributes & ButtonProps) => (
+       <AdditionalDetails key="details" {...props} />
+     ),
+     (props: JSX.IntrinsicAttributes & ButtonProps) => (
+       <Confirm key="confirm" {...props} />
+     ),
   ];
+
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const openModal = () => setModalIsOpen(true);
+  const closeModal = () => setModalIsOpen(false);
 
   return (
     <section className="relative w-full min-h-dvh flex">
@@ -157,6 +164,18 @@ const DashboardContent = ({ id }: { id: string | string[] | undefined }) => {
           id,
         })}
       </section>
+      {/* Template Selection Button */}
+      {currentIndex !== 0 &&
+      <button
+        className="absolute top-[132px] bg-[#FAFAFA] px-4 py-2 font-semibold flex items-center gap-x-2 border-[#BDBDBD]/50 border rounded-xl right-4 lg:top-[152px] lg:right-20  2xl:right-24"
+        onClick={openModal}
+      >
+        <CgTemplate />
+        <span className="text-sm">Change Template</span>
+      </button> }
+
+      {/* Modal Overlay  for Template Selection */}
+      {modalIsOpen &&  <TemplateModal closeModal={closeModal} />}
     </section>
   );
 };

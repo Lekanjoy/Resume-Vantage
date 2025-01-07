@@ -3,12 +3,13 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { setCurrentEditingIndex } from "@/features/resumeSlice";
 import { useAppDispatch, useTypedSelector } from "@/store/store";
 import Button, { ButtonProps } from "../button";
-import ResumePreview from "@/components/resume-preview";
+import ResumePreview1 from "@/components/resume-preview-1";
 import plus from "@/public/assets/dashboard/plusIcon.svg";
 import deleteIcon from "@/public/assets/dashboard/delete.svg";
 import editIcon from "@/public/assets/dashboard/edit.svg";
 import { getSkillsSuggestions } from "@/app/actions/skillsAction";
 import { updateSkillsSuggestions } from "@/features/SkillsSuggestionSlice";
+import Preview from "../Preview";
 
 export interface ExperienceReviewProps extends ButtonProps {
   setCurrentIndex: Dispatch<SetStateAction<number>>;
@@ -47,7 +48,7 @@ const EducationReview = ({
     if (result.success) {
       setLoading(false);
       dispatch(updateSkillsSuggestions(result.data?.payload?.rawSkills));
-      handleNext();     
+      handleNext();
     } else {
       setLoading(false);
       console.error(result.error);
@@ -103,9 +104,7 @@ const EducationReview = ({
             </div>
           ))}
         </div>
-        <div className="w-full min-h-full flex justify-center items-center  lg:w-[30%] lg:block">
-          <ResumePreview />
-        </div>
+        <Preview/>
       </div>
       <button
         onClick={handleAddEducation}

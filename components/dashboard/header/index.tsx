@@ -6,9 +6,12 @@ import { useSearchParams } from "next/navigation";
 import { createResumeHeader } from "@/app/actions/createResume";
 import { useToast } from "@/components/toast/ShowToast";
 import Button, { ButtonProps as UserHeaderProps } from "../button";
-import ResumePreview from "@/components/resume-preview";
+import ResumePreview1 from "@/components/resume-preview-1";
 import CustomInput from "@/components/input";
 import Toast from "@/components/toast";
+import ResumePreview3 from "@/components/resume-preview-3";
+import ResumePreview2 from "@/components/resume-preview-2";
+import Preview from "../Preview";
 
 const UserHeader = ({
   currentIndex,
@@ -64,8 +67,9 @@ const UserHeader = ({
       showToast(res.error, "error");
       console.error(res.error);
     }
-    setLoading(false); 
+    setLoading(false);
   };
+
 
   return (
     <>
@@ -154,9 +158,7 @@ const UserHeader = ({
             isEdited={editedFields["email"]}
           />
         </form>
-          <div className="w-full min-h-full flex justify-center items-center  lg:w-[30%] lg:block">
-            <ResumePreview />
-          </div>
+        <Preview/>
       </div>
 
       <div className="w-full my-20 flex justify-center items-center">

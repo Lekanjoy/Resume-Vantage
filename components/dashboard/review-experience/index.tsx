@@ -3,10 +3,11 @@ import { Dispatch, SetStateAction } from "react";
 import { setCurrentEditingIndex } from "@/features/resumeSlice";
 import { useAppDispatch, useTypedSelector } from "@/store/store";
 import Button, { ButtonProps } from "../button";
-import ResumePreview from "@/components/resume-preview";
+import ResumePreview1 from "@/components/resume-preview-1";
 import plus from "@/public/assets/dashboard/plusIcon.svg";
 import deleteIcon from "@/public/assets/dashboard/delete.svg";
 import editIcon from "@/public/assets/dashboard/edit.svg";
+import Preview from "../Preview";
 
 export interface ExperienceReviewProps extends ButtonProps {
   setCurrentIndex: Dispatch<SetStateAction<number>>;
@@ -85,9 +86,7 @@ const ExperienceReview = ({
             </div>
           ))}
         </div>
-        <div className="w-full min-h-full flex justify-center items-center  lg:w-[30%] lg:block">
-          <ResumePreview />
-        </div>
+          <Preview />
       </div>
       <button
         onClick={handleAddExperience}

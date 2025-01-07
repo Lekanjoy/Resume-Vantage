@@ -4,6 +4,7 @@ import resumeSlice from '@/features/resumeSlice';
 import AISuggestionsSlice from '@/features/AISuggestionsSlice';
 import SkillsSuggestionSlice from '@/features/SkillsSuggestionSlice';
 import SummarySuggestionSlice from '@/features/SummarySuggestionSlice';
+import resumeTemplateSlice from '@/features/resumeTemplateSlice';
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     suggestions: AISuggestionsSlice,
     skillsSuggestions: SkillsSuggestionSlice,
     summarySuggestions: SummarySuggestionSlice,
+    resumePreference: resumeTemplateSlice,
   },
 });
 

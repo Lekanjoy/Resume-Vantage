@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 import CustomInput from "@/components/input";
-import ResumePreview from "@/components/resume-preview";
+import ResumePreview1 from "@/components/resume-preview-1";
 import Button, { ButtonProps as ExperienceProps } from "../button";
 import {
   addExperience,
@@ -21,6 +21,7 @@ import { useToast } from "@/components/toast/ShowToast";
 import Toast from "@/components/toast";
 import { useSearchParams } from "next/navigation";
 import { updateSuggestions } from "@/features/AISuggestionsSlice";
+import Preview from "../Preview";
 
 export interface ExtendedExperienceProps extends ExperienceProps {
   setCurrentIndex: Dispatch<SetStateAction<number>>;
@@ -246,9 +247,7 @@ const Experiences = ({
             </label>
           </div>
         </form>
-        <div className="w-full min-h-full flex justify-center items-center  lg:w-[30%] lg:block">
-            <ResumePreview />
-          </div>
+        <Preview className="lg:w-[30%] lg:block"/>
       </div>
 
       <div className="w-full my-20 flex justify-center items-center">

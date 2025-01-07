@@ -50,18 +50,21 @@ export const templatesData = [
     id: 0,
     text: "Simple Resume Template",
     img: template1,
+    name: 'template1',
   },
 
   {
     id: 1,
     text: "Creative Resume Template",
     img: template2,
+    name: 'template2',
   },
 
   {
     id: 2,
     text: "Professional Resume Template",
     img: template3,
+    name: 'template3',
   },
 ];
 
@@ -125,7 +128,7 @@ export const resumeData = {
   phone: "+44 1234 56789",
   careerSummary:
     "Highly motivated and detail-oriented software engineer with a passion for building scalable and efficient software solutions.",
-  rawCareerSummary: ['Dedicated and passionate developer'],
+  rawCareerSummary: ["Dedicated and passionate developer"],
   skills: [
     "JavaScript",
     "React",
