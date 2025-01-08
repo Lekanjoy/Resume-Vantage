@@ -12,6 +12,8 @@ const ExportResume = ({
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
   const id = searchParams?.resumeId;
+  const template = searchParams?.template;
+
   return (
     <section className="p-4 lg:px-8 lg:py-6 ">
       <BrandName className="lg:text-xl" />
@@ -48,7 +50,7 @@ const ExportResume = ({
 
       {/* Resume Preview */}
       <div className="w-full max-w-[252px] justify-center items-center border rounded-2xl mb-10 lg:mb-20  mx-auto">
-        <ResumeExportPreview id={id} />
+        <ResumeExportPreview id={id} template={template}/>
       </div>
 
       <div className="w-full flex justify-center items-center gap-x-12 lg:gap-x-28">

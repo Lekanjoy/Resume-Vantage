@@ -1,5 +1,5 @@
+import { cn } from "@/lib/utils";
 import React from "react";
-import { twMerge } from "tailwind-merge";
 
 interface StepsProps extends React.HTMLAttributes<HTMLSpanElement> {
   title: string;
@@ -9,9 +9,9 @@ interface StepsProps extends React.HTMLAttributes<HTMLSpanElement> {
 
 const Steps = ({ title, checked, isToggle, className }: StepsProps) => {
   return (
-    <li className={twMerge("flex gap-x-3 items-center", className)}>
+    <li className={cn("flex gap-x-3 items-center", className)}>
       <span
-        className={twMerge(
+        className={cn(
           "relative min-w-5 min-h-5 rounded-full border border-[#FAFAFA] xl:w-8 xl:h-8 after:absolute after:w-[2px] after:h-[28px] after:bg-[#FAFAFA] after:-bottom-10 after:left-2 xl:after:left-3",
           className
         )}
@@ -21,7 +21,7 @@ const Steps = ({ title, checked, isToggle, className }: StepsProps) => {
         )}
       </span>
       <span
-        className={twMerge(
+        className={cn(
           "hidden transition-all duration-1000 whitespace-nowrap lg:block",
           isToggle ? "block" : "hidden"
         )}

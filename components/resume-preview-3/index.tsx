@@ -41,18 +41,24 @@ const ResumePreview3 = () => {
 
             {/* Contact Information */}
             <div className="flex flex-wrap justify-between text-[6px] bg-white p-2 rounded-md shadow">
-              <div className="flex items-center gap-1">
-                <Mail className="w-2 h-2" />
-                <span>{resumeData?.email}</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <Phone className="w-2 h-2" />
-                <span>{resumeData?.phone}</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <MapPin className="w-2 h-2" />
-                <span>{location}</span>
-              </div>
+              {resumeData?.email.length > 0 && (
+                <div className="flex items-center gap-1">
+                  <Mail className="w-2 h-2" />
+                  <span>{resumeData?.email}</span>
+                </div>
+              )}
+              {resumeData?.phone.length > 0 && (
+                <div className="flex items-center gap-1">
+                  <Phone className="w-2 h-2" />
+                  <span>{resumeData?.phone}</span>
+                </div>
+              )}
+              {location.length > 0 && (
+                <div className="flex items-center gap-1">
+                  <MapPin className="w-2 h-2" />
+                  <span>{location}</span>
+                </div>
+              )}
               <div className="flex items-center gap-1">
                 <Linkedin className="w-2 h-2" />
                 <span>linkedin.com/in/john.doe</span>
@@ -60,87 +66,88 @@ const ResumePreview3 = () => {
             </div>
 
             {/* Professional Summary */}
-            <div className="bg-white p-2 rounded-md shadow">
-              {resumeData?.careerSummary.length > 0 && (
+            {resumeData?.careerSummary.length > 0 && (
+              <div className="bg-white p-2 rounded-md shadow">
                 <h3 className="text-[8px] font-bold mb-1 text-blue-600">
                   Professional Summary
                 </h3>
-              )}
-              <p className="text-[6px]">{resumeData?.careerSummary}</p>
-            </div>
+                <p className="text-[6px]">{resumeData?.careerSummary}</p>
+              </div>
+            )}
 
             {/* Work Experience */}
-            <div className="bg-white p-2 rounded-md shadow">
-              {resumeData?.experience.length > 0 && (
+            {resumeData?.experience.length > 0 && (
+              <div className="bg-white p-2 rounded-md shadow">
                 <h3 className="text-[8px] font-bold mb-1 flex items-center gap-1 text-blue-600">
                   <Briefcase className="w-3 h-3" /> Work Experience
                 </h3>
-              )}
-              <div className="space-y-1">
-                {resumeData?.experience?.map((exp, index) => {
-                  return (
-                    <div key={exp._id}>
-                      <h4 className="text-[8px] font-bold">{exp.jobTitle}</h4>
-                      <p className="text-[6px] text-gray-600">
-                        {exp.company} | {`${exp.city}, ${exp.country}`}
-                      </p>
-                      <p className="text-[6px] text-gray-500">{`${exp.startDate} - ${exp.endDate}`}</p>
-                      <ul className="list-disc list-inside space-y-1 mt-1">
-                        {exp?.responsibilities?.responsibilities?.map(
-                          (desc, id) => {
-                            return (
-                              <li key={id} className="text-[6px]">
-                                {desc}
-                              </li>
-                            );
-                          }
-                        )}
-                      </ul>
-                    </div>
-                  );
-                })}
+                <div className="space-y-1">
+                  {resumeData?.experience?.map((exp, index) => {
+                    return (
+                      <div key={exp._id}>
+                        <h4 className="text-[8px] font-bold">{exp.jobTitle}</h4>
+                        <p className="text-[6px] text-gray-600">
+                          {exp.company} | {`${exp.city}, ${exp.country}`}
+                        </p>
+                        <p className="text-[6px] text-gray-500">{`${exp.startDate} - ${exp.endDate}`}</p>
+                        <ul className="list-disc list-inside space-y-1 mt-1">
+                          {exp?.responsibilities?.responsibilities?.map(
+                            (desc, id) => {
+                              return (
+                                <li key={id} className="text-[6px]">
+                                  {desc}
+                                </li>
+                              );
+                            }
+                          )}
+                        </ul>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Skills */}
-            <div className="bg-white p-2 rounded-md shadow">
-              <h3 className="text-[8px] font-bold mb-1 flex items-center gap-1 text-blue-600">
-                <Award className="w-3 h-3" /> Skills
-              </h3>
-              <div className="grid grid-cols-2 gap-2">
-                {resumeData.skills.map((skill) => (
-                  <div key={skill} className="flex items-center gap-[2px]">
-                    <div className="w-1 h-1 bg-blue-600 rounded-full"></div>
-                    <span className="text-[6px]">{skill}</span>
-                  </div>
-                ))}
+            {resumeData.skills.length > 0 && (
+              <div className="bg-white p-2 rounded-md shadow">
+                <h3 className="text-[8px] font-bold mb-1 flex items-center gap-1 text-blue-600">
+                  <Award className="w-3 h-3" /> Skills
+                </h3>
+                <div className="grid grid-cols-2 gap-2">
+                  {resumeData.skills.map((skill) => (
+                    <div key={skill} className="flex items-center gap-[2px]">
+                      <div className="w-1 h-1 bg-blue-600 rounded-full"></div>
+                      <span className="text-[6px]">{skill}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Education */}
-            <div className="bg-white p-2 rounded-md shadow">
-              {resumeData.education.length > 0 && (
+            {resumeData.education.length > 0 && (
+              <div className="bg-white p-2 rounded-md shadow">
                 <h3 className="text-[8px] font-bold mb-1 flex items-center gap-1 text-blue-600">
                   <GraduationCap className="w-3 h-3" /> Education
                 </h3>
-              )}
-              <div className="flex flex-col gap-y-1">
-              {
-                resumeData?.education?.map((edu, index) => {
-                  return (
-                    <div key={edu._id}>
-                      <h4 className="text-[8px] font-bold">{edu.degreeType} in {edu.studyField}</h4>
-                      <p className="text-[6px] text-gray-600">
-                        {edu.schoolName} | {`${edu.schoolLocation}`}
-                      </p>
-                      <p className="text-[6px] text-gray-500">{`${edu.startDate} - ${edu.gradDate}`}</p>
-                    </div>
-                  );
-                })
-              }
-
+                <div className="flex flex-col gap-y-1">
+                  {resumeData?.education?.map((edu, index) => {
+                    return (
+                      <div key={edu._id}>
+                        <h4 className="text-[8px] font-bold">
+                          {edu.degreeType} in {edu.studyField}
+                        </h4>
+                        <p className="text-[6px] text-gray-600">
+                          {edu.schoolName} | {`${edu.schoolLocation}`}
+                        </p>
+                        <p className="text-[6px] text-gray-500">{`${edu.startDate} - ${edu.gradDate}`}</p>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Organizations */}
             {/* <div className="bg-white p-2 rounded-md shadow">
@@ -190,7 +197,6 @@ const ResumePreview3 = () => {
                 ))}
               </div>
             </div> */}
-
           </div>
         </section>
       )}

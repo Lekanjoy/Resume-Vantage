@@ -133,9 +133,9 @@ const DashboardContent = ({ id }: { id: string | string[] | undefined }) => {
      (props: JSX.IntrinsicAttributes & ButtonProps) => (
        <Summary key="summary" {...props} />
      ),
-     (props: JSX.IntrinsicAttributes & ButtonProps) => (
-       <AdditionalDetails key="details" {...props} />
-     ),
+    //  (props: JSX.IntrinsicAttributes & ButtonProps) => (
+    //    <AdditionalDetails key="details" {...props} />
+    //  ),
      (props: JSX.IntrinsicAttributes & ButtonProps) => (
        <Confirm key="confirm" {...props} />
      ),

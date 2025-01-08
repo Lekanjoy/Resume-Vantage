@@ -111,7 +111,7 @@ export const stepsData = [
   { title: "Education Review", checked: false },
   { title: "Your Skills", checked: false },
   { title: "Summary", checked: false },
-  { title: "Additional Details", checked: false },
+  // { title: "Additional Details", checked: false },
   { title: "Confirm", checked: false },
 ];
 
