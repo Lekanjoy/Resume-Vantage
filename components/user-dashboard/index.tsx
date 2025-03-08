@@ -44,6 +44,7 @@ const UserDashboard = ({ resumes, error }: UserDashboardProps) => {
       <View key={resume._id} resume={resume} />
     ));
   };
+  
 
   return (
     <div className="my-14 xl:my-20">
@@ -70,7 +71,7 @@ const UserDashboard = ({ resumes, error }: UserDashboardProps) => {
         ))}
       </div>
 
-      <div className="mt-5 flex gap-x-2 xl:mt-16">
+      <div className="mt-5 flex overflow-x-auto scrollbar-hide gap-x-2 xl:mt-16">
         {renderResumeViews()}
       </div>
       <Toast

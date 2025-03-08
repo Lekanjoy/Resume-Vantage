@@ -36,6 +36,7 @@ export type resumeDataProps = {
       date: string;
       institution: string;
     }[];
+    templateType?: string;
   };
 };
 
@@ -59,4 +60,5 @@ export type resumeData = {
   publicEmail: string;
   careerSummary: string;
   rawCareerSummary: string[];
+  templateType?: string;
 };

@@ -54,7 +54,7 @@ export default async function Templates() {
         <Suspense fallback={<p>Loading...</p>}>
           <UserDashboard resumes={resumes} error={error} />
         </Suspense>
-      </div>   
+      </div>
       <Cta />
       <Footer />
     </>
