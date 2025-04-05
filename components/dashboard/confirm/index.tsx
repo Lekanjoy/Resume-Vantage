@@ -14,7 +14,7 @@ const Confirm = ({ currentIndex, handleNext, handlePrev }: ConfirmProps) => {
   const router = useRouter();
 
   const confirmAndNavigate = async () => {
-    const res = await setIsCompleted(resumeId, true);
+    await setIsCompleted(resumeId, true);
     router.push(`/dashboard/export?template=${selectedTemplate}`);
   };
 

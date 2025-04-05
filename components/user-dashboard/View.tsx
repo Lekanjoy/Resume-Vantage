@@ -20,12 +20,12 @@ const View = ({ resume }: ViewProps) => {
     experience: resume.jobExperiences || [],
     education: resume.education || [],
     certifications: resume.certifications || [],
-    templateType: resume.templateType ?? 'template1'
+    templateType: resume.templateType ?? "template1",
   };
-  
+
   return (
     <Link
-      href={`/dashboard/export?resumeId=${resume?._id}`}
+      href={`/dashboard/export?resumeId=${resume?._id}&template=${resume?.templateType}`}
       className="flex flex-col min-w-[200px] py-6 ease-in-out duration-500 min-h-full lg:max-w-[200px] hover:scale-105"
     >
       <Resume resumeData={resumeData} />

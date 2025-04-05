@@ -37,7 +37,7 @@ const ExportResume = ({
           <Image src={editIcon} alt="edit icon" className="w-4 h-4" />
           <span>Edit resume</span>
         </Link>
-        <DownloadResume />
+        <DownloadResume template={template}/>
         <button className="flex items-center gap-x-2 lg:gap-x-3">
           <Image
             src={emailSendIcon}
@@ -53,8 +53,8 @@ const ExportResume = ({
         <ResumeExportPreview id={id} template={template}/>
       </div>
 
-      <div className="w-full flex justify-center items-center gap-x-12 lg:gap-x-28">
-        <button className="p-4 border border-[#7758F3] bg-[#FAFAFA] text-[#7758F3] font-semibold lg:min-w-[327px]">
+      <div className="w-full flex justify-center items-center gap-x-6 lg:gap-x-28">
+        <button className="p-4 min-w-[150px] border border-[#7758F3] bg-[#FAFAFA] text-[#7758F3] font-semibold lg:min-w-[327px]">
           Back
         </button>
         <button className="p-4 bg-[#7758F3] text-[#FAFAFA] font-semibold lg:min-w-[327px]">
